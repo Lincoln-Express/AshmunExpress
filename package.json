@@ -16,5 +16,14 @@
   "main": "app.js",
   "author": "",
   "license": "ISC",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lincoln-Express/AshmunExpress.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Lincoln-Express/AshmunExpress/issues"
+  },
+  "homepage": "https://github.com/Lincoln-Express/AshmunExpress#readme",
   "description": ""
 }
