@@ -5,7 +5,7 @@ export default function Logo() {
 	return (
 		<View style={styles.container}>
 			<Image
-				style={{ width: 320, height: 200 }}
+				style={{ width: 328, height: 188 }}
 				source={require('../assets/LULogo.png')}
 			/>
 			<Text style={styles.textStyle}>Welcome to Ashmun Express</Text>

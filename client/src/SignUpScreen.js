@@ -1,23 +1,26 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Button, StyleSheet, View, Text } from 'react-native';
 import Logo from './Logo';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import LoginScreen from './LoginScreen';
 import RegistrationScreen from './RegistrationScreen';
 export default function SignUpScreen({ navigation }) {
 	return (
 		<View style={styles.container}>
 			<Logo />
-			<TouchableOpacity
-				style={styles.buttonStyle}
-				onPress={() => navigation.navigate(RegistrationScreen)}
-			>
-				<Text>Join Ashmun Express</Text>
-			</TouchableOpacity>
-			<Text onPress={() => navigation.navigate(LoginScreen)}>
-				{' '}
-				Have an account? Login Here{' '}
-			</Text>
+			<View style={styles.buttonStyle}>
+				<Button
+					title={'Join Ashmun Express'}
+					onPress={() => navigation.navigate(RegistrationScreen)}
+					color='#273A7F'
+				></Button>
+				<Text
+					style={styles.textStyle}
+					onPress={() => navigation.navigate(LoginScreen)}
+				>
+					{' '}
+					Have an account? Login Here{' '}
+				</Text>
+			</View>
 		</View>
 	);
 }
@@ -25,15 +28,20 @@ export default function SignUpScreen({ navigation }) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		paddingTop: 45,
 		backgroundColor: '#ffffff',
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
 	buttonStyle: {
-		width: 280,
-		height: 55,
-		color: '#273A7F',
+		flex: 1,
+		justifyContent: 'center',
+		paddingTop: 200,
+		width: 250,
+		height: 50,
 		borderRadius: 10,
 	},
-	textStyle: {},
+	textStyle: {
+		textAlign: 'center',
+	},
 });
