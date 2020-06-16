@@ -1,23 +1,23 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import SignUpScreen from './src/SignUpScreen';
+import RegistrationScreen from './src/RegistrationScreen';
+import LoginScreen from './src/LoginScreen';
 
+const Stack = createStackNavigator();
 export default function App() {
+	// set the signup flag here
 	return (
-		<View style={styles.container}>
-			<Text style={styles.RED}>Ashmun Express</Text>
-		</View>
+		<NavigationContainer>
+			<StatusBar backgroundColor='#f57c00' barStyle='light-content' />
+			<Stack.Navigator>
+				<Stack.Screen name='SignUp' component={SignUpScreen} />
+				<Stack.Screen name='Register' component={RegistrationScreen} />
+				{/* if there is already an account */}
+				<Stack.Screen name='Login' component={LoginScreen} />
+			</Stack.Navigator>
+		</NavigationContainer>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: 'lightblue',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	RED: {
-		color: 'darkorange',
-		fontSize: 50,
-	},
-});
