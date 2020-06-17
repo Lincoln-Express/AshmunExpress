@@ -14,8 +14,11 @@ export default function App() {
 		<NavigationContainer>
 			<StatusBar backgroundColor='#f57c00' barStyle='light-content' />
 			<Stack.Navigator>
-				<Stack.Screen name='SignUp' component={SignUpScreen} />
-				<Stack.Screen name='Register' component={RegistrationScreen} />
+				<Stack.Screen name='Welcome' component={SignUpScreen} />
+				<Stack.Screen
+					name='RegistrationScreen'
+					component={RegistrationScreen}
+				/>
 				{/* if there is already an account */}
 				<Stack.Screen name='Login' component={LoginScreen} />
 			</Stack.Navigator>
