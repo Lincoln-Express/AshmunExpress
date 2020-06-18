@@ -7,6 +7,7 @@ import FilledButton from '../components/FilledButton';
 import TextButton from '../components/TextButton';
 import ErrorBoundary from '../components/ErrorBoundary';
 import { AuthContext } from '../contexts/AuthContext';
+import Loading from '../components/Loading';
 
 export default function LoginScreen({ navigation }) {
 	const { login } = React.useContext(AuthContext);

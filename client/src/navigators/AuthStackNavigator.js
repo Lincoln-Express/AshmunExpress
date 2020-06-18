@@ -1,6 +1,5 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import { StatusBar, StyleSheet, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from '../screens/LoginScreen';
 import RegistrationScreen from '../screens/RegistrationScreen';
@@ -23,7 +22,7 @@ export default function AuthStackNavigator() {
 						<LoginStack.Screen
 							name={'Login'}
 							component={LoginScreen}
-						></LoginStack.Screen>
+						/>
 					</LoginStack.Navigator>
 				)}
 			</AuthStack.Screen>

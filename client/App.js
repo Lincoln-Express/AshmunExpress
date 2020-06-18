@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './src/screens/LoginScreen';
 import RegistrationScreen from './src/screens/RegistrationScreen';
 import AuthStackNavigator from './src/navigators/AuthStackNavigator';
+import MainStackNavigator from './src/navigators/MainStackNavigator';
 import lightTheme from './src/themes/LightTheme';
 import { AuthContext } from './src/contexts/AuthContext';
 import { createAction } from './src/utils/createAction';
@@ -27,7 +28,7 @@ export default function App() {
 			}
 		}),
 		(initialState = {
-			user = undefined,
+			user: undefined,
 		})
 	);
 	const auth = React.useMemo(
@@ -38,8 +39,8 @@ export default function App() {
 				// should add username option soon
 				const user = {
 					email: '', // stuff.user.email,
-					token: '' // stuff.jwt,
-				}
+					token: '', // stuff.jwt,
+				};
 				dispatch(createAction('SET_USER', user));
 			},
 			logout: () => {
@@ -59,6 +60,10 @@ export default function App() {
 					<Stack.Screen
 						name={'AuthStack'}
 						component={AuthStackNavigator}
+					/>
+					<Stack.Screen
+						name={'MainStack'}
+						component={MainStackNavigator}
 					/>
 				</Stack.Navigator>
 			</NavigationContainer>
