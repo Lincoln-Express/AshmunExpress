@@ -1,9 +1,21 @@
 import React from 'react';
-import { StyleSheet, TextInput } from 'react-native';
-import KeyboardHelper from './KeyboardHelper';
+import {
+	StyleSheet,
+	TextInput,
+	KeyboardAvoidingView,
+	Platform,
+	View,
+} from 'react-native';
 
 export default function InputField({ style, ...props }) {
-	return <TextInput {...props} style={[style, styles.inputBox]} />;
+	return (
+		// <KeyboardAvoidingView
+		// 	behavior={Platform.OS === 'ios' ? 'padding' : null}
+		// 	style={{ flex: 1 }}
+		// >
+		<TextInput {...props} style={[styles.inputBox, style]} />
+		// </KeyboardAvoidingView>
+	);
 }
 
 const styles = StyleSheet.create({
@@ -13,5 +25,6 @@ const styles = StyleSheet.create({
 		color: '#273A7F',
 		padding: 20,
 		borderRadius: 5,
+		justifyContent: 'flex-end',
 	},
 });

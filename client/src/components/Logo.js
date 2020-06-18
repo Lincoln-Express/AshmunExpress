@@ -14,7 +14,8 @@ export default function Logo() {
 
 const styles = StyleSheet.create({
 	container: {
-		paddingBottom: 50,
+		position: 'absolute',
+		padding: 50,
 		justifyContent: 'center',
 		alignSelf: 'center',
 	},
