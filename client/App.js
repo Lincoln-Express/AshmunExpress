@@ -8,21 +8,45 @@ import RegistrationScreen from './src/screens/RegistrationScreen';
 import AuthStackNavigator from './src/navigators/AuthStackNavigator';
 import lightTheme from './src/themes/LightTheme';
 import { AuthContext } from './src/contexts/AuthContext';
+import { createAction } from './src/utils/createAction';
 
 const Stack = createStackNavigator();
 export default function App() {
 	// add statusBar later
+	// temp state manager
+	const [state, dispatch] = React.useReducer(
+		(reducer = (state, action) => {
+			switch (action.type) {
+				case 'SET_USER':
+					return {
+						...state,
+						user: { ...action.payload },
+					};
+				default:
+					return state;
+			}
+		}),
+		(initialState = {
+			user = undefined,
+		})
+	);
 	const auth = React.useMemo(
 		() => ({
-			login: (email, password) => {
-				console.log('logged in');
+			login: async (email, password) => {
+				// backend code should go in here
+
+				// should add username option soon
+				const user = {
+					email: '', // stuff.user.email,
+					token: '' // stuff.jwt,
+				}
+				dispatch(createAction('SET_USER', user));
 			},
 			logout: () => {
 				console.log('logged out');
 			},
-			register: (firstname, lastname, email, password) => {
+			register: async (firstname, lastname, email, password) => {
 				// backend code should go in here
-
 				console.log('registered');
 			},
 		}),

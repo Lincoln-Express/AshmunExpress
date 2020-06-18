@@ -12,11 +12,14 @@ export default function LoginScreen({ navigation }) {
 	const { login } = React.useContext(AuthContext);
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
+	const [loading, setLoading] = React.useState(false);
+	const [error, setError] = React.useState('');
+
 	return (
 		<View style={styles.container}>
 			<Logo />
 			<Header style={styles.headerStyle}> Login</Header>
-			<ErrorBoundary error={''} />
+			<ErrorBoundary error={error} />
 			<InputField
 				style={styles.inputBoxStyle}
 				placeholder={'Email'}
@@ -39,10 +42,17 @@ export default function LoginScreen({ navigation }) {
 			/>
 			<TextButton
 				title={"Don't have an account? create one here"}
-				onPress={() => {
-					navigation.navigate('Registration');
+				onPress={async () => {
+					try {
+						setLoading(true);
+						await login(email, password);
+					} catch (e) {
+						setError(e.message);
+						setLoading(false);
+					}
 				}}
 			/>
+			<Loading loading={loading} />
 		</View>
 	);
 }
@@ -52,7 +62,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		paddingTop: 80,
-		padding: 20,
+		padding: 16,
 		backgroundColor: '#fff',
 	},
 	inputBoxStyle: { marginVertical: 25 },

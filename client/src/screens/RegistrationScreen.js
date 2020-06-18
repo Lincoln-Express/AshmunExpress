@@ -64,6 +64,7 @@ export default function RegistrationScreen({ navigation }) {
 				style={styles.buttonStyle}
 				onPress={async () => {
 					try {
+						setLoading(true);
 						await register(firstname, lastname, email, password);
 						navigation.pop();
 					} catch (e) {
@@ -72,7 +73,7 @@ export default function RegistrationScreen({ navigation }) {
 					}
 				}}
 			/>
-			<Loading loading />
+			<Loading loading={loading} />
 		</View>
 	);
 }
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		paddingTop: 80,
 		padding: 16,
+		backgroundColor: '#fff',
 	},
 	inputBoxStyle: { marginVertical: 25 },
 	headerStyle: { paddingTop: 200 },
