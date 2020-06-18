@@ -6,23 +6,16 @@ export default function Logo() {
 		<View style={styles.container}>
 			<Image
 				style={{ width: 328, height: 188 }}
-				source={require('../assets/LULogo.png')}
+				source={require('../../assets/LULogo.png')}
 			/>
-			<Text style={styles.textStyle}>Welcome to Ashmun Express</Text>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		backgroundColor: '#ffffff',
-		alignItems: 'center',
+		paddingBottom: 50,
 		justifyContent: 'center',
-	},
-	textStyle: {
-		marginVertical: 15,
-		color: '#273A7F',
-		fontSize: 24,
+		alignSelf: 'center',
 	},
 });

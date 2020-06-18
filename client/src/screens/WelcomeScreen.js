@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, StyleSheet, View, Text } from 'react-native';
-import Logo from './Logo';
+import Logo from '../Logo';
 import LoginScreen from './LoginScreen';
 import RegistrationScreen from './RegistrationScreen';
-export default function SignUpScreen({ navigation }) {
+export default function WelcomeScreen({ navigation }) {
 	return (
 		<View style={styles.container}>
 			<Logo />
@@ -13,6 +13,7 @@ export default function SignUpScreen({ navigation }) {
 					onPress={() => navigation.navigate(RegistrationScreen)}
 					color='#273A7F'
 				></Button>
+
 				<Text
 					style={styles.textStyle}
 					onPress={() => navigation.navigate(LoginScreen)}
@@ -42,6 +43,7 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 	},
 	textStyle: {
+		paddingTop: 50,
 		textAlign: 'center',
 	},
 });

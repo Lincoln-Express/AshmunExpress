@@ -1,27 +1,12 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import SignUpScreen from './src/SignUpScreen';
-import RegistrationScreen from './src/RegistrationScreen';
-import LoginScreen from './src/LoginScreen';
+import LoginScreen from './src/screens/LoginScreen';
 
 const Stack = createStackNavigator();
 export default function App() {
 	// set the signup flag here
-	return (
-		<NavigationContainer>
-			<StatusBar backgroundColor='#f57c00' barStyle='light-content' />
-			<Stack.Navigator>
-				<Stack.Screen name='Welcome' component={SignUpScreen} />
-				<Stack.Screen
-					name='RegistrationScreen'
-					component={RegistrationScreen}
-				/>
-				{/* if there is already an account */}
-				<Stack.Screen name='Login' component={LoginScreen} />
-			</Stack.Navigator>
-		</NavigationContainer>
-	);
+	return <LoginScreen />;
 }

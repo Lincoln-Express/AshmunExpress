@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import Logo from './Logo';
-import LoginForm from './LoginForm';
+import Logo from '../components/Logo';
+import RegistrationForm from '../components/RegistrationForm';
 
 export default function RegistrationScreen() {
 	return (
