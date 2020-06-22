@@ -16,7 +16,7 @@ export default function App() {
 	// add statusBar later
 	// temp state manager
 	const [state, dispatch] = useReducer(
-		(reducer = (state, action) => {
+		(state, action) => {
 			switch (action.type) {
 				case 'SET_USER':
 					return {
@@ -26,7 +26,7 @@ export default function App() {
 				default:
 					return state;
 			}
-		}),
+		},
 		(initialState = {
 			user: undefined,
 		})
@@ -34,13 +34,13 @@ export default function App() {
 	const auth = () => ({
 		login: async (email, password) => {
 			// backend code should go in here
-			await axios.post(`${BASE_URL}`, {
+			const { data } = await axios.post(`${BASE_URL}`, {
 				username: email,
-				password: password,
+				password,
 			});
 			const user = {
-				email: '', // stuff.user.email,
-				token: '', // stuff.jwt,
+				email: data.user.email,
+				token: data.jwt,
 			};
 			dispatch(createAction('SET_USER', user));
 		},
