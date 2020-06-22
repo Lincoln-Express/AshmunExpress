@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -8,13 +8,14 @@ import TextButton from '../components/TextButton';
 import ErrorBoundary from '../components/ErrorBoundary';
 import { AuthContext } from '../contexts/AuthContext';
 import Loading from '../components/Loading';
+import RegistrationScreen from './RegistrationScreen';
 
 export default function LoginScreen({ navigation }) {
-	const { login } = React.useContext(AuthContext);
-	const [email, setEmail] = React.useState('');
-	const [password, setPassword] = React.useState('');
-	const [loading, setLoading] = React.useState(false);
-	const [error, setError] = React.useState('');
+	const { login } = useContext(AuthContext);
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState('');
 
 	return (
 		<View style={styles.container}>
@@ -37,12 +38,6 @@ export default function LoginScreen({ navigation }) {
 			<FilledButton
 				title={'Login'}
 				style={styles.buttonStyle}
-				onPress={() => {
-					login();
-				}}
-			/>
-			<TextButton
-				title={"Don't have an account? create one here"}
 				onPress={async () => {
 					try {
 						setLoading(true);
@@ -52,6 +47,10 @@ export default function LoginScreen({ navigation }) {
 						setLoading(false);
 					}
 				}}
+			/>
+			<TextButton
+				title={"Don't have an account? create one here"}
+				onPress={navigation.navigate('Registration')}
 			/>
 			<Loading loading={loading} />
 		</View>

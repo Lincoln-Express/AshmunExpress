@@ -4,7 +4,6 @@ import {
 	TextInput,
 	KeyboardAvoidingView,
 	Platform,
-	View,
 } from 'react-native';
 
 export default function InputField({ style, ...props }) {

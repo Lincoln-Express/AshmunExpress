@@ -5,12 +5,8 @@ import HomeScreen from '../screens/HomeScreen';
 
 const MainStack = createStackNavigator();
 export default function MainStackNavigator() {
-	// add statusBar later
 	return (
-		<MainStack.Navigator
-			mode={'modal'}
-			screenOptions={{ headerShown: false }}
-		>
+		<MainStack.Navigator>
 			<MainStack.Screen name={'HomePage'} component={HomeScreen} />
 		</MainStack.Navigator>
 	);
