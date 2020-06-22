@@ -1,0 +1,14 @@
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import IconButton from './IconButton';
+
+export default function HeaderIcon({ name, onPress }) {
+	return (
+		<IconButton name={name} style={styles.container} onPress={onPress} />
+	);
+}
+
+const styles = StyleSheet.create({
+	container: {},
+});

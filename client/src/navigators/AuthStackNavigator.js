@@ -7,7 +7,6 @@ import RegistrationScreen from '../screens/RegistrationScreen';
 const AuthStack = createStackNavigator();
 const LoginStack = createStackNavigator();
 export default function AuthStackNavigator() {
-	// add statusBar later
 	return (
 		<AuthStack.Navigator
 			mode={'modal'}

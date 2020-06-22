@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -6,19 +6,17 @@ import InputField from '../components/InputField';
 import FilledButton from '../components/FilledButton';
 import IconButton from '../components/IconButton';
 import ErrorBoundary from '../components/ErrorBoundary';
-import LoginScreen from './LoginScreen';
 import { AuthContext } from '../contexts/AuthContext';
-import { set } from 'react-native-reanimated';
 import Loading from '../components/Loading';
 
 export default function RegistrationScreen({ navigation }) {
-	const { register } = React.useContext(AuthContext);
-	const [firstname, setFirstname] = React.useState('');
-	const [lastname, setLastname] = React.useState('');
-	const [email, setEmail] = React.useState('');
-	const [password, setPassword] = React.useState('');
-	const [loading, setLoading] = React.useState(false);
-	const [error, setError] = React.useState('');
+	const { register } = useContext(AuthContext);
+	const [firstname, setFirstname] = useState('');
+	const [lastname, setLastname] = useState('');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState('');
 
 	return (
 		<View style={styles.container}>
