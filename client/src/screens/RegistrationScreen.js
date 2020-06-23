@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
 		padding: 16,
 		backgroundColor: '#fff',
 	},
-	inputBoxStyle: { marginVertical: 25 },
-	headerStyle: { paddingTop: 200 },
+	inputBoxStyle: { marginVertical: 10 },
+	headerStyle: { paddingTop: 170 },
 	buttonStyle: {
 		marginVertical: 15,
 	},

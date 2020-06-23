@@ -31,36 +31,39 @@ export default function App() {
 			user: undefined,
 		})
 	);
-	const auth = () => ({
-		login: async (email, password) => {
-			// backend code should go in here
-			const { data } = await axios.post(`${BASE_URL}`, {
-				username: email,
-				password,
-			});
-			const user = {
-				email: data.user.email,
-				token: data.jwt,
-			};
-			dispatch(createAction('SET_USER', user));
-		},
-		logout: () => {
-			console.log('logged out');
-		},
-		register: async (firstname, lastname, email, password) => {
-			// backend code should go in here
-			await axios.post(`${BASE_URL}`, {
-				username: email,
-				firstname,
-				lastname,
-				email,
-				password,
-			});
-		},
-	});
+	const auth = useMemo(
+		() => ({
+			login: async (email, password) => {
+				// backend code should go in here
+				const { data } = await axios.post(`${BASE_URL}`, {
+					username: email,
+					password,
+				});
+				const user = {
+					email: data.user.email,
+					token: data.jwt,
+				};
+				dispatch(createAction('SET_USER', user));
+			},
+			logout: () => {
+				console.log('logged out');
+			},
+			register: async (firstname, lastname, email, password) => {
+				// backend code should go in here
+				await axios.post(`${BASE_URL}`, {
+					username: email,
+					firstname,
+					lastname,
+					email,
+					password,
+				});
+			},
+		}),
+		[]
+	);
 	return (
 		<AuthContext.Provider value={auth}>
-			<NavigationContainer theme={lightTheme}>
+			<NavigationContainer theme={LightTheme}>
 				<Stack.Navigator screenOptions={{ headerShown: false }}>
 					{state.user ? (
 						<Stack.Screen

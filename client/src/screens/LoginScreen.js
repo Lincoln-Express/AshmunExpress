@@ -8,7 +8,6 @@ import TextButton from '../components/TextButton';
 import ErrorBoundary from '../components/ErrorBoundary';
 import { AuthContext } from '../contexts/AuthContext';
 import Loading from '../components/Loading';
-import RegistrationScreen from './RegistrationScreen';
 
 export default function LoginScreen({ navigation }) {
 	const { login } = useContext(AuthContext);
@@ -50,7 +49,9 @@ export default function LoginScreen({ navigation }) {
 			/>
 			<TextButton
 				title={"Don't have an account? create one here"}
-				onPress={navigation.navigate('Registration')}
+				onPress={() => {
+					navigation.navigate('Registration');
+				}}
 			/>
 			<Loading loading={loading} />
 		</View>
