@@ -10,6 +10,7 @@
     "@react-navigation/native": "^5.5.1",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "debug": "~4.1.1",
     "express": "~4.17.1",
     "express-session": "^1.17.1",
@@ -22,7 +23,9 @@
   "main": "app.js",
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lincoln-Express/AshmunExpress.git"

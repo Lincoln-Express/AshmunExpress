@@ -34,7 +34,7 @@ export default function App() {
 	const auth = () => ({
 		login: async (email, password) => {
 			// backend code should go in here
-			const { data } = await axios.post(`${BASE_URL}`, {
+			const { data } = await axios.post(`${BASE_URL}/auth`, {
 				username: email,
 				password,
 			});
@@ -49,7 +49,7 @@ export default function App() {
 		},
 		register: async (firstname, lastname, email, password) => {
 			// backend code should go in here
-			await axios.post(`${BASE_URL}`, {
+			await axios.post(`${BASE_URL}/register`, {
 				username: email,
 				firstname,
 				lastname,

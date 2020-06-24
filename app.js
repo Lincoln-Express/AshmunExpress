@@ -1,3 +1,61 @@
+// import important modules
+var express = require('express');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+var path = require('path');
+var connection = require('./db')
+const cors = require('cors')
+
+var app = express();
+app.use(cors());
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
+
+app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.json());
+
+// verifies user's username and password
+app.post('/auth', function(request, response) {
+	var username = request.body.username;
+	var password = request.body.password;
+	if (username && password) {
+		connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
+			if (results.length > 0) {
+				request.session.loggedin = true;
+				response.json({success:true});
+			} else {
+				response.send('Incorrect Username and/or Password!');
+			}			
+			response.end();
+		});
+	} else {
+		response.send('Please enter Username and Password!');
+		response.end();
+	}
+});
+
+//registers a new user into database
+app.post('/register', function (request, response) {
+	var postData  = request.body;
+	connection.query('INSERT INTO accounts SET ?', postData, function (error, results, fields) {
+	   if (error) throw error;
+	   response.json({success:true});
+	 });
+ });
+
+
+
+app.listen(3000, () => console.log('app is running'));
+
+
+
+
+
+
+
 /*var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -39,40 +97,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;*/
-var mysql = require('mysql');
-var express = require('express');
-var session = require('express-session');
-var bodyParser = require('body-parser');
-var path = require('path');
-var connection = require('./db')
-
-var app = express();
-app.use(session({
-	secret: 'secret',
-	resave: true,
-	saveUninitialized: true
-}));
-
-app.use(bodyParser.urlencoded({extended : true}));
-app.use(bodyParser.json());
-
-app.post('/auth', function(request, response) {
-	var username = request.body.username;
-	var password = request.body.password;
-	if (username && password) {
-		connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
-			if (results.length > 0) {
-				request.session.loggedin = true;
-				request.session.username = username;
-				response.redirect('/home');
-			} else {
-				response.send('Incorrect Username and/or Password!');
-			}			
-			response.end();
-		});
-	} else {
-		response.send('Please enter Username and Password!');
-		response.end();
-	}
-});
-
