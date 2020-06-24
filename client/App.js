@@ -23,6 +23,11 @@ export default function App() {
 						...state,
 						user: { ...action.payload },
 					};
+				case 'REMOVE_USER':
+					return {
+						...state,
+						user: undefined,
+					};
 				default:
 					return state;
 			}
@@ -46,7 +51,7 @@ export default function App() {
 				dispatch(createAction('SET_USER', user));
 			},
 			logout: () => {
-				console.log('logged out');
+				dispatch(createAction('REMOVE_USER'));
 			},
 			register: async (firstname, lastname, email, password) => {
 				// backend code should go in here
@@ -62,7 +67,7 @@ export default function App() {
 		[]
 	);
 	return (
-		<AuthContext.Provider value={auth}>
+		<AuthContext.Provider value={{ auth, user: state.user }}>
 			<NavigationContainer theme={LightTheme}>
 				<Stack.Navigator screenOptions={{ headerShown: false }}>
 					{state.user ? (

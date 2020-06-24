@@ -10,7 +10,9 @@ import { AuthContext } from '../contexts/AuthContext';
 import Loading from '../components/Loading';
 
 export default function LoginScreen({ navigation }) {
-	const { login } = useContext(AuthContext);
+	const {
+		auth: { login },
+	} = useContext(AuthContext);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [loading, setLoading] = useState(false);
