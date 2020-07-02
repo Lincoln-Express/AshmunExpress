@@ -17,6 +17,7 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
+app.get('/', (request, response) => response.send('Hello World!'))
 // verifies user's username and password
 app.post('/auth', function(request, response) {
 	var username = request.body.username;
@@ -45,6 +46,44 @@ app.post('/register', function (request, response) {
 	   response.json({success:true});
 	 });
  });
+
+//GETS TUTORIAL PROBLEMS
+app.get('/tutorial/:level', function(request,response){
+	connection.query('SELECT questions FROM tutorial WHERE level = ?',[request.params.level], function(error, results, fields){
+		if (error) throw error;
+		response.json(results);
+
+	});
+});
+
+//GETS EXAMPLE PROBLEMS
+app.get('/example/:level', function(request,response){
+	connection.query('SELECT questions FROM tutorial WHERE level = ?',[request.params.level], function(error, results, fields){
+		if (error) throw error;
+		response.json(results);
+
+	});
+});
+
+//GETS PRACTICE PROBLEMS
+app.get('/practice/:level', function(request,response){
+	connection.query('SELECT question, option a, option b, option c, option d, answer FROM tutorial WHERE level = ?',[request.params.level], function(error, results, fields){
+		if (error) throw error;
+		response.json(results);
+
+	});
+});
+
+//GETS TEST PROBLEMS
+app.get('/test/:level', function(request,response){
+	connection.query('SELECT question, option a, option b, option c, option d, answer FROM tutorial WHERE level = ?',[request.params.level], function(error, results, fields){
+		if (error) throw error;
+		response.json(results);
+
+	});
+});
+
+
 
 
 
