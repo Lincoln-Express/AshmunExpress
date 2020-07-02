@@ -2,10 +2,10 @@ import React, { useEffect, useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import HeaderIcon from '../components/HeaderIcon';
 import { AuthContext } from '../contexts/AuthContext';
+import { UserContext } from '../contexts/UserContext';
 export default function HomeScreen({ navigation }) {
-	const {
-		auth: { logout },
-	} = useContext(AuthContext);
+	const { logout } = useContext(AuthContext);
+	const { user } = useContext(UserContext);
 	useEffect(() => {
 		navigation.setOptions({
 			headerRight: () => (

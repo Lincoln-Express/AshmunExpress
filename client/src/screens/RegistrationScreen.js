@@ -10,9 +10,7 @@ import { AuthContext } from '../contexts/AuthContext';
 import Loading from '../components/Loading';
 
 export default function RegistrationScreen({ navigation }) {
-	const {
-		auth: { register },
-	} = useContext(AuthContext);
+	const { register } = useContext(AuthContext);
 	const [firstname, setFirstname] = useState('');
 	const [lastname, setLastname] = useState('');
 	const [email, setEmail] = useState('');

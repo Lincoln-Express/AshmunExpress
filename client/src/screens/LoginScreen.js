@@ -10,9 +10,7 @@ import { AuthContext } from '../contexts/AuthContext';
 import Loading from '../components/Loading';
 
 export default function LoginScreen({ navigation }) {
-	const {
-		auth: { login },
-	} = useContext(AuthContext);
+	const { login } = useContext(AuthContext);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -21,7 +19,6 @@ export default function LoginScreen({ navigation }) {
 	return (
 		<View style={styles.container}>
 			<Logo />
-			<Header style={styles.headerStyle}> Login</Header>
 			<ErrorBoundary error={error} />
 			<InputField
 				style={styles.inputBoxStyle}
@@ -64,12 +61,11 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		alignItems: 'center',
-		paddingTop: 80,
+		paddingTop: 250,
 		padding: 16,
 		backgroundColor: '#fff',
 	},
 	inputBoxStyle: { marginVertical: 25 },
-	headerStyle: { paddingTop: 200 },
 	buttonStyle: {
 		marginVertical: 15,
 	},
