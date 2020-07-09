@@ -1,11 +1,8 @@
 import { useReducer, memo, useEffect } from 'react';
 import { createAction } from '../utils/createAction';
 import axios from 'axios';
-import SecureStorage from 'react-native-secure-storage';
 import * as SecureStore from 'expo-secure-store';
 import { BASE_URL } from '../config/index';
-import Loading from '../components/Loading';
-
 const reducer = (state, action) => {
 	switch (action.type) {
 		case 'SET_USER':
@@ -51,7 +48,6 @@ export default function useAuth() {
 				dispatch(createAction('DELETE_USER'));
 			},
 			register: async (firstname, lastname, email, password) => {
-				// backend code should go in here
 				await axios.post(`${BASE_URL}/register`, {
 					username: email,
 					firstname,

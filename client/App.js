@@ -28,13 +28,22 @@ export default function App() {
 		);
 	}
 	return (
-		<AuthContext.Provider value={auth}>
-			<NavigationContainer theme={LightTheme}>
-				<StatusBar backgroundColor='#f57c00' style='auto' />
-				<Stack.Navigator screenOptions={{ headerShown: false }}>
-					{renderScreens()}
-				</Stack.Navigator>
-			</NavigationContainer>
-		</AuthContext.Provider>
+		// <AuthContext.Provider value={auth}>
+		// 	<NavigationContainer>
+		// 		<StatusBar backgroundColor='#f57c00' style='auto' />
+		// 		<Stack.Navigator screenOptions={{ headerShown: false }}>
+		// 			{renderScreens()}
+		// 		</Stack.Navigator>
+		// 	</NavigationContainer>
+		// </AuthContext.Provider>
+
+		<NavigationContainer>
+			<Stack.Navigator>
+				<Stack.Screen
+					name={'MainStack'}
+					component={MainStackNavigator}
+				/>
+			</Stack.Navigator>
+		</NavigationContainer>
 	);
 }

@@ -29,7 +29,6 @@ export default function RegistrationScreen({ navigation }) {
 					navigation.pop();
 				}}
 			/>
-			<Header style={styles.headerStyle}> Register Here </Header>
 			<ErrorBoundary error={error} />
 			<InputField
 				style={styles.inputBoxStyle}
