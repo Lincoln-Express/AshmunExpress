@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-//check out zillow's impl of errorboundary
 export default function ErrorBoundary({ error }) {
 	return (
 		// <View style={styles.container}>

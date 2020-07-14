@@ -1,4 +1,4 @@
-import { useReducer, memo, useEffect } from 'react';
+import { useReducer, memo, useEffect, useMemo } from 'react';
 import { createAction } from '../utils/createAction';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
@@ -23,13 +23,13 @@ const reducer = (state, action) => {
 		default:
 			return state;
 	}
-},
+};
 export default function useAuth() {
 	const [state, dispatch] = useReducer(reducer, {
 		user: undefined,
 		loading: true,
 	});
-	const auth = memo(
+	const auth = useMemo(
 		() => ({
 			login: async (email, password) => {
 				const { data } = await axios.post(`${BASE_URL}/auth`, {

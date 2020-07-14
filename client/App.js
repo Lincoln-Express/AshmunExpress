@@ -9,6 +9,7 @@ import LightTheme from './src/themes/LightTheme';
 import { AuthContext } from './src/contexts/AuthContext';
 import { UserContext } from './src/contexts/UserContext';
 import useAuth from './src/hooks/useAuth';
+import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -28,22 +29,20 @@ export default function App() {
 		);
 	}
 	return (
-		// <AuthContext.Provider value={auth}>
-		// 	<NavigationContainer>
-		// 		<StatusBar backgroundColor='#f57c00' style='auto' />
-		// 		<Stack.Navigator screenOptions={{ headerShown: false }}>
-		// 			{renderScreens()}
-		// 		</Stack.Navigator>
-		// 	</NavigationContainer>
-		// </AuthContext.Provider>
-
-		<NavigationContainer>
-			<Stack.Navigator>
-				<Stack.Screen
-					name={'MainStack'}
-					component={MainStackNavigator}
-				/>
-			</Stack.Navigator>
-		</NavigationContainer>
+		<SafeAreaProvider>
+			<AuthContext.Provider value={auth}>
+				<NavigationContainer>
+					<StatusBar backgroundColor='#f57c00' style='auto' />
+					<Stack.Navigator
+						screenOptions={{
+							headerShown: false,
+							animationEnabled: false,
+						}}
+					>
+						{renderScreens()}
+					</Stack.Navigator>
+				</NavigationContainer>
+			</AuthContext.Provider>
+		</SafeAreaProvider>
 	);
 }

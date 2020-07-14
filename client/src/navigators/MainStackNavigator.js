@@ -15,30 +15,44 @@ const SettingsStack = createStackNavigator();
 const MainTab = createBottomTabNavigator();
 
 const HomeStackScreen = () => {
-	<HomeStack.Navigator>
-		<HomeStack.Screen name='Home' component={HomeScreen}></HomeStack.Screen>
-	</HomeStack.Navigator>;
+	return (
+		<HomeStack.Navigator>
+			<HomeStack.Screen
+				name='Home'
+				component={HomeScreen}
+			></HomeStack.Screen>
+		</HomeStack.Navigator>
+	);
 };
 const ProfileStackScreen = () => {
-	<ProfileStack.Navigator>
-		<ProfileStack.Screen
-			name='Profile'
-			component={ProfileScreen}
-		></ProfileStack.Screen>
-	</ProfileStack.Navigator>;
+	return (
+		<ProfileStack.Navigator>
+			<ProfileStack.Screen
+				name='Profile'
+				component={ProfileScreen}
+			></ProfileStack.Screen>
+		</ProfileStack.Navigator>
+	);
 };
 const QuizStackScreen = () => {
-	<QuizStack.Navigator>
-		<QuizStack.Screen name='Quiz' component={QuizScreen}></QuizStack.Screen>
-	</QuizStack.Navigator>;
+	return (
+		<QuizStack.Navigator>
+			<QuizStack.Screen
+				name='Quiz'
+				component={QuizScreen}
+			></QuizStack.Screen>
+		</QuizStack.Navigator>
+	);
 };
 const SettingsStackScreen = () => {
-	<SettingsStack.Navigator>
-		<SettingsStack.Screen
-			name='Settings'
-			component={SettingsScreen}
-		></SettingsStack.Screen>
-	</SettingsStack.Navigator>;
+	return (
+		<SettingsStack.Navigator>
+			<SettingsStack.Screen
+				name='Settings'
+				component={SettingsScreen}
+			></SettingsStack.Screen>
+		</SettingsStack.Navigator>
+	);
 };
 export default function MainStackNavigator() {
 	return (

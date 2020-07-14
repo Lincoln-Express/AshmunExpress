@@ -10,13 +10,17 @@ export default function AuthStackNavigator() {
 	return (
 		<AuthStack.Navigator
 			mode={'modal'}
-			screenOptions={{ headerShown: false }}
+			screenOptions={{ headerShown: false, animationEnabled: false }}
+			anima
 		>
 			<AuthStack.Screen name={'Login'}>
 				{() => (
 					<LoginStack.Navigator
 						mode={'card'}
-						screenOptions={{ headerShown: false }}
+						screenOptions={{
+							headerShown: false,
+							animationEnabled: false,
+						}}
 					>
 						<LoginStack.Screen
 							name={'Login'}

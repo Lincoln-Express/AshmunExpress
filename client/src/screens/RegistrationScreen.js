@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
 import InputField from '../components/InputField';
@@ -8,6 +8,7 @@ import IconButton from '../components/IconButton';
 import ErrorBoundary from '../components/ErrorBoundary';
 import { AuthContext } from '../contexts/AuthContext';
 import Loading from '../components/Loading';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function RegistrationScreen({ navigation }) {
 	const { register } = useContext(AuthContext);
@@ -21,10 +22,10 @@ export default function RegistrationScreen({ navigation }) {
 	return (
 		<View style={styles.container}>
 			<Logo />
+			<Header children={'Register Here'} style={styles.headerStyle} />
 			<IconButton
 				style={styles.iconButtonStyle}
-				// platform conditional
-				name={'md-close-circle-outline'}
+				name={'close-circle-outline'}
 				onPress={() => {
 					navigation.pop();
 				}}
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
 		padding: 16,
 		backgroundColor: '#fff',
 	},
-	inputBoxStyle: { marginVertical: 10 },
+	inputBoxStyle: { marginVertical: 5 },
 	headerStyle: { paddingTop: 170 },
 	buttonStyle: {
 		marginVertical: 15,
