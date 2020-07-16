@@ -46,8 +46,8 @@ export default function LoginScreen({ navigation }) {
 				style={styles.buttonStyle}
 				handlePress={async () => {
 					try {
-						setLoading(true);
-						await login(email, password);
+						const response = await login(email, password);
+						response ? setLoading(true) : setLoading(false);
 					} catch (e) {
 						setError(e.message);
 						setLoading(false);

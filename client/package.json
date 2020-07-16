@@ -40,7 +40,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
-    "babel-preset-expo": "~8.0.0"
+    "babel-preset-expo": "~8.0.0",
+    "miragejs": "^0.1.40"
   },
   "private": true
 }

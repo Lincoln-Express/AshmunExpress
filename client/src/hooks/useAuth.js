@@ -3,6 +3,7 @@ import { createAction } from '../utils/createAction';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { BASE_URL } from '../config/index';
+
 const reducer = (state, action) => {
 	switch (action.type) {
 		case 'SET_USER':
@@ -33,29 +34,38 @@ export default function useAuth() {
 	const auth = useMemo(
 		() => ({
 			login: async (email, password) => {
-				const { data } = await axios.post(`${BASE_URL}/auth`, {
-					username: email,
-					password,
-				});
-				const user = {
-					email: data.user.email,
-				};
+				try {
+					const { data } = await axios.post(`${BASE_URL}/auth`, {
+						identifier: email,
+						password,
+					});
+					const user = {
+						email: data.user.email,
+						token: data.token,
+					};
 
-				await SecureStore.setItemAsync(user, JSON.stringify(user));
-				dispatch(createAction('SET_USER', user));
+					await SecureStore.setItemAsync(user, JSON.stringify(user));
+					dispatch(createAction('SET_USER', user));
+				} catch (error) {
+					console.error(`Login request failed: ${error}`);
+				}
 			},
 			logout: async () => {
 				await SecureStore.deleteItemAsync(user);
 				dispatch(createAction('DELETE_USER'));
 			},
 			register: async (firstName, lastName, email, password) => {
-				await axios.post(`${BASE_URL}/register`, {
-					username: email,
-					firstName,
-					lastName,
-					email,
-					password,
-				});
+				try {
+					await axios.post(`${BASE_URL}/register`, {
+						username: email,
+						firstName,
+						lastName,
+						email,
+						password,
+					});
+				} catch (error) {
+					console.error(`Register request failed: ${error}`);
+				}
 			},
 		}),
 		[dispatch]
