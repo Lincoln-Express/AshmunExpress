@@ -24,6 +24,7 @@ const reducer = (state, action) => {
 			return state;
 	}
 };
+
 export default function useAuth() {
 	const [state, dispatch] = useReducer(reducer, {
 		user: undefined,
@@ -38,8 +39,8 @@ export default function useAuth() {
 				});
 				const user = {
 					email: data.user.email,
-					token: data.jwt,
 				};
+
 				await SecureStore.setItemAsync(user, JSON.stringify(user));
 				dispatch(createAction('SET_USER', user));
 			},
@@ -47,11 +48,11 @@ export default function useAuth() {
 				await SecureStore.deleteItemAsync(user);
 				dispatch(createAction('DELETE_USER'));
 			},
-			register: async (firstname, lastname, email, password) => {
+			register: async (firstName, lastName, email, password) => {
 				await axios.post(`${BASE_URL}/register`, {
 					username: email,
-					firstname,
-					lastname,
+					firstName,
+					lastName,
 					email,
 					password,
 				});

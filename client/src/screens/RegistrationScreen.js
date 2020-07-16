@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
 import InputField from '../components/InputField';
@@ -9,39 +9,46 @@ import ErrorBoundary from '../components/ErrorBoundary';
 import { AuthContext } from '../contexts/AuthContext';
 import Loading from '../components/Loading';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function RegistrationScreen({ navigation }) {
 	const { register } = useContext(AuthContext);
-	const [firstname, setFirstname] = useState('');
-	const [lastname, setLastname] = useState('');
+	const [firstName, setFirstName] = useState('');
+	const [lastName, setLastName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
 
 	return (
-		<View style={styles.container}>
+		<KeyboardAwareScrollView
+			style={{ backgroundColor: '#fff' }}
+			resetScrollToCoords={{ x: 0, y: 0 }}
+			contentContainerStyle={styles.container}
+			enableOnAndroid={true}
+			extraHeight={150}
+		>
 			<Logo />
 			<Header children={'Register Here'} style={styles.headerStyle} />
 			<IconButton
 				style={styles.iconButtonStyle}
 				name={'close-circle-outline'}
-				onPress={() => {
+				handlePress={() => {
 					navigation.pop();
 				}}
 			/>
 			<ErrorBoundary error={error} />
 			<InputField
 				style={styles.inputBoxStyle}
-				placeholder={'First name'}
-				value={firstname}
-				onChangeText={setFirstname}
+				placeholder={'First Name'}
+				value={firstName}
+				onChangeText={setFirstName}
 			/>
 			<InputField
 				style={styles.inputBoxStyle}
-				placeholder={'Last name'}
-				value={lastname}
-				onChangeText={setLastname}
+				placeholder={'Last Name'}
+				value={lastName}
+				onChangeText={setLastName}
 			/>
 			<InputField
 				style={styles.inputBoxStyle}
@@ -60,10 +67,10 @@ export default function RegistrationScreen({ navigation }) {
 			<FilledButton
 				title={'Register'}
 				style={styles.buttonStyle}
-				onPress={async () => {
+				handlePress={async () => {
 					try {
 						setLoading(true);
-						await register(firstname, lastname, email, password);
+						await register(firstName, lastName, email, password);
 						navigation.pop();
 					} catch (e) {
 						setError(e.message);
@@ -72,7 +79,7 @@ export default function RegistrationScreen({ navigation }) {
 				}}
 			/>
 			<Loading loading={loading} />
-		</View>
+		</KeyboardAwareScrollView>
 	);
 }
 

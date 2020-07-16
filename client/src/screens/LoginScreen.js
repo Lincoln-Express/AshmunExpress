@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
 import InputField from '../components/InputField';
@@ -9,6 +9,8 @@ import ErrorBoundary from '../components/ErrorBoundary';
 import { AuthContext } from '../contexts/AuthContext';
 import Loading from '../components/Loading';
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 export default function LoginScreen({ navigation }) {
 	const { login } = useContext(AuthContext);
 	const [email, setEmail] = useState('');
@@ -17,7 +19,13 @@ export default function LoginScreen({ navigation }) {
 	const [error, setError] = useState('');
 
 	return (
-		<View style={styles.container}>
+		<KeyboardAwareScrollView
+			style={{ backgroundColor: '#fff' }}
+			resetScrollToCoords={{ x: 0, y: 0 }}
+			contentContainerStyle={styles.container}
+			enableOnAndroid={true}
+			extraHeight={150}
+		>
 			<Logo />
 			<ErrorBoundary error={error} />
 			<InputField
@@ -36,7 +44,7 @@ export default function LoginScreen({ navigation }) {
 			<FilledButton
 				title={'Login'}
 				style={styles.buttonStyle}
-				onPress={async () => {
+				handlePress={async () => {
 					try {
 						setLoading(true);
 						await login(email, password);
@@ -48,12 +56,12 @@ export default function LoginScreen({ navigation }) {
 			/>
 			<TextButton
 				title={"Don't have an account? create one here"}
-				onPress={() => {
+				handlePress={() => {
 					navigation.navigate('Registration');
 				}}
 			/>
 			<Loading loading={loading} />
-		</View>
+		</KeyboardAwareScrollView>
 	);
 }
 

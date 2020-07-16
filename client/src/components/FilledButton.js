@@ -1,13 +1,30 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Text, Platform } from 'react-native';
+import {
+	StyleSheet,
+	TouchableHighlight,
+	TouchableNativeFeedback,
+	Text,
+	Platform,
+	View,
+} from 'react-native';
 import buttonStyle from '../utils/constants';
 
-export default function FilledButton({ title, style, onPress }) {
+export default function FilledButton({ title, style, handlePress }) {
 	const titleValue = Platform.OS === 'ios' ? title : title.toUpperCase();
-	return (
-		<TouchableOpacity style={[styles.container, style]} onPress={onPress}>
+
+	return Platform.OS === 'ios' ? (
+		<TouchableHighlight
+			style={[styles.container, style]}
+			onPress={handlePress}
+		>
 			<Text style={styles.textStyle}>{titleValue}</Text>
-		</TouchableOpacity>
+		</TouchableHighlight>
+	) : (
+		<TouchableNativeFeedback onPress={handlePress}>
+			<View style={[styles.container, style]}>
+				<Text style={styles.textStyle}>{titleValue}</Text>
+			</View>
+		</TouchableNativeFeedback>
 	);
 }
 

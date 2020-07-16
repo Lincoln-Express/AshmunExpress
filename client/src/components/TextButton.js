@@ -1,11 +1,28 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Text } from 'react-native';
+import {
+	StyleSheet,
+	TouchableOpacity,
+	TouchableHighlight,
+	TouchableNativeFeedback,
+	Text,
+	Platform,
+} from 'react-native';
 
-export default function TextButton({ title, style, onPress }) {
-	return (
-		<TouchableOpacity style={[styles.container, style]} onPress={onPress}>
+export default function TextButton({ title, style, handlePress }) {
+	return Platform.OS === 'ios' ? (
+		<TouchableOpacity
+			style={[styles.container, style]}
+			onPress={handlePress}
+		>
 			<Text style={styles.textStyle}>{title}</Text>
 		</TouchableOpacity>
+	) : (
+		<TouchableNativeFeedback
+			style={[styles.container, style]}
+			onPress={handlePress}
+		>
+			<Text style={styles.textStyle}>{title}</Text>
+		</TouchableNativeFeedback>
 	);
 }
 

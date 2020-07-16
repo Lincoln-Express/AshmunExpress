@@ -1,23 +1,11 @@
 import React, { useEffect, useContext } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import HeaderIcon from '../components/HeaderIcon';
 import { AuthContext } from '../contexts/AuthContext';
 import { UserContext } from '../contexts/UserContext';
 export default function HomeScreen({ navigation }) {
 	const { logout } = useContext(AuthContext);
 	const { user } = useContext(UserContext);
-	useEffect(() => {
-		navigation.setOptions({
-			headerRight: () => (
-				<HeaderIcon
-					name={'log-out-outline'}
-					onPress={() => {
-						logout();
-					}}
-				/>
-			),
-		});
-	}, [navigation]);
+	useEffect(() => {}, []);
 	return (
 		<View style={styles.container}>
 			<Text>Welcome, students</Text>

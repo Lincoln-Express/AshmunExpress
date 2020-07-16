@@ -13,7 +13,6 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 export default function App() {
-	// add statusBar later
 	const { auth, state } = useAuth();
 	function renderScreens() {
 		return state.user ? (
@@ -28,11 +27,12 @@ export default function App() {
 			<Stack.Screen name={'AuthStack'} component={AuthStackNavigator} />
 		);
 	}
+
 	return (
 		<SafeAreaProvider>
 			<AuthContext.Provider value={auth}>
 				<NavigationContainer>
-					<StatusBar backgroundColor='#f57c00' style='auto' />
+					<StatusBar backgroundColor='#f57c00' style='dark' />
 					<Stack.Navigator
 						screenOptions={{
 							headerShown: false,
