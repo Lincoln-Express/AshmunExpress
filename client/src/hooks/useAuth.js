@@ -36,7 +36,7 @@ export default function useAuth() {
       login: async (email, password) => {
         try {
           await axios
-            .post(`${BASE_URL}auth`, {
+            .post(`${BASE_URL}/auth`, {
               username: email,
               password,
             })
