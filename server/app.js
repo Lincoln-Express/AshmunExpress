@@ -48,8 +48,8 @@ app.post('/register', function (request, response) {
  });
 
 //GETS TUTORIAL PROBLEMS
-app.get('/tutorial/:level', function(request,response){
-	connection.query('SELECT questions FROM tutorial WHERE level = ?',[request.params.level], function(error, results, fields){
+app.get('/tutorial/:level/section/:section', function(request,response){
+	connection.query('SELECT * FROM tutorial WHERE level = ? AND section = ?',[request.params.level, request.params.section], function(error, results, fields){
 		if (error) throw error;
 		response.json(results);
 
@@ -57,8 +57,8 @@ app.get('/tutorial/:level', function(request,response){
 });
 
 //GETS EXAMPLE PROBLEMS
-app.get('/example/:level', function(request,response){
-	connection.query('SELECT questions FROM tutorial WHERE level = ?',[request.params.level], function(error, results, fields){
+app.get('/example/:level/section/:section', function(request,response){
+	connection.query('SELECT * FROM example_problems WHERE level = ? AND section = ?',[request.params.level, request.params.section], function(error, results, fields){
 		if (error) throw error;
 		response.json(results);
 
@@ -66,8 +66,8 @@ app.get('/example/:level', function(request,response){
 });
 
 //GETS PRACTICE PROBLEMS
-app.get('/practice/:level', function(request,response){
-	connection.query('SELECT question, option a, option b, option c, option d, answer FROM tutorial WHERE level = ?',[request.params.level], function(error, results, fields){
+app.get('/practice/:level/section/:section', function(request,response){
+	connection.query('SELECT * FROM practice_problems WHERE level = ? AND section = ?',[request.params.level, request.params.section], function(error, results, fields){
 		if (error) throw error;
 		response.json(results);
 
@@ -75,8 +75,8 @@ app.get('/practice/:level', function(request,response){
 });
 
 //GETS TEST PROBLEMS
-app.get('/test/:level', function(request,response){
-	connection.query('SELECT question, option a, option b, option c, option d, answer FROM tutorial WHERE level = ?',[request.params.level], function(error, results, fields){
+app.get('/test/:level/section/:section', function(request,response){
+	connection.query('SELECT * FROM test_problems WHERE level = ? AND section = ?',[request.params.level, request.params.section], function(error, results, fields){
 		if (error) throw error;
 		response.json(results);
 
