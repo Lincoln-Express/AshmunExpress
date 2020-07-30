@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var connection = require('./db')
 const cors = require('cors')
-
+const PORT = process.env.PORT || 5000;
 var app = express();
 app.use(cors());
 app.use(session({
@@ -17,7 +17,7 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
-app.get('/', (request, response) => response.send('Hello World!'))
+app.get('/', (request, response) => response.json('Hello World!'))
 // verifies user's username and password
 app.post('/auth', function(request, response) {
 	var username = request.body.username;
@@ -87,7 +87,7 @@ app.get('/test/:level', function(request,response){
 
 
 
-app.listen(5000, () => console.log('app is running'));
+app.listen(PORT, () => console.log('app is running'));
 
 
 
