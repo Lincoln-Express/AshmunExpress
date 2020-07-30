@@ -1,7 +1,12 @@
-import React, { useContext, useState } from 'react';
-import { StyleSheet, TextInput, ImageBackground } from 'react-native';
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/jsx-fragments */
+import React, { useContext, useState, Fragment } from 'react';
+import { StyleSheet, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Formik } from 'formik';
+import * as yup from 'yup';
 import Logo from '../components/Logo';
 import FilledButton from '../components/FilledButton';
 import TextButton from '../components/TextButton';
@@ -9,6 +14,7 @@ import ErrorBoundary from '../components/ErrorBoundary';
 import AuthContext from '../contexts/AuthContext';
 import Loading from '../components/Loading';
 import Header from '../components/Header';
+import InputField from '../components/InputField';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,18 +23,6 @@ const styles = StyleSheet.create({
     paddingTop: 250,
     padding: 16,
     backgroundColor: '#fff',
-  },
-  inputBoxStyle: {
-    borderColor: '#273A7F',
-    borderWidth: 1,
-    width: '100%',
-    color: '#273A7F',
-    padding: 20,
-    borderRadius: 5,
-    marginVertical: 10,
-  },
-  buttonStyle: {
-    marginVertical: 15,
   },
   imageStyle: {
     position: 'absolute',
@@ -43,10 +37,16 @@ const styles = StyleSheet.create({
 const LoginScreen = () => {
   const navigation = useNavigation();
   const { login } = useContext(AuthContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const validationSchema = yup.object().shape({
+    email: yup.string().email().required().label('Your input'),
+    password: yup
+      .string()
+      .required()
+      .min(8, 'Password should be 8 characters or more')
+      .label('Password'),
+  });
 
   return (
     <KeyboardAwareScrollView
@@ -63,42 +63,54 @@ const LoginScreen = () => {
       />
 
       <Logo />
-      <ErrorBoundary error={error} />
+      {/* <ErrorBoundary error={error} /> */}
       <Header>Welcome Back</Header>
-      <TextInput
-        style={styles.inputBoxStyle}
-        placeholder='Email'
-        placeholderTextColor='#273A7F'
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.inputBoxStyle}
-        placeholder='Password'
-        placeholderTextColor='#273A7F'
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
-      <FilledButton
-        title='Login'
-        style={styles.buttonStyle}
-        handlePress={async () => {
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        onSubmit={async (values) => {
           try {
-            await login(email, password);
-            // response ? setLoading(true) : setLoading(false);
+            await login(values.email, values.password);
+            setLoading(true);
           } catch (e) {
             setError(e.message);
             setLoading(false);
           }
         }}
-      />
-      <TextButton
-        title={"Don't have an account? create one here"}
-        handlePress={() => {
-          navigation.navigate('Registration');
-        }}
-      />
+        validationSchema={validationSchema}
+      >
+        {(formikProps) => (
+          <Fragment>
+            <InputField
+              label='Email'
+              formikProps={formikProps}
+              pointer='email'
+              placeholder='johndoe@email.com'
+              placeholderTextColor='#808080'
+              autoFocus
+            />
+            <InputField
+              label='Password'
+              formikProps={formikProps}
+              pointer='password'
+              placeholder='********'
+              placeholderTextColor='#808080'
+              secureTextEntry
+              autoFocus
+            />
+
+            <FilledButton
+              title='Login'
+              handlePress={formikProps.handleSubmit}
+            />
+            <TextButton
+              title={"Don't have an account? create one here"}
+              handlePress={() => {
+                navigation.navigate('Registration');
+              }}
+            />
+          </Fragment>
+        )}
+      </Formik>
       <Loading loading={loading} />
     </KeyboardAwareScrollView>
   );

@@ -33,5 +33,7 @@ const IconButton = (props) => {
 IconButton.propTypes = {
   name: PropTypes.string.isRequired,
   handlePress: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  style: PropTypes.object.isRequired,
 };
 export default IconButton;

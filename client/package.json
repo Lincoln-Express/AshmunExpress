@@ -18,11 +18,11 @@
     "eq": "^0.1.0",
     "expo": "~36.0.2",
     "expo-cli": "^3.22.3",
-    "expo-constants": "^9.1.1",
     "expo-font": "~8.0.0",
     "expo-secure-store": "~8.0.0",
     "expo-status-bar": "^1.0.2",
     "fbjs": "^1.0.0",
+    "formik": "^2.1.5",
     "global": "^4.4.0",
     "node": "^14.5.0",
     "package.json": "^2.0.1",
@@ -38,7 +38,8 @@
     "react-native-safe-area-context": "0.6.0",
     "react-native-screens": "2.0.0-alpha.12",
     "react-native-secure-storage": "^0.1.2",
-    "react-native-web": "~0.12.2"
+    "react-native-web": "~0.12.2",
+    "yup": "^0.29.1"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",

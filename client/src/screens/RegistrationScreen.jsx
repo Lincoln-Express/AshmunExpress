@@ -1,14 +1,17 @@
-import React, { useContext, useState } from 'react';
-import { StyleSheet, TextInput, ImageBackground } from 'react-native';
+/* eslint-disable react/jsx-fragments */
+import React, { useContext, useState, Fragment } from 'react';
+import { StyleSheet, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Formik } from 'formik';
+import * as yup from 'yup';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
 import FilledButton from '../components/FilledButton';
 import IconButton from '../components/IconButton';
-import ErrorBoundary from '../components/ErrorBoundary';
 import AuthContext from '../contexts/AuthContext';
 import Loading from '../components/Loading';
+import InputField from '../components/InputField';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,19 +21,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: '#fff',
   },
-  inputBoxStyle: {
-    borderColor: '#273A7F',
-    borderWidth: 1,
-    width: '100%',
-    color: '#273A7F',
-    padding: 20,
-    borderRadius: 5,
-    marginBottom: 10,
-  },
   headerStyle: { paddingTop: 170 },
-  buttonStyle: {
-    marginVertical: 15,
-  },
   iconButtonStyle: {
     position: 'absolute',
     top: 50,
@@ -49,20 +40,36 @@ const styles = StyleSheet.create({
 export default function RegistrationScreen() {
   const navigation = useNavigation();
   const { register } = useContext(AuthContext);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const validationSchema = yup.object().shape({
+    firstName: yup.string().required().label('First Name'),
+    lastName: yup.string().required().label('Last Name'),
+    email: yup.string().email().required().label('Your input'),
+    password: yup
+      .string()
+      .required()
+      .min(8, 'Password should be 8 characters or more')
+      .label('Password'),
+    confirmPassword: yup
+      .string()
+      .required()
+      .min(8, 'Password should be 8 characters or more')
+      .label('Confirm Password')
+      .test('passwords-match', "Passwords don't match", function (value) {
+        // eslint-disable-next-line react/no-this-in-sfc
+        return this.parent.password === value;
+      }),
+  });
 
+  // registration screen will have a confirm password field
   return (
     <KeyboardAwareScrollView
       style={{ backgroundColor: '#fff' }}
       resetScrollToCoords={{ x: 0, y: 0 }}
       contentContainerStyle={styles.container}
       enableOnAndroid
-      extraHeight={150}
+      // extraScrollHeight={200}
     >
       <ImageBackground
         // eslint-disable-next-line global-require
@@ -70,7 +77,6 @@ export default function RegistrationScreen() {
         style={styles.imageStyle}
       />
       <Logo />
-      <Header style={styles.headerStyle}>Register Here</Header>
       <IconButton
         style={styles.iconButtonStyle}
         name='close-circle-outline'
@@ -78,51 +84,89 @@ export default function RegistrationScreen() {
           navigation.pop();
         }}
       />
-      <ErrorBoundary error={error} />
-      <TextInput
-        style={styles.inputBoxStyle}
-        placeholder='First Name'
-        placeholderTextColor='#273A7F'
-        value={firstName}
-        onChangeText={setFirstName}
-      />
-      <TextInput
-        style={styles.inputBoxStyle}
-        placeholder='Last Name'
-        placeholderTextColor='#273A7F'
-        value={lastName}
-        onChangeText={setLastName}
-      />
-      <TextInput
-        style={styles.inputBoxStyle}
-        placeholder='Email'
-        placeholderTextColor='#273A7F'
-        keyboardType='email-address'
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.inputBoxStyle}
-        placeholder='Password'
-        placeholderTextColor='#273A7F'
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
-      <FilledButton
-        title='Register'
-        style={styles.buttonStyle}
-        handlePress={async () => {
+      <Header style={styles.headerStyle}>Register Here</Header>
+      <Formik
+        initialValues={{
+          firstName: '',
+          lastName: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+        }}
+        onSubmit={async (values) => {
           try {
             setLoading(true);
-            await register(firstName, lastName, email, password);
+            await register(
+              values.firstName,
+              values.lastName,
+              values.email,
+              // eslint-disable-next-line comma-dangle
+              values.password
+            );
             navigation.pop();
           } catch (e) {
             setError(e.message);
             setLoading(false);
           }
         }}
-      />
+        validationSchema={validationSchema}
+      >
+        {(formikProps) => (
+          <Fragment>
+            <InputField
+              label='FirstName'
+              formikProps={formikProps}
+              pointer='firstName'
+              placeholder='John'
+              placeholderTextColor='#808080'
+              secureTextEntry
+              autoFocus
+            />
+            <InputField
+              label='LastName'
+              formikProps={formikProps}
+              pointer='lastName'
+              placeholder='Doe'
+              placeholderTextColor='#808080'
+              secureTextEntry
+              autoFocus
+            />
+            <InputField
+              label='Email'
+              formikProps={formikProps}
+              pointer='email'
+              placeholder='johndoe@gmail.com'
+              placeholderTextColor='#808080'
+              secureTextEntry
+              autoFocus
+            />
+            <InputField
+              label='Password'
+              formikProps={formikProps}
+              pointer='password'
+              placeholder='********'
+              placeholderTextColor='#808080'
+              secureTextEntry
+              autoFocus
+            />
+
+            <InputField
+              label='Confirm Password'
+              formikProps={formikProps}
+              pointer='confirmPassword'
+              placeholder='confirm password'
+              placeholderTextColor='#808080'
+              secureTextEntry
+              autoFocus
+            />
+
+            <FilledButton
+              title='Register'
+              handlePress={formikProps.handleSubmit}
+            />
+          </Fragment>
+        )}
+      </Formik>
       <Loading loading={loading} />
     </KeyboardAwareScrollView>
   );

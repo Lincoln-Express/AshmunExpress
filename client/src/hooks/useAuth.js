@@ -35,24 +35,24 @@ export default function useAuth() {
     () => ({
       login: async (email, password) => {
         try {
-          const { data } = await axios.post(`${BASE_URL}/auth`, {
-            identifier: email,
-            password,
-          });
-          const user = {
-            username: data.email,
-          };
-
-          await SecureStore.setItemAsync(user, JSON.stringify(user));
-          dispatch(createAction('SET_USER', user));
+          await axios
+            .post(`${BASE_URL}auth`, {
+              username: email,
+              password,
+            })
+            .then((res) => {
+              const user = res.data.email;
+              dispatch(createAction('SET_USER', user));
+              SecureStore.setItemAsync(user, JSON.stringify(user));
+            });
         } catch (error) {
           // eslint-disable-next-line no-console
-          console.error(`Login request failed: ${error}`);
+          console.error(`Login request failed: ${error} `);
         }
       },
-      logout: async () => {
+      logout: () => {
         // eslint-disable-next-line no-undef
-        await SecureStore.deleteItemAsync(user);
+        SecureStore.deleteItemAsync(user);
         dispatch(createAction('DELETE_USER'));
       },
       register: async (firstName, lastName, email, password) => {
@@ -69,8 +69,7 @@ export default function useAuth() {
           console.error(`Register request failed: ${error}`);
         }
       },
-    }),
-    // eslint-disable-next-line comma-dangle
+    }), // eslint-disable-next-line comma-dangle
     [dispatch]
   );
   useEffect(() => {

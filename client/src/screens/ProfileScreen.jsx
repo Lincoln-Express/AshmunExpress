@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
-const ProflieScreen = () => {
+const ProfileScreen = () => {
   // eslint-disable-next-line no-unused-vars
   const navigation = useNavigation();
 
@@ -28,4 +28,4 @@ const ProflieScreen = () => {
   );
 };
 
-export default ProflieScreen;
+export default ProfileScreen;
