@@ -40,6 +40,7 @@ app.post('/auth', function(request, response) {
 
 //registers a new user into database
 app.post('/register', function (request, response) {
+	console.log('I got a request')
 	var postData  = request.body;
 	connection.query('INSERT INTO accounts SET ?', postData, function (error, results, fields) {
 	   if (error) throw error;
@@ -76,7 +77,7 @@ app.get('/practice/:level/section/:section', function(request,response){
 
 //GETS TEST PROBLEMS
 app.get('/test/:level/section/:section', function(request,response){
-	connection.query('SELECT * FROM test_problems WHERE level = ? AND section = ?',[request.params.level, request.params.section], function(error, results, fields){
+	connection.query('SELECT * FROM _problems WHERE level = ? AND section = ?',[request.params.level, request.params.section], function(error, results, fields){
 		if (error) throw error;
 		response.json(results);
 

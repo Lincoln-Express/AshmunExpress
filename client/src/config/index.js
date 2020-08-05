@@ -1,1 +1,2 @@
-export const BASE_URL = 'ashmun-express.herokuapp.com';
+const BASE_URL = 'http://ashmun-express.herokuapp.com';
+export default BASE_URL
