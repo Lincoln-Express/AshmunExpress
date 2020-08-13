@@ -70,7 +70,7 @@ const LoginScreen = () => {
         onSubmit={async (values) => {
           try {
             await login(values.email, values.password);
-            setLoading(true);
+            // setLoading(true);
           } catch (e) {
             setError(e.message);
             setLoading(false);

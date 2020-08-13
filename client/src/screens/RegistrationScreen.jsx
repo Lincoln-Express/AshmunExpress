@@ -118,7 +118,6 @@ export default function RegistrationScreen() {
               pointer='firstName'
               placeholder='John'
               placeholderTextColor='#808080'
-              secureTextEntry
               autoFocus
             />
             <InputField
@@ -127,7 +126,6 @@ export default function RegistrationScreen() {
               pointer='lastName'
               placeholder='Doe'
               placeholderTextColor='#808080'
-              secureTextEntry
               autoFocus
             />
             <InputField
@@ -136,7 +134,6 @@ export default function RegistrationScreen() {
               pointer='email'
               placeholder='johndoe@gmail.com'
               placeholderTextColor='#808080'
-              secureTextEntry
               autoFocus
             />
             <InputField
