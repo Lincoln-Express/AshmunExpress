@@ -35,16 +35,16 @@ const ProfileStackScreen = () => (
   </ProfileStack.Navigator>
 );
 
-// const QuizStackScreen = () => (
-//   <QuizStack.Navigator>
-//     <QuizStack.Screen name='Quiz' component={QuizScreen} />
-//   </QuizStack.Navigator>
-// );
+const QuizStackScreen = () => (
+  <QuizStack.Navigator>
+    <QuizStack.Screen name='Quiz' component={QuizScreen} />
+  </QuizStack.Navigator>
+);
 
 const QuizListStackScreen = () => (
   <QuizListStack.Navigator>
     <QuizStack.Screen name='QuizList' component={QuizListScreen} />
-    {/* <QuizStack.Screen name='Quiz' component={QuizStackScreen} /> */}
+    <QuizStack.Screen name='Quiz' component={QuizStackScreen} />
   </QuizListStack.Navigator>
 );
 

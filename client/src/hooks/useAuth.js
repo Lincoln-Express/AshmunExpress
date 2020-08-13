@@ -41,6 +41,7 @@ export default function useAuth() {
               password,
             })
             .then((res) => {
+              // this should be success
               const user = res.data.email;
               dispatch(createAction('SET_USER', user));
               SecureStore.setItemAsync(user, JSON.stringify(user));

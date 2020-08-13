@@ -62,7 +62,6 @@ export default function RegistrationScreen() {
       }),
   });
 
-  // registration screen will have a confirm password field
   return (
     <KeyboardAwareScrollView
       style={{ backgroundColor: '#fff' }}
