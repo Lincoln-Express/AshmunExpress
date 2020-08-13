@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var connection = require('./db')
 const cors = require('cors')
-
+const PORT = process.env.PORT || 5000;
 var app = express();
 app.use(cors());
 app.use(session({
@@ -17,7 +17,7 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
-app.get('/', (request, response) => response.send('Hello World!'))
+app.get('/', (request, response) => response.json('Hello World!'))
 // verifies user's username and password
 app.post('/auth', function(request, response) {
 	var username = request.body.username;
@@ -40,6 +40,7 @@ app.post('/auth', function(request, response) {
 
 //registers a new user into database
 app.post('/register', function (request, response) {
+	console.log('I got a request')
 	var postData  = request.body;
 	connection.query('INSERT INTO accounts SET ?', postData, function (error, results, fields) {
 	   if (error) throw error;
@@ -48,8 +49,8 @@ app.post('/register', function (request, response) {
  });
 
 //GETS TUTORIAL PROBLEMS
-app.get('/tutorial/:level', function(request,response){
-	connection.query('SELECT questions FROM tutorial WHERE level = ?',[request.params.level], function(error, results, fields){
+app.get('/tutorial/:level/section/:section', function(request,response){
+	connection.query('SELECT * FROM tutorial WHERE level = ? AND section = ?',[request.params.level, request.params.section], function(error, results, fields){
 		if (error) throw error;
 		response.json(results);
 
@@ -57,8 +58,8 @@ app.get('/tutorial/:level', function(request,response){
 });
 
 //GETS EXAMPLE PROBLEMS
-app.get('/example/:level', function(request,response){
-	connection.query('SELECT questions FROM tutorial WHERE level = ?',[request.params.level], function(error, results, fields){
+app.get('/example/:level/section/:section', function(request,response){
+	connection.query('SELECT * FROM example_problems WHERE level = ? AND section = ?',[request.params.level, request.params.section], function(error, results, fields){
 		if (error) throw error;
 		response.json(results);
 
@@ -66,8 +67,8 @@ app.get('/example/:level', function(request,response){
 });
 
 //GETS PRACTICE PROBLEMS
-app.get('/practice/:level', function(request,response){
-	connection.query('SELECT question, option a, option b, option c, option d, answer FROM tutorial WHERE level = ?',[request.params.level], function(error, results, fields){
+app.get('/practice/:level/section/:section', function(request,response){
+	connection.query('SELECT * FROM practice_problems WHERE level = ? AND section = ?',[request.params.level, request.params.section], function(error, results, fields){
 		if (error) throw error;
 		response.json(results);
 
@@ -75,8 +76,8 @@ app.get('/practice/:level', function(request,response){
 });
 
 //GETS TEST PROBLEMS
-app.get('/test/:level', function(request,response){
-	connection.query('SELECT question, option a, option b, option c, option d, answer FROM tutorial WHERE level = ?',[request.params.level], function(error, results, fields){
+app.get('/test/:level/section/:section', function(request,response){
+	connection.query('SELECT * FROM _problems WHERE level = ? AND section = ?',[request.params.level, request.params.section], function(error, results, fields){
 		if (error) throw error;
 		response.json(results);
 
@@ -87,7 +88,7 @@ app.get('/test/:level', function(request,response){
 
 
 
-app.listen(3000, () => console.log('app is running'));
+app.listen(PORT, () => console.log('app is running'));
 
 
 

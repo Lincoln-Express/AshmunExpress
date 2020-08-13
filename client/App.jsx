@@ -85,9 +85,8 @@ export default function App() {
         </SafeAreaView>
       </ScrollView>
     </View>
+    // <NavigationContainer>
+    //   <MainTabNavigator />
+    // </NavigationContainer>
   );
 }
-
-/* <NavigationContainer>
-<MainTabNavigator />
-</NavigationContainer> */

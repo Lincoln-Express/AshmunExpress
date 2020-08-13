@@ -36,7 +36,7 @@ export default function useAuth() {
       login: async (email, password) => {
         try {
           await axios
-            .post(`${BASE_URL}auth`, {
+            .post(`${BASE_URL}/auth`, {
               username: email,
               password,
             })
@@ -68,6 +68,7 @@ export default function useAuth() {
         } catch (error) {
           // eslint-disable-next-line no-console
           console.error(`Register request failed: ${error}`);
+          console.log(error.response.data)
         }
       },
     }), // eslint-disable-next-line comma-dangle
