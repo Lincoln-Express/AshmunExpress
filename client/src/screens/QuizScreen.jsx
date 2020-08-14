@@ -1,25 +1,39 @@
 /* eslint-disable react/jsx-fragments */
-import React, { useState, Fragment } from 'react';
-import { View, Text } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
-import FilledButton from '../components/FilledButton';
+import React, { useState, useEffect } from 'react';
+import {
+  useRoute,
+  useNavigation,
+  NavigationContainer,
+} from '@react-navigation/native';
+import axios from 'axios';
+import BASE_URL from '../config/index';
+import TestScreen from './TestScreen';
+// import QuizStackNavigator from '../navigators/QuizStackNavigator';
 
 const QuizScreen = () => {
-  const [count, setCount] = useState(0);
+  const [questions, setQuestions] = useState([]);
+  const route = useRoute();
+  const { name } = route.params;
+  const navigation = useNavigation();
 
-  // should fetch data from the network, probably in an array format
+  useEffect(async () => {
+    await axios.post(`${BASE_URL}/${name}`).then((res) => {
+      setQuestions(res.data);
+    });
+  }, []);
 
-  return (
-    <Fragment>
-      <View>
-        <Text>QuestionTitle</Text>
-        <FilledButton>Option A</FilledButton>
-        <FilledButton>Option B</FilledButton>
-        <FilledButton>Option C</FilledButton>
-        <FilledButton>Option D</FilledButton>
-      </View>
-    </Fragment>
-  );
+  if (name === 'Example') {
+    // navigation.push('ExampleScreen');
+    return <ExampleScreen questions={questions} />;
+  }
+  if (name === 'Practice') {
+    return <PracticeScreen questions={questions} />;
+  }
+  if (name === 'Test') {
+    return <TestScreen questions={questions} />;
+  }
+
+  return <TutorialScreen questions={questions} />;
 };
 
 export default QuizScreen;

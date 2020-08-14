@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useReducer, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
@@ -34,6 +35,12 @@ export default function useAuth() {
   const auth = useMemo(
     () => ({
       login: async (email, password) => {
+        axios.interceptors.response.use(
+          (response) => response,
+          (error) => {
+            throw error;
+          }
+        );
         try {
           await axios
             .post(`${BASE_URL}/auth`, {
@@ -41,13 +48,26 @@ export default function useAuth() {
               password,
             })
             .then((res) => {
-              const user = res.data.email;
-              dispatch(createAction('SET_USER', user));
-              SecureStore.setItemAsync(user, JSON.stringify(user));
+              if (res.data.success) {
+                const user = {
+                  username: email,
+                };
+
+                dispatch(createAction('SET_USER', user));
+                SecureStore.setItemAsync(user, JSON.stringify(user));
+              } else {
+                throw new Error("Couldn't create user");
+              }
             });
         } catch (error) {
-          // eslint-disable-next-line no-console
-          console.error(`Login request failed: ${error} `);
+          if (error.request) {
+            console.error(`Login request failed: ${error.request.data}`);
+          } else if (error.response) {
+            console.error(`Login response failed: ${error.response.data}`);
+            console.error(`Login response failed: ${error.response.status}`);
+          } else {
+            console.error(`error ${error.message}`);
+          }
         }
       },
       logout: () => {
@@ -56,6 +76,12 @@ export default function useAuth() {
         dispatch(createAction('DELETE_USER'));
       },
       register: async (firstName, lastName, email, password) => {
+        axios.interceptors.response.use(
+          (response) => response,
+          (error) => {
+            throw error;
+          }
+        );
         try {
           await axios.post(`${BASE_URL}/register`, {
             username: email,
@@ -66,8 +92,14 @@ export default function useAuth() {
           });
         } catch (error) {
           // eslint-disable-next-line no-console
-          console.error(`Register request failed: ${error}`);
-          console.log(error.response.data)
+          if (error.request) {
+            console.error(`Register request failed: ${error.request.data}`);
+          } else if (error.response) {
+            console.error(`Register response failed: ${error.response.data}`);
+            console.error(`Register response failed: ${error.response.status}`);
+          } else {
+            console.error(`error ${error.message}`);
+          }
         }
       },
     }), // eslint-disable-next-line comma-dangle
