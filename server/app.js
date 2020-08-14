@@ -26,7 +26,7 @@ app.post('/auth', function(request, response) {
 		connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
 			if (results.length > 0) {
 				request.session.loggedin = true;
-				response.json({success:true});
+				response.end();
 			} else {
 				response.send('Incorrect Username and/or Password!');
 			}			
@@ -77,13 +77,19 @@ app.get('/practice/:level/section/:section', function(request,response){
 
 //GETS TEST PROBLEMS
 app.get('/test/:level/section/:section', function(request,response){
-	connection.query('SELECT * FROM _problems WHERE level = ? AND section = ?',[request.params.level, request.params.section], function(error, results, fields){
+	connection.query('SELECT * FROM test_problems WHERE level = ? AND section = ?',[request.params.level, request.params.section], function(error, results, fields){
 		if (error) throw error;
 		response.json(results);
 
 	});
 });
-
+// GETS TOPIC AND SUBTOPIC
+app.get('/topics',function(request,response){
+	connection.query('SELECT topics.topic_name, section.section_name FROM section JOIN topics ON section.topic_id = topics.topic_id ORDER BY tname, stname;', function(error, results, fields){
+		if (error) throw error;
+		response.json(results);
+	})
+})
 
 
 
