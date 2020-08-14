@@ -26,7 +26,7 @@ app.post('/auth', function(request, response) {
 		connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
 			if (results.length > 0) {
 				request.session.loggedin = true;
-				response.end();
+				response.send({success:true});
 			} else {
 				response.send('Incorrect Username and/or Password!');
 			}			
