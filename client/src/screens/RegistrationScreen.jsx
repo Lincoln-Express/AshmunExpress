@@ -64,11 +64,9 @@ export default function RegistrationScreen() {
 
   return (
     <KeyboardAwareScrollView
-      style={{ backgroundColor: '#fff' }}
       resetScrollToCoords={{ x: 0, y: 0 }}
       contentContainerStyle={styles.container}
       enableOnAndroid
-      // extraScrollHeight={200}
     >
       <ImageBackground
         // eslint-disable-next-line global-require

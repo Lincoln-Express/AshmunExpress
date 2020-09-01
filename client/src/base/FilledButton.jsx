@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { buttonStyle } from '../utils/utils';
+import buttonStyle from '../utils/utils';
 
 const styles = StyleSheet.create({
   container: {

@@ -50,11 +50,9 @@ const LoginScreen = () => {
 
   return (
     <KeyboardAwareScrollView
-      style={{ backgroundColor: '#fff' }}
       resetScrollToCoords={{ x: 0, y: 0 }}
       contentContainerStyle={styles.container}
       enableOnAndroid
-      extraHeight={150}
     >
       <ImageBackground
         // eslint-disable-next-line global-require
