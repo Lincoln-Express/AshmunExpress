@@ -1,39 +1,26 @@
-/* eslint-disable react/jsx-fragments */
-import React, { useState, useEffect } from "react";
-import {
-  useRoute,
-  useNavigation,
-  NavigationContainer,
-} from "@react-navigation/native";
-import axios from "axios";
+/* eslint-disable react/jsx-one-expression-per-line */
+import React from "react";
+import { View } from "react-native";
+import useSWR from "swr";
+import Loading from "../../base/Loading/Loading";
+import fetcher from "../../utils/fetcher";
 import BASE_URL from "../../config/index";
-import TestScreen from "./TestScreen";
-// import QuizStackNavigator from '../navigators/QuizStackNavigator';
+
+// split topics and subtopics
+function resolveData(data) {
+  return data;
+}
 
 const QuizScreen = () => {
-  const [questions, setQuestions] = useState([]);
-  const route = useRoute();
-  const { name } = route.params;
-  const navigation = useNavigation();
+  const { data, error } = useSWR(`${BASE_URL}/topics`, fetcher);
 
-  useEffect(async () => {
-    await axios.post(`${BASE_URL}/${name}`).then((res) => {
-      setQuestions(res.data);
-    });
-  }, []);
-
-  if (name === "Example") {
-    // navigation.push('ExampleScreen');
-    return <ExampleScreen questions={questions} />;
-  }
-  if (name === "Practice") {
-    return <PracticeScreen questions={questions} />;
-  }
-  if (name === "Test") {
-    return <TestScreen questions={questions} />;
-  }
-
-  return <TutorialScreen questions={questions} />;
+  return (
+    <View>
+      {error && <View>{error.info}</View>}
+      {!data && <Loading loading />}
+      {data && <View>{resolveData(data)}</View>}
+    </View>
+  );
 };
 
 export default QuizScreen;
