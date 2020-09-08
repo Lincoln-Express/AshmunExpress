@@ -1,23 +1,23 @@
 /* eslint-disable no-console */
-import { useReducer, useEffect, useMemo } from 'react';
-import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
-import BASE_URL from '../config/index';
-import createAction from '../utils/createAction';
+import { useReducer, useEffect, useMemo } from "react";
+import axios from "axios";
+import * as SecureStore from "expo-secure-store";
+import BASE_URL from "../config/index";
+import createAction from "../utils/createAction";
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'SET_USER':
+    case "SET_USER":
       return {
         ...state,
         user: { ...action.payload },
       };
-    case 'DELETE_USER':
+    case "DELETE_USER":
       return {
         ...state,
         user: undefined,
       };
-    case 'SET_LOADING':
+    case "SET_LOADING":
       return {
         ...state,
         loading: action.payload,
@@ -39,7 +39,7 @@ export default function useAuth() {
           (response) => response,
           (error) => {
             throw error;
-          }
+          },
         );
         try {
           await axios
@@ -49,12 +49,10 @@ export default function useAuth() {
             })
             .then((res) => {
               if (res.data.success) {
-                const user = {
-                  username: email,
-                };
+                const user = email;
 
-                dispatch(createAction('SET_USER', user));
-                SecureStore.setItemAsync(user, JSON.stringify(user));
+                dispatch(createAction("SET_USER", user));
+                SecureStore.setItemAsync("user", JSON.stringify(user));
               } else {
                 throw new Error("Couldn't create user");
               }
@@ -72,15 +70,15 @@ export default function useAuth() {
       },
       logout: () => {
         // eslint-disable-next-line no-undef
-        SecureStore.deleteItemAsync(user);
-        dispatch(createAction('DELETE_USER'));
+        SecureStore.deleteItemAsync("user");
+        dispatch(createAction("DELETE_USER"));
       },
       register: async (firstName, lastName, email, password) => {
         axios.interceptors.response.use(
           (response) => response,
           (error) => {
             throw error;
-          }
+          },
         );
         try {
           await axios.post(`${BASE_URL}/register`, {
@@ -103,14 +101,14 @@ export default function useAuth() {
         }
       },
     }), // eslint-disable-next-line comma-dangle
-    [dispatch]
+    [dispatch],
   );
   useEffect(() => {
-    SecureStore.getItemAsync('user').then((user) => {
+    SecureStore.getItemAsync("user").then((user) => {
       if (user) {
-        dispatch(createAction('SET_USER', JSON.parse(user)));
+        dispatch(createAction("SET_USER", JSON.parse(user)));
       }
-      dispatch(createAction('SET_LOADING', false));
+      dispatch(createAction("SET_LOADING", false));
     });
   }, []);
   return { auth, state };

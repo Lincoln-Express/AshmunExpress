@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-fragments */
-import React, { useState, Fragment } from 'react';
-import { View } from 'react-native';
-import QuestionDescription from './QuestionDescription';
-import FilledButton from '../components/FilledButton';
+import React, { useState, Fragment } from "react";
+import { View } from "react-native";
+import QuestionDescription from "./QuizDescription";
+import FilledButton from "../../base/FilledButton/FilledButton";
 
 const TestScreen = (props, { navigation }) => {
   const { questions } = props;
@@ -28,25 +28,25 @@ const TestScreen = (props, { navigation }) => {
       <FilledButton
         title={questions[count].answer1}
         handlePress={() =>
-          navigation.push('QuizList', { name: `level ${level}` })
+          navigation.push("QuizList", { name: `level ${level}` })
         }
       />
       <FilledButton
         title={questions[count].answer2}
         handlePress={() =>
-          navigation.push('QuizList', { name: `level ${level}` })
+          navigation.push("QuizList", { name: `level ${level}` })
         }
       />
       <FilledButton
         title={questions[count].answer3}
         handlePress={() =>
-          navigation.push('QuizList', { name: `level ${level}` })
+          navigation.push("QuizList", { name: `level ${level}` })
         }
       />
       <FilledButton
         title={questions[count].answer4}
         handlePress={() =>
-          navigation.push('QuizList', { name: `level ${level}` })
+          navigation.push("QuizList", { name: `level ${level}` })
         }
       />
     </Fragment>

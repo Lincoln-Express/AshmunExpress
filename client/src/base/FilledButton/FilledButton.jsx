@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   StyleSheet,
   TouchableHighlight,
@@ -6,40 +6,40 @@ import {
   Text,
   Platform,
   View,
-} from 'react-native';
-import PropTypes from 'prop-types';
-import buttonStyle from '../utils/utils';
+} from "react-native";
+import PropTypes from "prop-types";
+import buttonElevationStyle from "../../utils/buttonElevation";
 
 const styles = StyleSheet.create({
   container: {
     ...Platform.select({
       ios: {
-        backgroundColor: buttonStyle.ios,
+        backgroundColor: buttonElevationStyle.ios,
       },
       android: {
-        backgroundColor: buttonStyle.android.color,
-        elevation: buttonStyle.android.elevation,
+        backgroundColor: buttonElevationStyle.android.color,
+        elevation: buttonElevationStyle.android.elevation,
       },
     }),
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 20,
     marginBottom: 10,
     borderRadius: 5,
     marginVertical: 15,
   },
   textStyle: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
   },
 });
 
 const FilledButton = (props) => {
   const { title, handlePress } = props;
-  const titleValue = Platform.OS === 'ios' ? title : title.toUpperCase();
+  const titleValue = Platform.OS === "ios" ? title : title.toUpperCase();
 
-  return Platform.OS === 'ios' ? (
+  return Platform.OS === "ios" ? (
     <TouchableHighlight style={styles.container} onPress={handlePress}>
       <Text style={styles.textStyle}>{titleValue}</Text>
     </TouchableHighlight>
@@ -54,7 +54,7 @@ const FilledButton = (props) => {
 
 FilledButton.propTypes = {
   title: PropTypes.string.isRequired,
-  handlePress: PropTypes.func.isRequired,
+  handlePress: PropTypes.func,
 };
 
 export default FilledButton;

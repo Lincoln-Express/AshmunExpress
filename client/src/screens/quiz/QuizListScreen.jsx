@@ -5,7 +5,7 @@ import React, { useEffect, useState, Fragment } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import axios from 'axios';
-import BASE_URL from '../config/index';
+import BASE_URL from '../../config/index';
 import FilledButton from '../components/FilledButton';
 
 const styles = StyleSheet.create({

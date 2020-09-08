@@ -1,16 +1,16 @@
-import React, { useContext } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import AuthContext from '../contexts/AuthContext';
-import UserContext from '../contexts/UserContext';
+import React, { useContext } from "react";
+import { StyleSheet, View, Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import AuthContext from "../../contexts/AuthContext";
+import UserContext from "../../contexts/UserContext";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
     paddingTop: 80,
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
 });
 const HomeScreen = () => {

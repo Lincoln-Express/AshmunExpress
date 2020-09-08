@@ -1,31 +1,31 @@
-import 'react-native-gesture-handler';
-import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from '../screens/LoginScreen';
-import RegistrationScreen from '../screens/RegistrationScreen';
+import "react-native-gesture-handler";
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import LoginScreen from "../screens/auth/login/LoginScreen";
+import RegistrationScreen from "../screens/auth/register/RegistrationScreen";
 
 const AuthStack = createStackNavigator();
 const LoginStack = createStackNavigator();
 const AuthStackNavigator = () => (
   <AuthStack.Navigator
-    mode='modal'
+    mode="modal"
     screenOptions={{ headerShown: false, animationEnabled: false }}
     anima
   >
-    <AuthStack.Screen name='Login'>
+    <AuthStack.Screen name="Login">
       {() => (
         <LoginStack.Navigator
-          mode='card'
+          mode="card"
           screenOptions={{
             headerShown: false,
             animationEnabled: false,
           }}
         >
-          <LoginStack.Screen name='Login' component={LoginScreen} />
+          <LoginStack.Screen name="Login" component={LoginScreen} />
         </LoginStack.Navigator>
       )}
     </AuthStack.Screen>
-    <AuthStack.Screen name='Registration' component={RegistrationScreen} />
+    <AuthStack.Screen name="Registration" component={RegistrationScreen} />
   </AuthStack.Navigator>
 );
 

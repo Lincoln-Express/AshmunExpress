@@ -1,9 +1,11 @@
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-fragments */
 import React, { useEffect, useState, Fragment } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import axios from 'axios';
-import BASE_URL from '../config/index';
+import BASE_URL from '../../config/index';
 import FilledButton from '../components/FilledButton';
 
 const styles = StyleSheet.create({
@@ -15,30 +17,34 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
-const TopicsScreen = () => {
+const LevelsScreen = () => {
   // eslint-disable-next-line no-unused-vars
   const navigation = useNavigation();
-  const [topics, setTopics] = useState([]);
+  const route = useRoute();
+  const { name: topic } = route.params;
+  const [levels, setLevels] = useState([]);
 
   useEffect(async () => {
-    await axios.get(`${BASE_URL}topic`).then((res) => {
-      setTopics(res.data);
+    await axios.get(`${BASE_URL}level`).then((res) => {
+      setLevels(res.data);
     });
   }, []);
 
   return (
     <Fragment>
       <View style={styles.container}>
-        <Text>Topics</Text>
+        <Text>Level</Text>
       </View>
-      {topics.map((topic) => (
+      {levels.map((level) => (
         <FilledButton
-          title={topic}
-          handlePress={() => navigation.push('Levels', { name: { topic } })}
+          title={level}
+          handlePress={() =>
+            navigation.push('QuizList', { name: `level ${level}` })
+          }
         />
       ))}
     </Fragment>
   );
 };
 
-export default TopicsScreen;
+export default LevelsScreen;
