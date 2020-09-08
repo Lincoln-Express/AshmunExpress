@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/jsx-fragments */
 import React, { useContext, useState, Fragment } from "react";
-import { StyleSheet, ImageBackground } from "react-native";
+import { StyleSheet, ImageBackground, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
@@ -17,7 +17,6 @@ import InputField from "../../../base/InputField/InputField";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: "center",
     paddingTop: 250,
     padding: 16,
@@ -30,6 +29,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
     opacity: 0.5,
+  },
+  textStyle: {
+    marginVertical: 40,
   },
 });
 
@@ -62,9 +64,9 @@ const LoginScreen = () => {
       <Header>Welcome</Header>
       <Formik
         initialValues={{ email: "", password: "" }}
-        onSubmit={async (values) => {
+        onSubmit={(values) => {
           try {
-            await login(values.email, values.password);
+            login(values.email, values.password);
             // setLoading(true);
           } catch (e) {
             setLoading(false);
@@ -96,12 +98,14 @@ const LoginScreen = () => {
               title="Login"
               handlePress={formikProps.handleSubmit}
             />
-            <TextButton
-              title={"Don't have an account? create one here"}
-              handlePress={() => {
-                navigation.navigate("Registration");
-              }}
-            />
+            <View style={styles.textStyle}>
+              <TextButton
+                title={"Don't have an account? create one here"}
+                handlePress={() => {
+                  navigation.navigate("Registration");
+                }}
+              />
+            </View>
           </Fragment>
         )}
       </Formik>

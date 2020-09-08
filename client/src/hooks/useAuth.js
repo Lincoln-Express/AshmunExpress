@@ -35,12 +35,6 @@ export default function useAuth() {
   const auth = useMemo(
     () => ({
       login: async (email, password) => {
-        axios.interceptors.response.use(
-          (response) => response,
-          (error) => {
-            throw error;
-          },
-        );
         try {
           await axios
             .post(`${BASE_URL}/auth`, {
@@ -48,7 +42,7 @@ export default function useAuth() {
               password,
             })
             .then((res) => {
-              if (res.data.success) {
+              if (res.data) {
                 const user = email;
 
                 dispatch(createAction("SET_USER", user));
@@ -59,7 +53,7 @@ export default function useAuth() {
             });
         } catch (error) {
           if (error.request) {
-            console.error(`Login request failed: ${error.request.data}`);
+            console.error(`Login request failed: ${error.request}`);
           } else if (error.response) {
             console.error(`Login response failed: ${error.response.data}`);
             console.error(`Login response failed: ${error.response.status}`);
@@ -74,12 +68,6 @@ export default function useAuth() {
         dispatch(createAction("DELETE_USER"));
       },
       register: async (firstName, lastName, email, password) => {
-        axios.interceptors.response.use(
-          (response) => response,
-          (error) => {
-            throw error;
-          },
-        );
         try {
           await axios.post(`${BASE_URL}/register`, {
             username: email,
