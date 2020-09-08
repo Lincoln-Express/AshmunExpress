@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-fragments */
 import React, { useState, Fragment } from "react";
 import { View } from "react-native";
-import QuestionDescription from "./QuizDescription";
+import QuestionDescription from "./QuizDescriptionScreen";
 import FilledButton from "../../base/FilledButton/FilledButton";
 
 const TestScreen = (props, { navigation }) => {

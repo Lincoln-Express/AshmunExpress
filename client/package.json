@@ -40,6 +40,7 @@
     "react-native-screens": "2.0.0-alpha.12",
     "react-native-secure-storage": "^0.1.2",
     "react-native-web": "~0.12.2",
+    "swr": "^0.3.2",
     "yup": "^0.29.1"
   },
   "devDependencies": {

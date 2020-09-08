@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default-member */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/prop-types */
 import "react-native-gesture-handler";
@@ -7,9 +8,17 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "../screens/home/HomeScreen";
-import QuizScreen from "../screens/quiz/QuizScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
 import SettingsScreen from "../screens/settings/SettingsScreen";
+import QuizScreen from "../screens/quiz/QuizScreen";
+import QuizListScreen from "../screens/quiz/QuizListScreen";
+import QuizLevelsScreen from "../screens/quiz/QuizLevelsScreen";
+import QuizDescriptionScreen from "../screens/quiz/QuizDescriptionScreen";
+import QuizResultsScreen from "../screens/quiz/QuizResultsScreen";
+import ExampleScreen from "../screens/quiz/ExampleScreen";
+import TutorialScreen from "../screens/quiz/TutorialScreen";
+import TestScreen from "../screens/quiz/TestScreen";
+import PracticeScreen from "../screens/quiz/PracticeScreen";
 
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -23,6 +32,7 @@ const HomeStackScreen = () => (
     <HomeStack.Screen name="Home" component={HomeScreen} />
   </HomeStack.Navigator>
 );
+
 const ProfileStackScreen = () => (
   <ProfileStack.Navigator>
     <ProfileStack.Screen name="Profile" component={ProfileScreen} />
@@ -32,6 +42,30 @@ const ProfileStackScreen = () => (
 const QuizStackScreen = () => (
   <QuizStack.Navigator>
     <QuizStack.Screen name="Quiz" component={QuizScreen} />
+    <QuizStack.Screen
+      name="QuizLevels"
+      component={QuizLevelsScreen}
+      options={{ title: "Quiz Levels" }}
+    />
+    <QuizStack.Screen
+      name="QuizList"
+      component={QuizListScreen}
+      options={{ title: "Quiz List" }}
+    />
+    <QuizStack.Screen name="Example" component={ExampleScreen} />
+    <QuizStack.Screen name="Test" component={TestScreen} />
+    <QuizStack.Screen name="Practice" component={PracticeScreen} />
+    <QuizStack.Screen name="Tutorial" component={TutorialScreen} />
+    <QuizStack.Screen
+      name="QuizDescription"
+      component={QuizDescriptionScreen}
+      options={{ title: "Quiz Description" }}
+    />
+    <QuizStack.Screen
+      name="QuizResult"
+      component={QuizResultsScreen}
+      options={{ title: "Quiz Results" }}
+    />
   </QuizStack.Navigator>
 );
 
