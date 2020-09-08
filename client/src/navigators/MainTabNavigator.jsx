@@ -79,7 +79,7 @@ const MainTabNavigator = () => (
   <MainTab.Navigator
     // initialRoute.name='Home'
     screenOptions={({ route }) => ({
-      tabBarIcon: ({ focused, color, size }) => {
+      tabBarIcon: ({ color, size }) => {
         let iconName;
 
         if (route.name === "Home") {

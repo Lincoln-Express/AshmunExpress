@@ -1,11 +1,9 @@
-const { default: Axios } = require("axios");
-
 import axios from "axios";
 
-export default fetcher = async (url) => {
+export default async function fetcher(url) {
   const res = await axios.get(url);
 
-  if (res.status != 200) {
+  if (res.status !== 200) {
     const error = new Error("An error occurred while fetching the data. ");
 
     error.info = await res.data;
@@ -15,4 +13,4 @@ export default fetcher = async (url) => {
   }
 
   return res.data;
-};
+}

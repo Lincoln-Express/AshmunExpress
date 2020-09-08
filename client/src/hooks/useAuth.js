@@ -89,7 +89,6 @@ export default function useAuth() {
             password,
           });
         } catch (error) {
-          // eslint-disable-next-line no-console
           if (error.request) {
             console.error(`Register request failed: ${error.request.data}`);
             console.error(`Register request failed: ${error.request.status}`);
@@ -101,7 +100,7 @@ export default function useAuth() {
           }
         }
       },
-    }), // eslint-disable-next-line comma-dangle
+    }),
     [dispatch],
   );
   useEffect(() => {

@@ -1,6 +1,6 @@
-const createAction = (actionType, payload) => ({
-  actionType,
-  payload,
-});
-
-export default createAction;
+export default function createAction(actionType, payload) {
+  return {
+    actionType,
+    payload,
+  };
+}

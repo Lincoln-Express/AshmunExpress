@@ -1,34 +1,34 @@
 /* eslint-disable react/jsx-fragments */
-import React, { useContext, useState, Fragment } from 'react';
-import { StyleSheet, ImageBackground } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Formik } from 'formik';
-import * as yup from 'yup';
-import Logo from '../../../base/Logo/Logo';
-import Header from '../../../base/Header/Header';
-import FilledButton from '../../../base/FilledButton/FilledButton';
-import IconButton from '../../../base/IconButton/IconButton';
-import Loading from '../../../base/Loading/Loading';
-import InputField from '../../../base/InputField/InputField';
-import AuthContext from '../../../contexts/AuthContext';
+import React, { useContext, useState, Fragment } from "react";
+import { StyleSheet, ImageBackground } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Formik } from "formik";
+import * as yup from "yup";
+import Logo from "../../../base/Logo/Logo";
+import Header from "../../../base/Header/Header";
+import FilledButton from "../../../base/FilledButton/FilledButton";
+import IconButton from "../../../base/IconButton/IconButton";
+import Loading from "../../../base/Loading/Loading";
+import InputField from "../../../base/InputField/InputField";
+import AuthContext from "../../../contexts/AuthContext";
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    alignItems: 'center',
+    alignItems: "center",
     paddingTop: 80,
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   headerStyle: { paddingTop: 170 },
   iconButtonStyle: {
-    position: 'absolute',
+    position: "absolute",
     top: 50,
     right: 20,
   },
   imageStyle: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     bottom: 0,
@@ -42,20 +42,22 @@ export default function RegistrationScreen() {
   const { register } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const validationSchema = yup.object().shape({
-    firstName: yup.string().required().label('First Name'),
-    lastName: yup.string().required().label('Last Name'),
-    email: yup.string().email().required().label('Your input'),
+    firstName: yup.string().required().label("First Name"),
+    lastName: yup.string().required().label("Last Name"),
+    email: yup.string().email().required().label("Your input"),
     password: yup
       .string()
       .required()
-      .min(8, 'Password should be 8 characters or more')
-      .label('Password'),
+      .min(8, "Password should be 8 characters or more")
+      .label("Password"),
     confirmPassword: yup
       .string()
       .required()
-      .min(8, 'Password should be 8 characters or more')
-      .label('Confirm Password')
-      .test('passwords-match', "Passwords don't match", function (value) {
+      .min(8, "Password should be 8 characters or more")
+      .label("Confirm Password")
+      .test("passwords-match", "Passwords don't match", function checkPassword(
+        value,
+      ) {
         // eslint-disable-next-line react/no-this-in-sfc
         return this.parent.password === value;
       }),
@@ -69,13 +71,13 @@ export default function RegistrationScreen() {
     >
       <ImageBackground
         // eslint-disable-next-line global-require
-        source={require('../../../../assets/background.jpg')}
+        source={require("../../../../assets/background.jpg")}
         style={styles.imageStyle}
       />
-      <Logo url={'../../assets/LULogo.png'} />
+      <Logo url="../../assets/LULogo.png" />
       <IconButton
         style={styles.iconButtonStyle}
-        name='close-circle-outline'
+        name="close-circle-outline"
         handlePress={() => {
           navigation.pop();
         }}
@@ -83,11 +85,11 @@ export default function RegistrationScreen() {
       <Header style={styles.headerStyle}>Register Here</Header>
       <Formik
         initialValues={{
-          firstName: '',
-          lastName: '',
-          email: '',
-          password: '',
-          confirmPassword: '',
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
         }}
         onSubmit={async (values) => {
           try {
@@ -97,7 +99,7 @@ export default function RegistrationScreen() {
               values.lastName,
               values.email,
               // eslint-disable-next-line comma-dangle
-              values.password
+              values.password,
             );
             navigation.pop();
           } catch (e) {
@@ -109,51 +111,51 @@ export default function RegistrationScreen() {
         {(formikProps) => (
           <Fragment>
             <InputField
-              label='FirstName'
+              label="FirstName"
               formikProps={formikProps}
-              pointer='firstName'
-              placeholder='John'
-              placeholderTextColor='#808080'
+              pointer="firstName"
+              placeholder="John"
+              placeholderTextColor="#808080"
               autoFocus
             />
             <InputField
-              label='LastName'
+              label="LastName"
               formikProps={formikProps}
-              pointer='lastName'
-              placeholder='Doe'
-              placeholderTextColor='#808080'
+              pointer="lastName"
+              placeholder="Doe"
+              placeholderTextColor="#808080"
               autoFocus
             />
             <InputField
-              label='Email'
+              label="Email"
               formikProps={formikProps}
-              pointer='email'
-              placeholder='johndoe@gmail.com'
-              placeholderTextColor='#808080'
+              pointer="email"
+              placeholder="johndoe@gmail.com"
+              placeholderTextColor="#808080"
               autoFocus
             />
             <InputField
-              label='Password'
+              label="Password"
               formikProps={formikProps}
-              pointer='password'
-              placeholder='********'
-              placeholderTextColor='#808080'
+              pointer="password"
+              placeholder="********"
+              placeholderTextColor="#808080"
               secureTextEntry
               autoFocus
             />
 
             <InputField
-              label='Confirm Password'
+              label="Confirm Password"
               formikProps={formikProps}
-              pointer='confirmPassword'
-              placeholder='confirm password'
-              placeholderTextColor='#808080'
+              pointer="confirmPassword"
+              placeholder="confirm password"
+              placeholderTextColor="#808080"
               secureTextEntry
               autoFocus
             />
 
             <FilledButton
-              title='Register'
+              title="Register"
               handlePress={formikProps.handleSubmit}
             />
           </Fragment>
