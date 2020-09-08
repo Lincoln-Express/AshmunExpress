@@ -30,23 +30,23 @@ export default function App() {
   }
 
   return (
-    <ErrorBoundary>
-      <AuthContext.Provider value={auth}>
-        <NavigationContainer>
-          <StatusBar backgroundColor="#f57c00" barStyle="default" />
+    // <ErrorBoundary>
+    //   <AuthContext.Provider value={auth}>
+    //     <NavigationContainer>
+    //       <StatusBar backgroundColor="#f57c00" barStyle="default" />
 
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            {renderScreens()}
-          </Stack.Navigator>
-        </NavigationContainer>
-      </AuthContext.Provider>
-    </ErrorBoundary>
-    // <NavigationContainer>
-    //   <MainTabNavigator />
-    // </NavigationContainer>
+    //       <Stack.Navigator
+    //         screenOptions={{
+    //           headerShown: false,
+    //         }}
+    //       >
+    //         {renderScreens()}
+    //       </Stack.Navigator>
+    //     </NavigationContainer>
+    //   </AuthContext.Provider>
+    // </ErrorBoundary>
+    <NavigationContainer>
+      <MainTabNavigator />
+    </NavigationContainer>
   );
 }

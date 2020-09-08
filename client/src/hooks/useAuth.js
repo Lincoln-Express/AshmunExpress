@@ -92,6 +92,7 @@ export default function useAuth() {
           // eslint-disable-next-line no-console
           if (error.request) {
             console.error(`Register request failed: ${error.request.data}`);
+            console.error(`Register request failed: ${error.request.status}`);
           } else if (error.response) {
             console.error(`Register response failed: ${error.response.data}`);
             console.error(`Register response failed: ${error.response.status}`);
