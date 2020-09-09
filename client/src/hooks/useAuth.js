@@ -1,23 +1,24 @@
 /* eslint-disable no-console */
-import { useReducer, useEffect, useMemo } from "react";
-import axios from "axios";
-import * as SecureStore from "expo-secure-store";
-import BASE_URL from "../config/index";
-import createAction from "../utils/createAction";
+import { useReducer, useEffect, useMemo } from 'react';
+import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
+import BASE_URL from '../config/index';
+import createAction from '../utils/createAction';
 
+// use loading in app.jsx, and remove the loading states in both loginScreen and registrationScreen
 const reducer = (state, action) => {
   switch (action.type) {
-    case "SET_USER":
+    case 'SET_USER':
       return {
         ...state,
-        user: { ...action.payload },
+        user: action.payload,
       };
-    case "DELETE_USER":
+    case 'DELETE_USER':
       return {
         ...state,
         user: undefined,
       };
-    case "SET_LOADING":
+    case 'SET_LOADING':
       return {
         ...state,
         loading: action.payload,
@@ -30,7 +31,7 @@ const reducer = (state, action) => {
 export default function useAuth() {
   const [state, dispatch] = useReducer(reducer, {
     user: undefined,
-    loading: true,
+    isLoading: false,
   });
   const auth = useMemo(
     () => ({
@@ -45,8 +46,8 @@ export default function useAuth() {
               if (res.data) {
                 const user = email;
 
-                dispatch(createAction("SET_USER", user));
-                SecureStore.setItemAsync("user", JSON.stringify(user));
+                dispatch({ type: 'SET_USER', payload: user });
+                SecureStore.setItemAsync('user', JSON.stringify(user));
               } else {
                 throw new Error("Couldn't create user");
               }
@@ -64,8 +65,10 @@ export default function useAuth() {
       },
       logout: () => {
         // eslint-disable-next-line no-undef
-        SecureStore.deleteItemAsync("user");
-        dispatch(createAction("DELETE_USER"));
+        let user = SecureStore.deleteItemAsync('user');
+        if (user) {
+          dispatch({ type: 'DELETE_USER' });
+        }
       },
       register: async (firstName, lastName, email, password) => {
         try {
@@ -90,15 +93,18 @@ export default function useAuth() {
         }
       },
     }), // eslint-disable-next-line comma-dangle
-    [dispatch],
+    [dispatch]
   );
   useEffect(() => {
-    SecureStore.getItemAsync("user").then((user) => {
-      if (user) {
-        dispatch(createAction("SET_USER", JSON.parse(user)));
-      }
-      dispatch(createAction("SET_LOADING", false));
-    });
+    const fetchUser = async () => {
+      let user;
+      try {
+        user = await SecureStore.getItemAsync('user');
+      } catch (e) {}
+
+      dispatch({ type: 'SET_USER', payload: user });
+    };
+    fetchUser();
   }, []);
   return { auth, state };
 }
