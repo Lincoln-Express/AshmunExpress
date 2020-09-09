@@ -3,7 +3,6 @@ import { useReducer, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import BASE_URL from '../config/index';
-import createAction from '../utils/createAction';
 
 // use loading in app.jsx, and remove the loading states in both loginScreen and registrationScreen
 const reducer = (state, action) => {
