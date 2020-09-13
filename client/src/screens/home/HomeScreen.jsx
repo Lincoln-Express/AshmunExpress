@@ -16,13 +16,11 @@ const styles = StyleSheet.create({
 const HomeScreen = () => {
   // eslint-disable-next-line no-unused-vars
   const navigation = useNavigation();
-
-  // const { logout } = useContext(AuthContext); // move this to profile
-  // const { user } = useContext(UserContext); // not sure if i will need this here
+  const { user } = useContext(UserContext);
 
   return (
     <View style={styles.container}>
-      <Text>Welcome, students</Text>
+      <Text>{`Welcome, ${user}`}</Text>
     </View>
   );
 };
