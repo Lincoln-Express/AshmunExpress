@@ -34,6 +34,8 @@ export default function App() {
             <Stack.Navigator
               screenOptions={{
                 headerShown: false,
+                animationEnabled: false,
+                gestureEnabled: true,
               }}
             >
               {renderScreens()}

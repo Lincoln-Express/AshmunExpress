@@ -20,7 +20,8 @@ const reducer = (state, action) => {
     case "SET_LOADING":
       return {
         ...state,
-        isLoading: action.payload,
+        user: action.payload,
+        isLoading: false,
       };
     default:
       return state;
@@ -30,7 +31,7 @@ const reducer = (state, action) => {
 export default function useAuth() {
   const [state, dispatch] = useReducer(reducer, {
     user: undefined,
-    isLoading: false,
+    isLoading: true,
   });
 
   const auth = useMemo(
@@ -43,13 +44,12 @@ export default function useAuth() {
               password,
             })
             .then((res) => {
-              if (res.data) {
-                const user = email;
+              if (res.data && SecureStore.getItemAsync("user")) {
+                const user = SecureStore.getItemAsync("user");
 
                 dispatch({ type: "SET_USER", payload: user });
-                SecureStore.setItemAsync("user", JSON.stringify(user));
               } else {
-                throw new Error("Couldn't create user");
+                throw new Error("Couldn't find user");
               }
             });
         } catch (error) {
@@ -72,13 +72,20 @@ export default function useAuth() {
       },
       register: async (firstName, lastName, email, password) => {
         try {
-          await axios.post(`${BASE_URL}/register`, {
-            username: email,
-            firstName,
-            lastName,
-            email,
-            password,
-          });
+          await axios
+            .post(`${BASE_URL}/register`, {
+              username: email,
+              firstName,
+              lastName,
+              email,
+              password,
+            })
+            .then((res) => {
+              const user = `${firstName}-${lastName}-${email}`;
+
+              dispatch({ type: "SET_USER", payload: user });
+              SecureStore.setItemAsync("user", JSON.stringify(user));
+            });
         } catch (error) {
           if (error.request) {
             console.error(`Register request failed: ${error.request.data}`);
@@ -96,15 +103,16 @@ export default function useAuth() {
   );
 
   useEffect(() => {
+    let user;
+
     const fetchUser = async () => {
-      let user;
       try {
         user = await SecureStore.getItemAsync("user");
       } catch (e) {
         console.error(`Restoring user error: ${e.message}`);
       }
 
-      dispatch({ type: "SET_USER", payload: user });
+      dispatch({ type: "SET_LOADING", payload: user });
     };
     fetchUser();
   }, []);
