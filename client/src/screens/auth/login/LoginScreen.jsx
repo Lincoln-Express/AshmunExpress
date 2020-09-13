@@ -31,6 +31,9 @@ const styles = StyleSheet.create({
     right: 0,
     opacity: 0.5,
   },
+  textStyle: {
+    marginVertical: 40,
+  },
 });
 
 export default function LoginScreen() {
@@ -66,6 +69,7 @@ export default function LoginScreen() {
             try {
               await login(values.email, values.password);
               // setLoading(true);
+              navigation.navigate('MainStack');
             } catch (e) {
               setLoading(false);
             }

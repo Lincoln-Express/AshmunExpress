@@ -15,17 +15,10 @@ import ErrorBoundary from "./src/base/ErrorBoundary/ErrorBoundary";
 const Stack = createStackNavigator();
 export default function App() {
   const { auth, state } = useAuth();
+
   function renderScreens() {
     return state.user ? (
-      <Stack.Screen name="MainStack">
-        {() => {
-          const { user } = state;
-          // eslint-disable-next-line react/jsx-indent
-          <UserContext.Provider value={user}>
-            <MainTabNavigator />
-          </UserContext.Provider>;
-        }}
-      </Stack.Screen>
+      <Stack.Screen name="MainStack" component={MainTabNavigator} />
     ) : (
       <Stack.Screen name="AuthStack" component={AuthStackNavigator} />
     );
@@ -34,21 +27,20 @@ export default function App() {
   return (
     <ErrorBoundary>
       <AuthContext.Provider value={auth}>
-        <NavigationContainer>
-          <StatusBar backgroundColor="#f57c00" barStyle="default" />
+        <UserContext.Provider value={state}>
+          <NavigationContainer>
+            <StatusBar backgroundColor="#f57c00" barStyle="default" />
 
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            {renderScreens()}
-          </Stack.Navigator>
-        </NavigationContainer>
+            <Stack.Navigator
+              screenOptions={{
+                headerShown: false,
+              }}
+            >
+              {renderScreens()}
+            </Stack.Navigator>
+          </NavigationContainer>
+        </UserContext.Provider>
       </AuthContext.Provider>
     </ErrorBoundary>
-    // <NavigationContainer>
-    //   <MainTabNavigator />
-    // </NavigationContainer>
   );
 }

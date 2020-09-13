@@ -3,14 +3,14 @@ import { useReducer, useEffect, useMemo } from "react";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import BASE_URL from "../config/index";
-import createAction from "../utils/createAction";
 
+// use loading in app.jsx, and remove the loading states in both loginScreen and registrationScreen
 const reducer = (state, action) => {
   switch (action.type) {
     case "SET_USER":
       return {
         ...state,
-        user: { ...action.payload },
+        user: action.payload,
       };
     case "DELETE_USER":
       return {
@@ -20,7 +20,7 @@ const reducer = (state, action) => {
     case "SET_LOADING":
       return {
         ...state,
-        loading: action.payload,
+        isLoading: action.payload,
       };
     default:
       return state;
@@ -30,17 +30,12 @@ const reducer = (state, action) => {
 export default function useAuth() {
   const [state, dispatch] = useReducer(reducer, {
     user: undefined,
-    loading: true,
+    isLoading: false,
   });
+
   const auth = useMemo(
     () => ({
       login: async (email, password) => {
-        axios.interceptors.response.use(
-          (response) => response,
-          (error) => {
-            throw error;
-          },
-        );
         try {
           await axios
             .post(`${BASE_URL}/auth`, {
@@ -48,10 +43,10 @@ export default function useAuth() {
               password,
             })
             .then((res) => {
-              if (res.data.success) {
+              if (res.data) {
                 const user = email;
 
-                dispatch(createAction("SET_USER", user));
+                dispatch({ type: "SET_USER", payload: user });
                 SecureStore.setItemAsync("user", JSON.stringify(user));
               } else {
                 throw new Error("Couldn't create user");
@@ -59,7 +54,7 @@ export default function useAuth() {
             });
         } catch (error) {
           if (error.request) {
-            console.error(`Login request failed: ${error.request.data}`);
+            console.error(`Login request failed: ${error.request}`);
           } else if (error.response) {
             console.error(`Login response failed: ${error.response.data}`);
             console.error(`Login response failed: ${error.response.status}`);
@@ -70,16 +65,12 @@ export default function useAuth() {
       },
       logout: () => {
         // eslint-disable-next-line no-undef
-        SecureStore.deleteItemAsync("user");
-        dispatch(createAction("DELETE_USER"));
+        const user = SecureStore.deleteItemAsync("user");
+        if (user) {
+          dispatch({ type: "DELETE_USER" });
+        }
       },
       register: async (firstName, lastName, email, password) => {
-        axios.interceptors.response.use(
-          (response) => response,
-          (error) => {
-            throw error;
-          },
-        );
         try {
           await axios.post(`${BASE_URL}/register`, {
             username: email,
@@ -100,16 +91,23 @@ export default function useAuth() {
           }
         }
       },
-    }),
-    [dispatch],
+    }), // eslint-disable-next-line comma-dangle
+    [],
   );
+
   useEffect(() => {
-    SecureStore.getItemAsync("user").then((user) => {
-      if (user) {
-        dispatch(createAction("SET_USER", JSON.parse(user)));
+    const fetchUser = async () => {
+      let user;
+      try {
+        user = await SecureStore.getItemAsync("user");
+      } catch (e) {
+        console.error(`Restoring user error: ${e.message}`);
       }
-      dispatch(createAction("SET_LOADING", false));
-    });
+
+      dispatch({ type: "SET_USER", payload: user });
+    };
+    fetchUser();
   }, []);
+
   return { auth, state };
 }
