@@ -3,7 +3,7 @@ import { useReducer, useEffect, useMemo } from "react";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import BASE_URL from "../config/index";
-import reducer, { State } from "../utils/reducer";
+import reducer, { State } from "../utils/reducer/reducer";
 
 type Auth = {
   auth: {
@@ -19,7 +19,7 @@ type Auth = {
   state: State;
 };
 
-function useAuth(): Auth {
+const useAuth = (): Auth => {
   const [state, dispatch] = useReducer(reducer, {
     user: undefined,
     isLoading: true,
@@ -114,6 +114,6 @@ function useAuth(): Auth {
   }, []);
 
   return { auth, state };
-}
+};
 
 export default useAuth;

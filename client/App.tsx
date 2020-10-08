@@ -13,7 +13,7 @@ import useAuth from "./src/hooks/useAuth";
 import ErrorBoundary from "./src/base/ErrorBoundary/ErrorBoundary";
 
 const Stack = createStackNavigator();
-export default function App() {
+const App = (): JSX.Element => {
   const { auth, state } = useAuth();
 
   function renderScreens() {
@@ -45,4 +45,6 @@ export default function App() {
       </AuthContext.Provider>
     </ErrorBoundary>
   );
-}
+};
+
+export default App;

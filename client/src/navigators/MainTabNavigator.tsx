@@ -10,8 +10,8 @@ import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "../screens/home/HomeScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
 import SettingsScreen from "../screens/settings/SettingsScreen";
-import QuizScreen from "../screens/quiz/QuizScreen";
-import QuizListScreen from "../screens/quiz/QuizListScreen";
+import QuizBasicScreen from "../screens/quiz/QuizBasicScreen";
+import QuizPageScreen from "../screens/quiz/QuizPageScreen";
 import QuizLevelsScreen from "../screens/quiz/QuizLevelsScreen";
 import QuizDescriptionScreen from "../screens/quiz/QuizDescriptionScreen";
 import QuizResultsScreen from "../screens/quiz/QuizResultsScreen";
@@ -41,7 +41,7 @@ const ProfileStackScreen = () => (
 
 const QuizStackScreen = () => (
   <QuizStack.Navigator>
-    <QuizStack.Screen name="Quiz" component={QuizScreen} />
+    <QuizStack.Screen name="Quiz" component={QuizBasicScreen} />
     <QuizStack.Screen
       name="QuizLevels"
       component={QuizLevelsScreen}
@@ -49,7 +49,7 @@ const QuizStackScreen = () => (
     />
     <QuizStack.Screen
       name="QuizList"
-      component={QuizListScreen}
+      component={QuizPageScreen}
       options={{ title: "Quiz List" }}
     />
     <QuizStack.Screen name="Example" component={ExampleScreen} />

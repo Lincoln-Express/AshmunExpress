@@ -1,9 +1,15 @@
 /* eslint-disable @typescript-eslint/ban-types */
-export type State = {};
-type Action =
+export type State = {
+  user: Promise<string | null> | string | undefined | null;
+  isLoading: boolean;
+};
+export type Action =
   | { type: "SET_USER"; payload: Promise<string | null> | string }
   | { type: "DELETE_USER" }
-  | { type: "SET_LOADING"; payload: Promise<string | null> | null | string };
+  | {
+      type: "SET_LOADING";
+      payload: Promise<string | null> | null | string;
+    };
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -11,6 +17,7 @@ const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         user: action.payload,
+        isLoading: false,
       };
     case "DELETE_USER":
       return {

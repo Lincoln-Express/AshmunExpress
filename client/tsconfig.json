@@ -14,7 +14,7 @@
     "outDir": ".dist",
     "skipLibCheck": true
   },
-  "include": ["src"],
+  "include": ["client"],
   "exclude": [
     "node_modules",
     "babel.config.js",
