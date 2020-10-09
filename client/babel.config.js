@@ -9,5 +9,10 @@ module.exports = function (api) {
     // ],
     presets: ["babel-preset-expo"],
     sourceMaps: true,
+    env: {
+      production: {
+        plugins: ["react-native-paper/babel"],
+      },
+    },
   };
 };

@@ -1,50 +1,50 @@
 /* eslint-disable react/jsx-curly-newline */
-/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-fragments */
-import React, { useEffect, useState, Fragment } from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import axios from "axios";
-import BASE_URL from "../../config/index";
-import FilledButton from "../../base/FilledButton/FilledButton";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import SectionCard from "../../base/SectionCard/SectionCard";
+import IconButton from "../../base/IconButton/IconButton";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    justifyContent: "center",
     paddingTop: 80,
     padding: 16,
     backgroundColor: "#fff",
   },
 });
-const QuizLevelsScreen = () => {
-  // eslint-disable-next-line no-unused-vars
-  const navigation = useNavigation();
-  const route = useRoute();
-  // const { name: topic } = route.params;
-  const [levels, setLevels] = useState([]);
 
-  useEffect(async () => {
-    await axios.get(`${BASE_URL}level`).then((res) => {
-      setLevels(res.data);
-    });
-  }, []);
+const QuizListScreen: React.FC<null> = (): JSX.Element => {
+  const navigation = useNavigation();
+  const quizzes = ["Example", "Practice", "Test", "Tutorial"];
 
   return (
-    <Fragment>
-      <View style={styles.container}>
-        <Text>Level</Text>
-      </View>
-      {levels.map((level) => (
-        <FilledButton
-          title={level}
-          handlePress={() =>
-            navigation.push("QuizList", { name: `level ${level}` })
-          }
+    <View style={styles.container}>
+      {quizzes.map((quiz) => (
+        <SectionCard
+          title={quiz}
+          subtitle={" "}
+          right={() => (
+            <IconButton
+              name="arrow-forward"
+              handlePress={() => {
+                navigation.navigate("QuizLevels", { name: quiz });
+              }}
+            />
+          )}
+          elevation={5}
+          paragraph={" "}
+          uri={`../../../assets/${quiz}.jpg`}
+          onPress={() => {
+            navigation.navigate("QuizLevels", { name: quiz });
+          }}
         />
       ))}
-    </Fragment>
+    </View>
   );
 };
 
-export default QuizLevelsScreen;
+export default QuizListScreen;

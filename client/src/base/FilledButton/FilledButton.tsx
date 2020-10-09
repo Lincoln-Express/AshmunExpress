@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 });
 
 interface FilledButtonProps {
-  title: string;
+  title: any;
   handlePress: () => any;
 }
 

@@ -1,22 +1,23 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable camelcase */
 const mergeQuizData = (
-  data: Array<{ topic_name: string; section_name: string }>
-): Array<{}> => {
-  const result = [];
+  data: Array<{ topic_name: string; section_name: string }>,
+) => {
+  const result: [] = [];
 
   data.forEach((item) => {
-    let existing = result.filter((val) => {
-      return (val.topic_name = item.topic_name);
+    const existing = result.filter((val) => {
+      return val.topic_name === item.topic_name;
     });
 
     if (existing.length) {
-      let index = result.indexOf(existing[0]);
+      const index = result.indexOf(existing[0]);
       result[index].section_name = result[index].section_name.concat(
-        item.section_name
+        item.section_name,
       );
     } else {
-      if (typeof item.section_name == 'string') {
-        item.section_name = [item.section_name] as any;
+      if (typeof item.section_name === "string") {
+        item.section_name = [item.section_name];
       }
       result.push(item);
     }

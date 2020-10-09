@@ -9,13 +9,13 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { position: "absolute", top: 50, right: 20 },
 });
 
-interface IconButtonProps {
+export interface IconButtonProps {
   name: string;
   handlePress: () => any;
-  style: any;
+  style?: any;
   size?: number;
 }
 

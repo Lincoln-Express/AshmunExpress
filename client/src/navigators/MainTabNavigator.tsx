@@ -15,10 +15,6 @@ import QuizPageScreen from "../screens/quiz/QuizPageScreen";
 import QuizLevelsScreen from "../screens/quiz/QuizLevelsScreen";
 import QuizDescriptionScreen from "../screens/quiz/QuizDescriptionScreen";
 import QuizResultsScreen from "../screens/quiz/QuizResultsScreen";
-import ExampleScreen from "../screens/quiz/ExampleScreen";
-import TutorialScreen from "../screens/quiz/TutorialScreen";
-import TestScreen from "../screens/quiz/TestScreen";
-import PracticeScreen from "../screens/quiz/PracticeScreen";
 
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -41,7 +37,11 @@ const ProfileStackScreen = () => (
 
 const QuizStackScreen = () => (
   <QuizStack.Navigator>
-    <QuizStack.Screen name="Quiz" component={QuizBasicScreen} />
+    <QuizStack.Screen
+      name="Quiz"
+      component={QuizBasicScreen}
+      options={{ title: "Topics" }}
+    />
     <QuizStack.Screen
       name="QuizLevels"
       component={QuizLevelsScreen}
@@ -52,10 +52,6 @@ const QuizStackScreen = () => (
       component={QuizPageScreen}
       options={{ title: "Quiz List" }}
     />
-    <QuizStack.Screen name="Example" component={ExampleScreen} />
-    <QuizStack.Screen name="Test" component={TestScreen} />
-    <QuizStack.Screen name="Practice" component={PracticeScreen} />
-    <QuizStack.Screen name="Tutorial" component={TutorialScreen} />
     <QuizStack.Screen
       name="QuizDescription"
       component={QuizDescriptionScreen}
@@ -65,6 +61,13 @@ const QuizStackScreen = () => (
       name="QuizResult"
       component={QuizResultsScreen}
       options={{ title: "Quiz Results" }}
+    />
+    <QuizStack.Screen
+      name="QuizPage"
+      component={QuizPageScreen}
+      options={({ route }) => ({
+        title: `${route.params.quizType}: Level ${route.params.levelNum}`,
+      })}
     />
   </QuizStack.Navigator>
 );
