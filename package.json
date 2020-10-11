@@ -1,6 +1,0 @@
-{
-  "devDependencies": {
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-import-resolver-typescript": "^2.3.0"
-  }
-}
