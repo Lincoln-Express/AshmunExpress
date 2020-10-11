@@ -9,16 +9,18 @@
 import React, { Component, ErrorInfo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import RNRestart from "react-native-restart";
-import SecureStore from "expo-secure-store";
+import * as SecureStore from "expo-secure-store";
 import FilledButton from "../FilledButton/FilledButton";
 import IconButton from "../IconButton/IconButton";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   errorHeaderStyle: {
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     color: "#273A7F",
     fontSize: 32,
@@ -26,6 +28,7 @@ const styles = StyleSheet.create({
   errorMessageStyle: {
     fontWeight: "400",
     marginVertical: 10,
+    color: "#273A7F",
   },
 });
 
@@ -48,9 +51,13 @@ class ErrorBoundary extends Component {
     await SecureStore.deleteItemAsync("user");
   };
 
-  public handleError = async () => {
-    await this.clearUserSettings();
+  // handleError =  () => {
+  //   await this.clearUserSettings();
 
+  //   RNRestart.Restart();
+  // };
+
+  handleError = () => {
     RNRestart.Restart();
   };
 
