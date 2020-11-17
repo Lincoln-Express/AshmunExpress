@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: "center",
     padding: 8,
-    backgroundColor: "#fff",
   },
   item: {
     marginVertical: 10,
@@ -34,7 +33,7 @@ const QuizListScreen: React.FC<null> = (): JSX.Element => {
           <CustomCard
             title={quiz}
             subtitle={" "}
-            key={`${quiz}`}
+            key={`${quiz}${Math.random()}`}
             right={() => (
               <IconButton
                 name="arrow-forward"

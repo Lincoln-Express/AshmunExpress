@@ -35,7 +35,12 @@ const CustomCard: React.FC<CustomCardProps> = (props: CustomCardProps) => {
   } = props;
 
   return (
-    <Card elevation={elevation} onPress={onPress} style={styles.container}>
+    <Card
+      elevation={elevation}
+      onPress={onPress}
+      style={styles.container}
+      testID={key}
+    >
       <Card.Cover source={require("../../../assets/random.jpg")} />
       <Card.Title title={title} subtitle={subtitle} right={right} />
       <Card.Content>
