@@ -12,6 +12,7 @@ import ProfileScreen from "../screens/profile/ProfileScreen";
 import SettingsScreen from "../screens/settings/SettingsScreen";
 import QuizBasicScreen from "../screens/quiz/QuizBasicScreen";
 import QuizPageScreen from "../screens/quiz/QuizPageScreen";
+import QuizListScreen from "../screens/quiz/QuizListScreen";
 import QuizLevelsScreen from "../screens/quiz/QuizLevelsScreen";
 import QuizDescriptionScreen from "../screens/quiz/QuizDescriptionScreen";
 import QuizResultsScreen from "../screens/quiz/QuizResultsScreen";
@@ -40,17 +41,24 @@ const QuizStackScreen = () => (
     <QuizStack.Screen
       name="Quiz"
       component={QuizBasicScreen}
-      options={{ title: "Topics" }}
+      options={{
+        title: "Topics",
+        headerTitleAlign: "center",
+      }}
     />
     <QuizStack.Screen
       name="QuizLevels"
       component={QuizLevelsScreen}
-      options={{ title: "Quiz Levels" }}
+      options={{
+        title: "Quiz Levels",
+      }}
     />
     <QuizStack.Screen
       name="QuizList"
-      component={QuizPageScreen}
-      options={{ title: "Quiz List" }}
+      component={QuizListScreen}
+      options={({ route }) => ({
+        title: `${route.params.name}`,
+      })}
     />
     <QuizStack.Screen
       name="QuizDescription"

@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 });
-const SettingsScreen = (): JSX.Element => {
+const SettingsScreen = () => {
   // eslint-disable-next-line no-unused-vars
   // const navigation = useNavigation();
 

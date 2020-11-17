@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 
 interface TextButtonProps {
   title: string;
-  handlePress: () => any;
+  handlePress: () => void;
 }
 const TextButton: React.FC<TextButtonProps> = (props: TextButtonProps) => {
   const { title, handlePress } = props;

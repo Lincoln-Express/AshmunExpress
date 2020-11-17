@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const ProfileScreen = (): JSX.Element => {
+const ProfileScreen: React.FC<null> = () => {
   // eslint-disable-next-line no-unused-vars
   // const navigation = useNavigation();
 

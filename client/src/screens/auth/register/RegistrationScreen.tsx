@@ -22,11 +22,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   headerStyle: { paddingTop: 170 },
-  iconButtonStyle: {
-    position: "absolute",
-    top: 50,
-    right: 20,
-  },
   imageStyle: {
     position: "absolute",
     top: 0,
@@ -37,7 +32,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const RegistrationScreen = (): JSX.Element => {
+const RegistrationScreen: React.FC<null> = () => {
   const navigation = useNavigation();
   const { register } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);

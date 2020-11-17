@@ -1,84 +1,76 @@
+/* eslint-disable global-require */
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
 import { SectionList, View, StyleSheet, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import useSWR from "swr";
 import Loading from "../../base/Loading/Loading";
-import fetcher from "../../utils/fetcher/fetcher";
+import useFetch from "../../hooks/useFetch/useFetch";
 import BASE_URL from "../../config/index";
-import mergeQuizData from "../../utils/mergeQuizData/mergeQuizData";
-import SectionCard from "../../base/SectionCard/SectionCard";
+import CustomCard from "../../base/CustomCard/CustomCard";
 import IconButton from "../../base/IconButton/IconButton";
-
-const description = [
-  {
-    name: "Monohybrid",
-    des: "stuff",
-  },
-  {
-    name: "Dihybrid",
-    des: "another One",
-  },
-  {
-    name: "Probability",
-    des: "again",
-  },
-];
+import { miniDescription } from "../../utils/quizDescription/quizDescription";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: "center",
-    paddingTop: 80,
-    padding: 16,
-    backgroundColor: "#fff",
+    flexGrow: 1,
     justifyContent: "center",
+    padding: 8,
+    backgroundColor: "#fff",
   },
   header: {
     fontSize: 24,
-    backgroundColor: "#fff",
+    paddingVertical: 5,
+    marginLeft: 2,
+  },
+  item: {
+    marginVertical: 10,
+    padding: 10,
+  },
+  iconStyle: {
+    marginRight: 15,
+    marginBottom: 15,
   },
 });
 
-const QuizScreen: React.FC<null> = (): JSX.Element => {
+const QuizScreen: React.FC<null> = () => {
   const navigation = useNavigation();
-  const { data, error } = useSWR(`${BASE_URL}/topics`, fetcher);
-  const result = mergeQuizData(data);
+  const { isError, isLoading, data } = useFetch(`${BASE_URL}/topics`);
 
   return (
     <View style={styles.container}>
-      {error && <View>{error.info}</View>}
-      {!data && <Loading loading />}
-      {data && (
-        <SectionList
-          sections={result}
-          keyExtractor={({ item, index }) => item + index}
-          renderItem={(item) => (
-            <SectionCard
-              title={item.item}
+      {isError && <View>{isError}</View>}
+      {isLoading && <Loading loading={isLoading} />}
+      <SectionList
+        sections={data}
+        keyExtractor={(item, index) => item + index}
+        renderItem={({ item }) => (
+          <View style={styles.item}>
+            <CustomCard
+              title={item}
               subtitle={" "}
               right={() => (
                 <IconButton
                   name="arrow-forward"
                   handlePress={() => {
-                    navigation.navigate("QuizList", { name: item.item });
+                    navigation.navigate("QuizList", { name: item });
                   }}
+                  style={styles.iconStyle}
                 />
               )}
               elevation={5}
-              paragraph={description.find((des) => des.name === item.item)?.des}
-              uri={`../../../assets/${item}.jpg`}
+              paragraph={miniDescription.find((des) => des.name === item)?.des}
+              uri=""
               onPress={() => {
-                navigation.navigate("QuizList", { name: item.item });
+                navigation.navigate("QuizList", { name: item });
               }}
             />
-          )}
-          renderSectionHeader={({ section: { section_name } }) => (
-            <Text style={styles.header}>{section_name}</Text>
-          )}
-        />
-      )}
+          </View>
+        )}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text style={styles.header}>{title}</Text>
+        )}
+      />
     </View>
   );
 };

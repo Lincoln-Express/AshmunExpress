@@ -26,6 +26,7 @@
   },
   "plugins": ["react", "react-native", "@typescript-eslint"],
   "rules": {
+    "consistent-return":"off",
     "quotes": ["error", "double"],
     "jsx-quotes": ["error", "prefer-double"],
     "react-native/no-unused-styles": 2,

@@ -12,11 +12,11 @@ const styles = StyleSheet.create({
 
 interface HeaderProps {
   children: string;
-  style?: any;
+  style?: Record<string, unknown>;
 }
 const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
   const { children, style } = props;
-  return <Text style={[styles.container, style]}>{children}</Text>;
+  return <Text style={style || styles.container}>{children}</Text>;
 };
 
 export default Header;

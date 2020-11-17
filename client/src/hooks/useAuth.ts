@@ -3,19 +3,10 @@ import { useReducer, useEffect, useMemo } from "react";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import BASE_URL from "../config/index";
-import reducer, { State } from "../utils/reducer/reducer";
+import reducer, { State } from "./useAuthReducer/useAuthReducer";
 
 type Auth = {
-  auth: {
-    login: (email: string, password: string) => Promise<void>;
-    logout: () => void;
-    register: (
-      firstName: string,
-      lastName: string,
-      email: string,
-      password: string,
-    ) => Promise<void>;
-  };
+  auth: unknown;
   state: State;
 };
 
@@ -25,7 +16,7 @@ const useAuth = (): Auth => {
     isLoading: true,
   });
 
-  const auth = useMemo(
+  const auth =
     () => ({
       login: async (email: string, password: string) => {
         try {
@@ -76,7 +67,7 @@ const useAuth = (): Auth => {
               email,
               password,
             })
-            .then((res: any) => {
+            .then((res: unknown) => {
               const user = `${firstName}-${lastName}-${email}`;
 
               dispatch({ type: "SET_USER", payload: user });
@@ -94,9 +85,7 @@ const useAuth = (): Auth => {
           }
         }
       },
-    }), // eslint-disable-next-line comma-dangle
-    [],
-  );
+    });
 
   useEffect(() => {
     let user: Promise<string | null> | null | string;

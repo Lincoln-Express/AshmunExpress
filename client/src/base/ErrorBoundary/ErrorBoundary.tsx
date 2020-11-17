@@ -70,7 +70,6 @@ class ErrorBoundary extends Component {
               name="information-circle-outline"
               size={60}
               handlePress={() => {}}
-              style={{}}
             />
           </Text>
           <Text style={styles.errorHeaderStyle}>

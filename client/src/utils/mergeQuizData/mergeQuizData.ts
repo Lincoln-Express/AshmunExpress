@@ -1,10 +1,10 @@
-/* eslint-disable no-param-reassign */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable camelcase */
+/* eslint-disable no-param-reassign */
 const mergeQuizData = (
-  data: Array<{ topic_name: string; section_name: string }>,
+  data: Array<{ topic_name: string; section_name: string; }>,
 ) => {
-  const result: [] = [];
-
+  const result: Array<any> = [];
   data.forEach((item) => {
     const existing = result.filter((val) => {
       return val.topic_name === item.topic_name;
@@ -22,6 +22,7 @@ const mergeQuizData = (
       result.push(item);
     }
   });
+  
   return result;
 };
 

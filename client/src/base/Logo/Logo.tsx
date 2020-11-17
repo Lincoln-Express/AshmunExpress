@@ -17,7 +17,7 @@ const Logo: React.FC = () => {
     <View style={styles.container}>
       <Image
         style={{ width: 330, height: 190 }}
-        source={require("../../../assets/LULogo.png")}
+        source={require("../../../assets/lincolnLogo.png")}
       />
     </View>
   );

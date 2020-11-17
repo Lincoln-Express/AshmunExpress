@@ -1,47 +1,46 @@
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-fragments */
-import React, { useEffect, useState, Fragment } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import axios from "axios";
-import BASE_URL from "../../config/index";
-import FilledButton from "../../base/FilledButton/FilledButton";
+import { Paragraph } from "react-native-paper";
+import TextButton from "../../base/TextButton/TextButton";
+import CustomDialog from "../../base/CustomDialog/CustomDialog";
+import quizPageStyle from "../../utils/styles/quizPageStyle";
+import mainDescription from "../../utils/quizDescription/quizDescription";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    paddingTop: 80,
-    padding: 16,
-    backgroundColor: "#fff",
-  },
-});
-const QuizDescriptionScreen = (): JSX.Element => {
-  // eslint-disable-next-line no-unused-vars
+const QuizDescriptionScreen: React.FC<null> = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  // const { name: level } = route.params;
-  const [quizList, setQuizList] = useState([]);
-
-  useEffect(async () => {
-    await axios.get(`${BASE_URL}quizList`).then((res) => {
-      setQuizList(res.data);
-    });
-  }, []);
+  const { quizType, num } = route.params;
 
   return (
-    <Fragment>
-      <View style={styles.container}>
-        <Text>Quizzes</Text>
-      </View>
-      {quizList.map((quiz) => (
-        <FilledButton
-          title={quiz}
-          handlePress={() => navigation.push("Quiz", { name: quiz })}
-        />
-      ))}
-    </Fragment>
+    <View style={quizPageStyle.container}>
+      <Paragraph>
+        {mainDescription.find((val) => val.name === quizType)?.des}
+      </Paragraph>
+      <CustomDialog
+        showDialogText="Start"
+        content="Are you ready?"
+        actionButtons={[
+          <>
+            <TextButton
+              title="No"
+              handlePress={() => {
+                navigation.navigate("QuizDescription", { quizType, num });
+              }}
+            />
+            <TextButton
+              title="Yes"
+              handlePress={() => {
+                navigation.navigate("QuizPage", { quizType, num });
+              }}
+            />
+          </>,
+        ]}
+      />
+    </View>
   );
 };
 

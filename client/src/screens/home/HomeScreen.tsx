@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 });
-const HomeScreen = (): JSX.Element => {
+const HomeScreen: React.FC<null> = () => {
   // eslint-disable-next-line no-unused-vars
   const navigation = useNavigation();
   const { user } = useContext(UserContext);

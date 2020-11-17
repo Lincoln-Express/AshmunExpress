@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const LoginScreen = (): JSX.Element => {
+const LoginScreen: React.FC<null> = () => {
   const navigation = useNavigation();
   const { login } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
