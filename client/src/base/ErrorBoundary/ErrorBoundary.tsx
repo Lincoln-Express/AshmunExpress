@@ -6,7 +6,7 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable react/state-in-constructor */
-import React, { Component, ErrorInfo } from "react";
+import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import RNRestart from "react-native-restart";
 import * as SecureStore from "expo-secure-store";
@@ -19,20 +19,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  errorHeaderStyle: {
+  errorHeader: {
     justifyContent: "flex-start",
     alignItems: "center",
     color: "#273A7F",
     fontSize: 32,
   },
-  errorMessageStyle: {
+  errorMessage: {
     fontWeight: "400",
     marginVertical: 10,
     color: "#273A7F",
   },
 });
 
-class ErrorBoundary extends Component {
+class ErrorBoundary extends React.Component {
   public state = {
     hasError: false,
   };
@@ -43,7 +43,7 @@ class ErrorBoundary extends Component {
     };
   }
 
-  public componentDidCatch(error: Error, info: ErrorInfo) {
+  public componentDidCatch(error: Error, info: React.ErrorInfo) {
     console.error("ErrorBoundary caught an error", error, info);
   }
 
@@ -72,11 +72,8 @@ class ErrorBoundary extends Component {
               handlePress={() => {}}
             />
           </Text>
-          <Text style={styles.errorHeaderStyle}>
-            {" "}
-            Oops, Something went wrong!{" "}
-          </Text>
-          <Text style={styles.errorMessageStyle}>
+          <Text style={styles.errorHeader}> Oops, Something went wrong! </Text>
+          <Text style={styles.errorMessage}>
             The app ran into a problem and could not continue. We apologize for
             any inconvenience this has caused! Press the button below to restart
             the app and log back in.

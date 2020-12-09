@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/jsx-fragments */
-import React, { useContext, useState, Fragment } from "react";
+import * as React from "react";
 import { StyleSheet, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "white",
   },
-  imageStyle: {
+  image: {
     position: "absolute",
     top: 0,
     left: 0,
@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
 
 const LoginScreen: React.FC<null> = () => {
   const navigation = useNavigation();
-  const { login } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
+  const { login } = React.useContext(AuthContext);
+  const [loading, setLoading] = React.useState(false);
   const validationSchema = yup.object().shape({
     email: yup.string().email().required().label("Your input"),
     password: yup
@@ -47,7 +47,7 @@ const LoginScreen: React.FC<null> = () => {
   });
 
   return (
-    <Fragment>
+    <>
       <KeyboardAwareScrollView
         resetScrollToCoords={{ x: 0, y: 0 }}
         contentContainerStyle={styles.container}
@@ -56,7 +56,7 @@ const LoginScreen: React.FC<null> = () => {
         <ImageBackground
           // eslint-disable-next-line global-require
           source={require("../../../../assets/background.jpg")}
-          style={styles.imageStyle}
+          style={styles.image}
         />
         <Logo />
         <Header>Welcome</Header>
@@ -74,7 +74,7 @@ const LoginScreen: React.FC<null> = () => {
           validationSchema={validationSchema}
         >
           {(formikProps) => (
-            <Fragment>
+            <>
               <InputField
                 label="Email"
                 formikProps={formikProps}
@@ -103,12 +103,12 @@ const LoginScreen: React.FC<null> = () => {
                   navigation.navigate("Registration");
                 }}
               />
-            </Fragment>
+            </>
           )}
         </Formik>
         <Loading loading={loading} />
       </KeyboardAwareScrollView>
-    </Fragment>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-one-expression-per-line */
-import React from "react";
+import * as React from "react";
 import { SectionList, View, StyleSheet, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Loading from "../../base/Loading/Loading";
@@ -9,7 +9,8 @@ import useFetch from "../../hooks/useFetch/useFetch";
 import BASE_URL from "../../config/index";
 import CustomCard from "../../base/CustomCard/CustomCard";
 import IconButton from "../../base/IconButton/IconButton";
-import { miniDescription } from "../../utils/quizDescription/quizDescription";
+import { quizTopicDescription } from "../../utils/quizDescription/quizDescription";
+import imageLinks from "../../utils/imageLinks/imageLinks";
 
 const styles = StyleSheet.create({
   container: {
@@ -27,12 +28,13 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     padding: 10,
   },
-  iconStyle: {
+  icon: {
     marginRight: 15,
     marginBottom: 15,
   },
 });
 
+// TODO: use Accordion (Third-party library)
 const QuizScreen: React.FC<null> = () => {
   const navigation = useNavigation();
   const { isError, isLoading, data } = useFetch(`${BASE_URL}/topics`);
@@ -48,19 +50,25 @@ const QuizScreen: React.FC<null> = () => {
           <View style={styles.item}>
             <CustomCard
               title={item}
-              subtitle={" "}
+              subtitle={""}
               right={() => (
                 <IconButton
                   name="arrow-forward"
                   handlePress={() => {
                     navigation.navigate("QuizList", { name: item });
                   }}
-                  style={styles.iconStyle}
+                  style={styles.icon}
                 />
               )}
-              elevation={5}
-              paragraph={miniDescription.find((des) => des.name === item)?.des}
-              uri=""
+              elevation={10}
+              paragraph={
+                quizTopicDescription.find((des) => des.name === item)
+                  ?.description
+              }
+              source={
+                imageLinks.find((imageLink) => imageLink.title === `${item}`)
+                  ?.imageLink
+              }
               onPress={() => {
                 navigation.navigate("QuizList", { name: item });
               }}

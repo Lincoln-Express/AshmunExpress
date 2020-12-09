@@ -2,8 +2,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
-import { FormikProps } from "formik/dist/types";
-import React from "react";
+import * as React from "react";
 import { View, Text, TextInput } from "react-native";
 
 interface InputFieldProps {

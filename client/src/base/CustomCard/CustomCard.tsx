@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable global-require */
 /* eslint-disable react/jsx-one-expression-per-line */
-import React from "react";
+import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Card, Paragraph } from "react-native-paper";
 
@@ -16,19 +16,20 @@ interface CustomCardProps {
   subtitle?: string;
   right: () => JSX.Element;
   paragraph?: string;
-  uri: string;
+  source: any;
   elevation?: number;
   onPress: () => void;
   key?: string;
 }
 
+// TODO: remove the key prop, make source prop optional, and add size prop, make it optional as well
 const CustomCard: React.FC<CustomCardProps> = (props: CustomCardProps) => {
   const {
     title,
     subtitle,
     right,
     paragraph,
-    uri,
+    source,
     elevation,
     onPress,
     key,
@@ -41,7 +42,7 @@ const CustomCard: React.FC<CustomCardProps> = (props: CustomCardProps) => {
       style={styles.container}
       testID={key}
     >
-      <Card.Cover source={require("../../../assets/random.jpg")} />
+      <Card.Cover source={source} />
       <Card.Title title={title} subtitle={subtitle} right={right} />
       <Card.Content>
         <Paragraph> {paragraph}</Paragraph>

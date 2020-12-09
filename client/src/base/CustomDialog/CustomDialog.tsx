@@ -1,24 +1,24 @@
-import React, { useState } from "react";
+import * as React from "react";
 import { View } from "react-native";
 import { Paragraph, Dialog, Portal } from "react-native-paper";
-import TextButton from "../TextButton/TextButton";
+import FilledButton from "../FilledButton/FilledButton";
 
 interface CustomDialogProps {
-  showDialogText: string;
+  dialogText: string;
   content: string;
   actionButtons: Array<JSX.Element>;
 }
 const CustomDialog: React.FC<CustomDialogProps> = (
   props: CustomDialogProps,
 ) => {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = React.useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
-  const { showDialogText, content, actionButtons } = props;
+  const { dialogText, content, actionButtons } = props;
 
   return (
     <View>
-      <TextButton title={showDialogText} handlePress={showDialog} />
+      <FilledButton title={dialogText} handlePress={showDialog} />
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>
           <Dialog.Content>

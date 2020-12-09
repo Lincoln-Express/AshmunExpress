@@ -1,31 +1,36 @@
-export const miniDescription = [
+export const quizTopicDescription = [
     {
       name: "Monohybrid",
-      des: "Quizzes on crosses between two organisms with different variations at one genetic chromosome of interest"
+      description: "Quizzes on crosses between two organisms with different variations at one genetic chromosome of interest"
     },
     {
       name: "Dihybrid",
-      des: "Quizzes on crosses between two different lines/genes that differ in two observed traits",
+      description: "Quizzes on crosses between two different lines/genes that differ in two observed traits",
     },
     {
       name: "Probability",
-      des: "Quizzes on the likelihood of something happening or being the case",
+      description: "Quizzes on the likelihood of something happening or being the case",
     },
   ];
 
-  const mainDescription = [
+  export const quizTypeDescription = [
     {
-      name: "Monohybrid",
-      des: "even more stuff",
+      name: "Test",
+      description: "This type of quiz is the graded quiz. you answer a set of questions and get points for your correct choices. you cannot go back after starting this quiz."
     },
-    {
-      name: "Dihybrid",
-      des: "stuff stuff stuff",
-    },
-    {
-      name: "Probability",
-      des: "there should be a lot of details here",
-    },
-  ];
 
-  export default mainDescription
+    {
+      name: "Example",
+      description: "This type of quiz is gives you more detailed reviews of the answers to each question, as well as keywords."
+    }, 
+
+    {
+      name: "Practice",
+      description: "This type of quiz is to help you understand the topics better by working on some questions without being penalized for choosing the wrong option."
+    }, 
+
+    {
+      name: "Tutorial",
+      description: "This type of quiz is to give you a better grasp of the topic by providing even more detailed answers to the questions in this quiz"
+    }
+  ]

@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {
   StyleSheet,
   TouchableOpacity,
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
   },
-  textStyle: {
+  text: {
     color: "#273A7F",
     fontSize: 14,
   },
@@ -30,11 +30,11 @@ const TextButton: React.FC<TextButtonProps> = (props: TextButtonProps) => {
   const { title, handlePress } = props;
   return Platform.OS === "ios" ? (
     <TouchableOpacity style={styles.container} onPress={handlePress}>
-      <Text style={styles.textStyle}>{title}</Text>
+      <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   ) : (
     <TouchableNativeFeedback style={styles.container} onPress={handlePress}>
-      <Text style={styles.textStyle}>{title}</Text>
+      <Text style={styles.text}>{title}</Text>
     </TouchableNativeFeedback>
   );
 };

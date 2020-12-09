@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {
   StyleSheet,
   TouchableHighlight,
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginVertical: 15,
   },
-  textStyle: {
+  text: {
     color: "#fff",
     fontSize: 16,
   },
@@ -48,12 +48,12 @@ const FilledButton: React.FC<FilledButtonProps> = (
 
   return Platform.OS === "ios" ? (
     <TouchableHighlight style={style || styles.container} onPress={handlePress}>
-      <Text style={styles.textStyle}>{titleValue}</Text>
+      <Text style={styles.text}>{titleValue}</Text>
     </TouchableHighlight>
   ) : (
     <TouchableNativeFeedback onPress={handlePress}>
       <View style={style || styles.container}>
-        <Text style={styles.textStyle}>{titleValue}</Text>
+        <Text style={styles.text}>{titleValue}</Text>
       </View>
     </TouchableNativeFeedback>
   );

@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 /* eslint-disable react-native/no-inline-styles */
-import React from "react";
+import * as React from "react";
 import { StyleSheet, View, Image } from "react-native";
 
 const styles = StyleSheet.create({

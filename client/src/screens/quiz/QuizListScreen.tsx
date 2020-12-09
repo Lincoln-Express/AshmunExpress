@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable react/jsx-fragments */
-import React from "react";
+import * as React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import CustomCard from "../../base/CustomCard/CustomCard";
 import IconButton from "../../base/IconButton/IconButton";
 
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     padding: 10,
   },
-  iconStyle: {
+  icon: {
     marginRight: 15,
     marginBottom: 15,
   },
@@ -25,29 +25,33 @@ const styles = StyleSheet.create({
 const QuizListScreen: React.FC<null> = (): JSX.Element => {
   const navigation = useNavigation();
   const quizzes = ["Example", "Practice", "Test", "Tutorial"];
+  const route = useRoute();
+  const { item: quizTopic } = route.params?.name;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {quizzes.map((quiz) => (
-        <View style={styles.item}>
+      {quizzes.map((quizType) => (
+        <View style={styles.item} key={quizType}>
           <CustomCard
-            title={quiz}
+            title={quizType}
             subtitle={" "}
-            key={`${quiz}${Math.random()}`}
             right={() => (
               <IconButton
                 name="arrow-forward"
                 handlePress={() => {
-                  navigation.navigate("QuizLevels", { name: quiz });
+                  navigation.navigate("QuizLevels", {
+                    name: quizType,
+                    quizTopic,
+                  });
                 }}
-                style={styles.iconStyle}
+                style={styles.icon}
               />
             )}
             elevation={5}
             paragraph={" "}
             uri=""
             onPress={() => {
-              navigation.navigate("QuizLevels", { name: quiz });
+              navigation.navigate("QuizLevels", { name: quizType, quizTopic });
             }}
           />
         </View>

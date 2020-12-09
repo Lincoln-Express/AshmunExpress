@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { useReducer, useEffect } from 'react';
-import axios from 'axios';
+import * as React from "react";
+import axios from "axios";
 import mergeQuizData from "../../utils/mergeQuizData/mergeQuizData";
 import transformData from "../../utils/transformData/transformData";
 
@@ -11,11 +11,11 @@ type State = {
 };
 
 type Action =
-  | { type: "FETCH_INIT"; }
-  | { type: "FETCH_SUCCESS"; payload: []; }
+  | { type: "FETCH_INIT" }
+  | { type: "FETCH_SUCCESS"; payload: [] }
   | {
-    type: "FETCH_FAILURE";
-  };
+      type: "FETCH_FAILURE";
+    };
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -44,27 +44,29 @@ const reducer = (state: State, action: Action): State => {
 };
 
 const useFetch = (url: string) => {
-  const [state, dispatch] = useReducer(reducer, {
+  const [state, dispatch] = React.useReducer(reducer, {
     isLoading: false,
     isError: false,
     data: [],
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchData = async () => {
-      dispatch({ type: 'FETCH_INIT' });
+      dispatch({ type: "FETCH_INIT" });
 
       try {
         const data = await axios.get(url).then((res) => res.data);
-        dispatch({ type: 'FETCH_SUCCESS', payload: transformData(mergeQuizData(data)) });
+        dispatch({
+          type: "FETCH_SUCCESS",
+          payload: transformData(mergeQuizData(data)),
+        });
       } catch (error) {
-        dispatch({ type: 'FETCH_FAILURE' });
+        dispatch({ type: "FETCH_FAILURE" });
       }
     };
 
     fetchData();
   }, []);
-
 
   return state;
 };

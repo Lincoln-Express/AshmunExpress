@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { View, StyleSheet, ScrollView } from "react-native";
 import CustomCard from "../../base/CustomCard/CustomCard";
@@ -9,11 +9,11 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: "center",
   },
-  cardStyle: {
+  item: {
     marginVertical: 10,
     padding: 10,
   },
-  iconStyle: {
+  icon: {
     marginRight: 15,
     marginBottom: 15,
   },
@@ -22,34 +22,35 @@ const QuizLevelsScreen: React.FC<null> = () => {
   const levels = ["one", "two", "three", "four"];
   const navigation = useNavigation();
   const route = useRoute();
-  const quizType = route.params?.name;
+  const { quizTopic, quizType } = route.params;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {levels.map((levelNum) => (
-        <View style={styles.cardStyle}>
+      {levels.map((level) => (
+        <View style={styles.item} key={level}>
           <CustomCard
-            title={`level ${levelNum}`}
-            key={`level ${levelNum}${Math.random()}`}
+            title={`level ${level}`}
             subtitle={" "}
             right={() => (
               <IconButton
                 name="arrow-forward"
                 handlePress={() => {
                   navigation.navigate("QuizDescription", {
-                    num: levelNum,
+                    level,
+                    quizTopic,
                     quizType,
                   });
                 }}
-                style={styles.iconStyle}
+                style={styles.icon}
               />
             )}
-            elevation={5}
+            elevation={10}
             paragraph={" "}
             uri=""
             onPress={() => {
               navigation.navigate("QuizDescription", {
-                num: levelNum,
+                level,
+                quizTopic,
                 quizType,
               });
             }}

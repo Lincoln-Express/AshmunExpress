@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-param-reassign */
 const mergeQuizData = (
-  data: Array<{ topic_name: string; section_name: string; }>,
+  data: Array<{ topic_name: string; section_name: string }>,
 ) => {
   const result: Array<any> = [];
   data.forEach((item) => {
@@ -22,7 +22,7 @@ const mergeQuizData = (
       result.push(item);
     }
   });
-  
+
   return result;
 };
 

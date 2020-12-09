@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import * as React from "react";
 import { Modal, Portal, Divider, Paragraph, Title } from "react-native-paper";
 import FilledButton from "../FilledButton/FilledButton";
 
@@ -9,7 +9,7 @@ interface CustomModalProps {
 
 const CustomModal: React.FC<CustomModalProps> = (props: CustomModalProps) => {
   const { content, title } = props;
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = React.useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
