@@ -47,12 +47,15 @@ const FilledButton: React.FC<FilledButtonProps> = (
   const titleValue = Platform.OS === "ios" ? title : title.toUpperCase();
 
   return Platform.OS === "ios" ? (
-    <TouchableHighlight style={style || styles.container} onPress={handlePress}>
+    <TouchableHighlight
+      style={{ ...styles.container, ...style }}
+      onPress={handlePress}
+    >
       <Text style={styles.text}>{titleValue}</Text>
     </TouchableHighlight>
   ) : (
     <TouchableNativeFeedback onPress={handlePress}>
-      <View style={style || styles.container}>
+      <View style={{ ...styles.container, ...style }}>
         <Text style={styles.text}>{titleValue}</Text>
       </View>
     </TouchableNativeFeedback>
@@ -60,6 +63,6 @@ const FilledButton: React.FC<FilledButtonProps> = (
 };
 
 FilledButton.defaultProps = {
-  style: undefined,
+  style: {},
 };
 export default FilledButton;

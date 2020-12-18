@@ -1,86 +1,69 @@
-/* eslint-disable global-require */
-/* eslint-disable camelcase */
-/* eslint-disable react/jsx-one-expression-per-line */
 import * as React from "react";
-import { SectionList, View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Loading from "../../base/Loading/Loading";
+import CustomList from "../../base/CustomList/CustomList";
 import useFetch from "../../hooks/useFetch/useFetch";
-import BASE_URL from "../../config/index";
-import CustomCard from "../../base/CustomCard/CustomCard";
+import mergeQuizData from "../../utils/mergeQuizData/mergeQuizData";
+import transformData from "../../utils/transformData/transformData";
 import IconButton from "../../base/IconButton/IconButton";
-import { quizTopicDescription } from "../../utils/quizDescription/quizDescription";
-import imageLinks from "../../utils/imageLinks/imageLinks";
+import CustomCard from "../../base/CustomCard/CustomCard";
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     padding: 8,
     backgroundColor: "#fff",
   },
-  header: {
-    fontSize: 24,
-    paddingVertical: 5,
-    marginLeft: 2,
-  },
-  item: {
-    marginVertical: 10,
-    padding: 10,
-  },
   icon: {
-    marginRight: 15,
-    marginBottom: 15,
+    right: 0,
+    top: 3,
+    left: 5,
+  },
+  title: {
+    flexGrow: 1,
+    alignItems: "center",
   },
 });
 
-// TODO: use Accordion (Third-party library)
-const QuizScreen: React.FC<null> = () => {
+const QuizBasicScreen: React.FC<null> = () => {
   const navigation = useNavigation();
-  const { isError, isLoading, data } = useFetch(`${BASE_URL}/topics`);
+  const keyword = "topics";
+  const { isError, isLoading, data } = useFetch(keyword);
+  const mergedQuizData = transformData(mergeQuizData(data));
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       {isError && <View>{isError}</View>}
       {isLoading && <Loading loading={isLoading} />}
-      <SectionList
-        sections={data}
-        keyExtractor={(item, index) => item + index}
-        renderItem={({ item }) => (
-          <View style={styles.item}>
-            <CustomCard
-              title={item}
-              subtitle={""}
-              right={() => (
-                <IconButton
-                  name="arrow-forward"
-                  handlePress={() => {
-                    navigation.navigate("QuizList", { name: item });
-                  }}
-                  style={styles.icon}
-                />
-              )}
-              elevation={10}
-              paragraph={
-                quizTopicDescription.find((des) => des.name === item)
-                  ?.description
-              }
-              source={
-                imageLinks.find((imageLink) => imageLink.title === `${item}`)
-                  ?.imageLink
-              }
-              onPress={() => {
-                navigation.navigate("QuizList", { name: item });
-              }}
-            />
-          </View>
-        )}
-        renderSectionHeader={({ section: { title } }) => (
-          <Text style={styles.header}>{title}</Text>
-        )}
-      />
-    </View>
+      {mergedQuizData !== undefined
+        ? mergedQuizData.map((topic) => (
+            <CustomList title={topic.title} key={topic.title}>
+              {topic.data.map((section) => {
+                return (
+                  <CustomCard
+                    key={section}
+                    title={section}
+                    titleStyle={styles.title}
+                    elevation={5}
+                    onPress={() => {
+                      navigation.navigate("QuizList", {
+                        name: topic.title,
+                        section,
+                      });
+                    }}
+                    left={() => (
+                      <IconButton name="hourglass" style={styles.icon} />
+                    )}
+                  />
+                );
+              })}
+            </CustomList>
+          ))
+        : null}
+    </ScrollView>
   );
 };
 
-export default QuizScreen;
+export default QuizBasicScreen;

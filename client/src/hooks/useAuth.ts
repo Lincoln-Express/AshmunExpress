@@ -1,12 +1,11 @@
-/* eslint-disable no-console */
 import * as React from "react";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import BASE_URL from "../config/index";
 import reducer, { State } from "./useAuthReducer/useAuthReducer";
 
-type Auth = {
-  auth: unknown;
+export type Auth = {
+  auth: any;
   state: State;
 };
 
@@ -45,7 +44,6 @@ const useAuth = (): Auth => {
       }
     },
     logout: () => {
-      // eslint-disable-next-line no-undef
       const user = SecureStore.deleteItemAsync("user");
       if (user) {
         dispatch({ type: "DELETE_USER" });
@@ -66,7 +64,7 @@ const useAuth = (): Auth => {
             email,
             password,
           })
-          .then((res: unknown) => {
+          .then((res) => {
             const user = `${firstName}-${lastName}-${email}`;
 
             dispatch({ type: "SET_USER", payload: user });

@@ -1,6 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable react/jsx-fragments */
 import * as React from "react";
 import { StyleSheet, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";

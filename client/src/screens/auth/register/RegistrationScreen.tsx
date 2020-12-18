@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-fragments */
 import * as React from "react";
 import { StyleSheet, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -73,10 +72,9 @@ const RegistrationScreen: React.FC<null> = () => {
       />
       <Logo />
       <IconButton
-        style={styles.iconButtonStyle}
         name="close-circle-outline"
         handlePress={() => {
-          navigation.pop();
+          navigation.goBack();
         }}
       />
       <Header style={styles.header}>Register Here</Header>
@@ -98,7 +96,7 @@ const RegistrationScreen: React.FC<null> = () => {
               // eslint-disable-next-line comma-dangle
               values.password,
             );
-            navigation.pop();
+            navigation.goBack();
           } catch (e) {
             setLoading(false);
           }

@@ -1,51 +1,56 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable global-require */
-/* eslint-disable react/jsx-one-expression-per-line */
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Card, Paragraph } from "react-native-paper";
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 5,
+    flexGrow: 1,
+    borderRadius: 10,
+    marginVertical: 10,
+    height: 72,
   },
 });
 
 interface CustomCardProps {
   title: string;
+  titleStyle?: Record<string, unknown>;
   subtitle?: string;
-  right: () => JSX.Element;
+  left?: () => JSX.Element;
+  right?: () => JSX.Element;
   paragraph?: string;
-  source: any;
   elevation?: number;
   onPress: () => void;
-  key?: string;
+  style?: Record<string, unknown>;
 }
 
-// TODO: remove the key prop, make source prop optional, and add size prop, make it optional as well
 const CustomCard: React.FC<CustomCardProps> = (props: CustomCardProps) => {
   const {
     title,
     subtitle,
     right,
     paragraph,
-    source,
     elevation,
     onPress,
-    key,
+    left,
+    style,
+    titleStyle,
   } = props;
 
   return (
     <Card
       elevation={elevation}
       onPress={onPress}
-      style={styles.container}
-      testID={key}
+      style={{ ...styles.container, ...style }}
     >
-      <Card.Cover source={source} />
-      <Card.Title title={title} subtitle={subtitle} right={right} />
+      <Card.Title
+        title={title}
+        subtitle={subtitle}
+        right={right}
+        left={left}
+        style={titleStyle}
+      />
       <Card.Content>
-        <Paragraph> {paragraph}</Paragraph>
+        <Paragraph>{paragraph}</Paragraph>
       </Card.Content>
     </Card>
   );
@@ -55,7 +60,10 @@ CustomCard.defaultProps = {
   subtitle: "",
   elevation: 0,
   paragraph: "",
-  key: "",
+  right: undefined,
+  left: undefined,
+  style: {},
+  titleStyle: {},
 };
 
 export default CustomCard;

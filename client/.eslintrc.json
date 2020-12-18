@@ -26,7 +26,8 @@
   },
   "plugins": ["react", "react-native", "@typescript-eslint"],
   "rules": {
-    "consistent-return":"off",
+    "consistent-return": "off",
+    "no-console": "off",
     "quotes": ["error", "double"],
     "jsx-quotes": ["error", "prefer-double"],
     "react-native/no-unused-styles": 2,
@@ -34,6 +35,7 @@
     "react-native/no-inline-styles": 2,
     "react-native/no-color-literals": 0,
     "react-native/no-raw-text": 0,
+    "global-require": "off",
     "linebreak-style": ["error", "windows"],
     "no-use-before-define": [0],
     "import/extensions": [

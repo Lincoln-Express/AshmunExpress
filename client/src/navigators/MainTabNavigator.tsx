@@ -1,6 +1,3 @@
-/* eslint-disable import/no-named-as-default-member */
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable react/prop-types */
 import "react-native-gesture-handler";
 import * as React from "react";
 import { Platform } from "react-native";
@@ -13,8 +10,6 @@ import SettingsScreen from "../screens/settings/SettingsScreen";
 import QuizBasicScreen from "../screens/quiz/QuizBasicScreen";
 import QuizPageScreen from "../screens/quiz/QuizPageScreen";
 import QuizListScreen from "../screens/quiz/QuizListScreen";
-import QuizLevelsScreen from "../screens/quiz/QuizLevelsScreen";
-import QuizDescriptionScreen from "../screens/quiz/QuizDescriptionScreen";
 import QuizResultsScreen from "../screens/quiz/QuizResultsScreen";
 
 const HomeStack = createStackNavigator();
@@ -47,23 +42,11 @@ const QuizStackScreen = () => (
       }}
     />
     <QuizStack.Screen
-      name="QuizLevels"
-      component={QuizLevelsScreen}
-      options={{
-        title: "Quiz Levels",
-      }}
-    />
-    <QuizStack.Screen
       name="QuizList"
       component={QuizListScreen}
       options={({ route }) => ({
         title: `${route.params.name}`,
       })}
-    />
-    <QuizStack.Screen
-      name="QuizDescription"
-      component={QuizDescriptionScreen}
-      options={{ title: "Quiz Description" }}
     />
     <QuizStack.Screen
       name="QuizResult"

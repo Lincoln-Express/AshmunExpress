@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 export type State = {
   user: Promise<string | null> | string | undefined | null;
   isLoading: boolean;

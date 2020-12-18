@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 });
-const QuizListScreen = (): JSX.Element => {
+const QuizResultsScreen = (): JSX.Element => {
   // eslint-disable-next-line no-unused-vars
   const navigation = useNavigation();
   const route = useRoute();
@@ -45,4 +45,4 @@ const QuizListScreen = (): JSX.Element => {
   );
 };
 
-export default QuizListScreen;
+export default QuizResultsScreen;
