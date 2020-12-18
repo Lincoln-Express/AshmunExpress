@@ -1,5 +1,3 @@
-/* eslint-disable import/no-named-as-default */
-/* eslint-disable import/no-named-as-default-member */
 import * as React from "react";
 import "react-native-gesture-handler";
 import { StatusBar } from "react-native";

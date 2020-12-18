@@ -1,7 +1,6 @@
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import RNRestart from "react-native-restart";
-import * as SecureStore from "expo-secure-store";
+import * as Updates from "expo-updates";
 import FilledButton from "../FilledButton/FilledButton";
 import IconButton from "../IconButton/IconButton";
 
@@ -28,11 +27,8 @@ interface IState {
   hasError: boolean;
 }
 
-interface IProps {
-  value: any;
-}
-class ErrorBoundary extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
+class ErrorBoundary extends React.Component<Record<string, unknown>, IState> {
+  constructor(props: Record<string, unknown>) {
     super(props);
     this.state = {
       hasError: false,
@@ -49,18 +45,8 @@ class ErrorBoundary extends React.Component<IProps, IState> {
     console.error("ErrorBoundary caught an error", error, info);
   }
 
-  public clearUserSettings = async (): Promise<void> => {
-    await SecureStore.deleteItemAsync("user");
-  };
-
-  // handleError =  () => {
-  //   await this.clearUserSettings();
-
-  //   RNRestart.Restart();
-  // };
-
   handleError = (): void => {
-    RNRestart.Restart();
+    setTimeout(async () => Updates.reloadAsync(), 3000);
   };
 
   public render(): JSX.Element | null | undefined {
