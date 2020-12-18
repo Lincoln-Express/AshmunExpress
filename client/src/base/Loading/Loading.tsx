@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { View, StyleSheet, ActivityIndicator, Text } from "react-native";
 
 const styles = StyleSheet.create({
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 5,
   },
-  textStyle: {
+  text: {
     marginLeft: 10,
     fontSize: 16,
     fontWeight: "400",
@@ -34,7 +34,7 @@ const Loading: React.FC<LoadingProps> = (props: LoadingProps) => {
     <View style={styles.overlay}>
       <View style={styles.container}>
         <ActivityIndicator color="#273A7F" />
-        <Text style={styles.textStyle}> Loading... </Text>
+        <Text style={styles.text}> Loading... </Text>
       </View>
     </View>
   );

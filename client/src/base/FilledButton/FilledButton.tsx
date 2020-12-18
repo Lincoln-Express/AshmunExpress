@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {
   StyleSheet,
   TouchableHighlight,
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginVertical: 15,
   },
-  textStyle: {
+  text: {
     color: "#fff",
     fontSize: 16,
   },
@@ -36,26 +36,33 @@ const styles = StyleSheet.create({
 
 interface FilledButtonProps {
   title: string;
-  handlePress: () => any;
+  handlePress: () => void;
+  style?: Record<string, unknown>;
 }
 
 const FilledButton: React.FC<FilledButtonProps> = (
   props: FilledButtonProps,
 ) => {
-  const { title, handlePress } = props;
+  const { title, handlePress, style } = props;
   const titleValue = Platform.OS === "ios" ? title : title.toUpperCase();
 
   return Platform.OS === "ios" ? (
-    <TouchableHighlight style={styles.container} onPress={handlePress}>
-      <Text style={styles.textStyle}>{titleValue}</Text>
+    <TouchableHighlight
+      style={{ ...styles.container, ...style }}
+      onPress={handlePress}
+    >
+      <Text style={styles.text}>{titleValue}</Text>
     </TouchableHighlight>
   ) : (
     <TouchableNativeFeedback onPress={handlePress}>
-      <View style={styles.container}>
-        <Text style={styles.textStyle}>{titleValue}</Text>
+      <View style={{ ...styles.container, ...style }}>
+        <Text style={styles.text}>{titleValue}</Text>
       </View>
     </TouchableNativeFeedback>
   );
 };
 
+FilledButton.defaultProps = {
+  style: {},
+};
 export default FilledButton;

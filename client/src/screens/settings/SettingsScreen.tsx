@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
 // import AuthContext from '../contexts/AuthContext';
 // import UserContext from '../contexts/UserContext';
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 });
-const SettingsScreen = (): JSX.Element => {
+const SettingsScreen = () => {
   // eslint-disable-next-line no-unused-vars
   // const navigation = useNavigation();
 

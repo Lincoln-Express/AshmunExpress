@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AuthContext from "../../contexts/AuthContext";
@@ -13,10 +13,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 });
-const HomeScreen = (): JSX.Element => {
+const HomeScreen: React.FC<null> = () => {
   // eslint-disable-next-line no-unused-vars
   const navigation = useNavigation();
-  const { user } = useContext(UserContext);
+  const { user } = React.useContext(UserContext);
   // here we use scoreContext to show the user's score and display some type of message
   // user is in this format: `${firstName}-${lastName}-${email}`;
   return (

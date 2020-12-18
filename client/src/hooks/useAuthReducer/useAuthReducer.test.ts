@@ -1,4 +1,4 @@
-import reducer, { State, Action } from "./reducer";
+import reducer, { State, Action } from "./useAuthReducer";
 
 const testState: State = {
   user: "chidera",

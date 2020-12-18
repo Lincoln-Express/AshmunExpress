@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-fragments */
-import React, { useEffect, useState, Fragment } from "react";
+import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
@@ -17,21 +17,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 });
-const QuizListScreen = (): JSX.Element => {
+const QuizResultsScreen = (): JSX.Element => {
   // eslint-disable-next-line no-unused-vars
   const navigation = useNavigation();
   const route = useRoute();
   // const { name: level } = route.params;
-  const [quizList, setQuizList] = useState([]);
+  const [quizList, setQuizList] = React.useState([]);
 
-  useEffect(async () => {
+  React.useEffect(async () => {
     await axios.get(`${BASE_URL}quizList`).then((res) => {
       setQuizList(res.data);
     });
   }, []);
 
   return (
-    <Fragment>
+    <>
       <View style={styles.container}>
         <Text>Quizzes</Text>
       </View>
@@ -41,8 +41,8 @@ const QuizListScreen = (): JSX.Element => {
           handlePress={() => navigation.push("Quiz", { name: quiz })}
         />
       ))}
-    </Fragment>
+    </>
   );
 };
 
-export default QuizListScreen;
+export default QuizResultsScreen;

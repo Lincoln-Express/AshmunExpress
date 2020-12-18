@@ -1,5 +1,4 @@
-/* eslint-disable react/require-default-props */
-import React from "react";
+import * as React from "react";
 import { Text, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
@@ -12,11 +11,14 @@ const styles = StyleSheet.create({
 
 interface HeaderProps {
   children: string;
-  style?: any;
+  style?: Record<string, unknown>;
 }
 const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
   const { children, style } = props;
-  return <Text style={[styles.container, style]}>{children}</Text>;
+  return <Text style={{ ...styles.container, ...style }}>{children}</Text>;
 };
 
+Header.defaultProps = {
+  style: {},
+};
 export default Header;

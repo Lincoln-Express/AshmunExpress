@@ -1,6 +1,4 @@
-/* eslint-disable global-require */
-/* eslint-disable react-native/no-inline-styles */
-import React from "react";
+import * as React from "react";
 import { StyleSheet, View, Image } from "react-native";
 
 const styles = StyleSheet.create({
@@ -10,14 +8,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
   },
+  image: { width: 330, height: 190 },
 });
 
 const Logo: React.FC = () => {
   return (
     <View style={styles.container}>
       <Image
-        style={{ width: 330, height: 190 }}
-        source={require("../../../assets/LULogo.png")}
+        style={styles.image}
+        source={require("../../../assets/lincolnLogo.png")}
       />
     </View>
   );

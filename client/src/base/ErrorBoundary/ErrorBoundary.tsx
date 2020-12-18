@@ -1,12 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/prop-types */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable react/state-in-constructor */
-import React, { Component, ErrorInfo } from "react";
+import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import RNRestart from "react-native-restart";
 import * as SecureStore from "expo-secure-store";
@@ -19,35 +11,45 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  errorHeaderStyle: {
+  errorHeader: {
     justifyContent: "flex-start",
     alignItems: "center",
     color: "#273A7F",
     fontSize: 32,
   },
-  errorMessageStyle: {
+  errorMessage: {
     fontWeight: "400",
     marginVertical: 10,
     color: "#273A7F",
   },
 });
 
-class ErrorBoundary extends Component {
-  public state = {
-    hasError: false,
-  };
+interface IState {
+  hasError: boolean;
+}
 
-  public static getDerivedStateFromError() {
+interface IProps {
+  value: any;
+}
+class ErrorBoundary extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      hasError: false,
+    };
+  }
+
+  public static getDerivedStateFromError(): { hasError: boolean } {
     return {
       hasError: true,
     };
   }
 
-  public componentDidCatch(error: Error, info: ErrorInfo) {
+  public componentDidCatch(error: Error, info: React.ErrorInfo): void {
     console.error("ErrorBoundary caught an error", error, info);
   }
 
-  public clearUserSettings = async () => {
+  public clearUserSettings = async (): Promise<void> => {
     await SecureStore.deleteItemAsync("user");
   };
 
@@ -57,27 +59,18 @@ class ErrorBoundary extends Component {
   //   RNRestart.Restart();
   // };
 
-  handleError = () => {
+  handleError = (): void => {
     RNRestart.Restart();
   };
 
-  public render() {
-    if (this.state.hasError) {
+  public render(): JSX.Element | null | undefined {
+    const { hasError } = this.state;
+    if (hasError) {
       return (
         <View style={styles.container}>
-          <Text style={{ width: "100%" }}>
-            <IconButton
-              name="information-circle-outline"
-              size={60}
-              handlePress={() => {}}
-              style={{}}
-            />
-          </Text>
-          <Text style={styles.errorHeaderStyle}>
-            {" "}
-            Oops, Something went wrong!{" "}
-          </Text>
-          <Text style={styles.errorMessageStyle}>
+          <IconButton name="information-circle-outline" size={60} />
+          <Text style={styles.errorHeader}> Oops, Something went wrong! </Text>
+          <Text style={styles.errorMessage}>
             The app ran into a problem and could not continue. We apologize for
             any inconvenience this has caused! Press the button below to restart
             the app and log back in.

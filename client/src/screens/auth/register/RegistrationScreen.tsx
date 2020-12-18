@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-fragments */
-import React, { useContext, useState, Fragment } from "react";
+import * as React from "react";
 import { StyleSheet, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -21,13 +20,8 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#fff",
   },
-  headerStyle: { paddingTop: 170 },
-  iconButtonStyle: {
-    position: "absolute",
-    top: 50,
-    right: 20,
-  },
-  imageStyle: {
+  header: { paddingTop: 170 },
+  image: {
     position: "absolute",
     top: 0,
     left: 0,
@@ -37,10 +31,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const RegistrationScreen = (): JSX.Element => {
+const RegistrationScreen: React.FC<null> = () => {
   const navigation = useNavigation();
-  const { register } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
+  const { register } = React.useContext(AuthContext);
+  const [loading, setLoading] = React.useState(false);
   const validationSchema = yup.object().shape({
     firstName: yup.string().required().label("First Name"),
     lastName: yup.string().required().label("Last Name"),
@@ -55,12 +49,14 @@ const RegistrationScreen = (): JSX.Element => {
       .required()
       .min(8, "Password should be 8 characters or more")
       .label("Confirm Password")
-      .test("passwords-match", "Passwords don't match", function checkPassword(
-        value,
-      ) {
-        // eslint-disable-next-line react/no-this-in-sfc
-        return this.parent.password === value;
-      }),
+      .test(
+        "passwords-match",
+        "Passwords don't match",
+        function checkPassword(value) {
+          // eslint-disable-next-line react/no-this-in-sfc
+          return this.parent.password === value;
+        },
+      ),
   });
 
   return (
@@ -72,17 +68,16 @@ const RegistrationScreen = (): JSX.Element => {
       <ImageBackground
         // eslint-disable-next-line global-require
         source={require("../../../../assets/background.jpg")}
-        style={styles.imageStyle}
+        style={styles.image}
       />
       <Logo />
       <IconButton
-        style={styles.iconButtonStyle}
         name="close-circle-outline"
         handlePress={() => {
-          navigation.pop();
+          navigation.goBack();
         }}
       />
-      <Header style={styles.headerStyle}>Register Here</Header>
+      <Header style={styles.header}>Register Here</Header>
       <Formik
         initialValues={{
           firstName: "",
@@ -101,7 +96,7 @@ const RegistrationScreen = (): JSX.Element => {
               // eslint-disable-next-line comma-dangle
               values.password,
             );
-            navigation.pop();
+            navigation.goBack();
           } catch (e) {
             setLoading(false);
           }
@@ -109,7 +104,7 @@ const RegistrationScreen = (): JSX.Element => {
         validationSchema={validationSchema}
       >
         {(formikProps) => (
-          <Fragment>
+          <>
             <InputField
               label="FirstName"
               formikProps={formikProps}
@@ -158,7 +153,7 @@ const RegistrationScreen = (): JSX.Element => {
               title="Register"
               handlePress={formikProps.handleSubmit}
             />
-          </Fragment>
+          </>
         )}
       </Formik>
       <Loading loading={loading} />

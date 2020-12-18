@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {
   StyleSheet,
   TouchableOpacity,
@@ -9,13 +9,13 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { position: "absolute", top: 50, right: 20 },
 });
 
-interface IconButtonProps {
+export interface IconButtonProps {
   name: string;
-  handlePress: () => any;
-  style: any;
+  handlePress?: () => void;
+  style?: Record<string, unknown>;
   size?: number;
 }
 
@@ -24,12 +24,15 @@ const IconButton: React.FC<IconButtonProps> = (props: IconButtonProps) => {
   const nameValue = Platform.OS === "ios" ? `ios-${name}` : `md-${name}`;
 
   return Platform.OS === "ios" ? (
-    <TouchableOpacity style={[styles.container, style]} onPress={handlePress}>
+    <TouchableOpacity
+      style={{ ...styles.container, ...style }}
+      onPress={handlePress}
+    >
       <Ionicons name={nameValue} size={size} color="#273A7F" />
     </TouchableOpacity>
   ) : (
     <TouchableNativeFeedback onPress={handlePress}>
-      <View style={[styles.container, style]}>
+      <View style={{ ...styles.container, ...style }}>
         <Ionicons name={nameValue} size={size} color="#273A7F" />
       </View>
     </TouchableNativeFeedback>
@@ -38,5 +41,6 @@ const IconButton: React.FC<IconButtonProps> = (props: IconButtonProps) => {
 
 IconButton.defaultProps = {
   size: 32,
+  handlePress: undefined,
 };
 export default IconButton;
