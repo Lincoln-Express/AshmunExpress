@@ -1,32 +1,28 @@
 import * as React from "react";
 import { Modal, Portal, Divider, Paragraph, Title } from "react-native-paper";
-import { View } from "react-native";
+import FilledButton from "../FilledButton/FilledButton";
 
 interface CustomModalProps {
   content: string;
   title: string;
-  visible: boolean;
-  actionButtons?: Array<JSX.Element>;
 }
 
 const CustomModal: React.FC<CustomModalProps> = (props: CustomModalProps) => {
-  const { content, title, actionButtons, visible } = props;
+  const { content, title } = props;
+  const [visible, setVisible] = React.useState(false);
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
 
   return (
     <Portal>
-      <Modal visible={visible} dismissable>
+      <Modal visible={visible} onDismiss={hideModal}>
         <Title>{title}</Title>
         <Divider />
         <Paragraph>{content}</Paragraph>
-        {actionButtons?.map((actionButton) => (
-          <View>{actionButton}</View>
-        ))}
       </Modal>
+      <FilledButton title="check answer" handlePress={showModal} />
     </Portal>
   );
 };
 
-CustomModal.defaultProps = {
-  actionButtons: undefined,
-};
 export default CustomModal;

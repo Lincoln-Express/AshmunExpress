@@ -17,8 +17,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
   errorMessage: {
-    justifyContent: "center",
-    alignItems: "center",
     fontWeight: "400",
     marginVertical: 10,
     color: "#273A7F",
@@ -60,11 +58,11 @@ class ErrorBoundary extends React.Component<Record<string, unknown>, IState> {
           <Text style={styles.errorHeader}> Oops, Something went wrong! </Text>
           <Text style={styles.errorMessage}>
             The app ran into a problem and could not continue. We apologize for
-            any inconvenience this has caused! Press the button below to reload
-            the application.
+            any inconvenience this has caused! Press the button below to restart
+            the app and log back in.
           </Text>
           <FilledButton
-            title="Back to the Home Page"
+            title="Back to login screen"
             handlePress={() => this.handleError()}
           />
         </View>
