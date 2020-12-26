@@ -1,6 +1,6 @@
 import * as React from "react";
 import "react-native-gesture-handler";
-import { StatusBar } from "react-native";
+import { StatusBar, LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Provider as PaperProvider } from "react-native-paper";
@@ -11,6 +11,7 @@ import UserContext from "./src/contexts/UserContext";
 import useAuth from "./src/hooks/useAuth";
 import ErrorBoundary from "./src/base/ErrorBoundary/ErrorBoundary";
 
+// LogBox.ignoreAllLogs();
 const Stack = createStackNavigator();
 const App = (): JSX.Element => {
   const { auth, state } = useAuth();
