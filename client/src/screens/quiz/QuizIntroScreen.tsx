@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const QuizBasicScreen: React.FC<null> = () => {
+const QuizIntroScreen: React.FC<null> = () => {
   const navigation = useNavigation();
   const keyword = "topics";
   const { isError, isLoading, data } = useFetch(keyword);
@@ -49,7 +49,7 @@ const QuizBasicScreen: React.FC<null> = () => {
                     elevation={5}
                     onPress={() => {
                       navigation.navigate("QuizList", {
-                        name: topic.title,
+                        topic: topic.title,
                         section,
                       });
                     }}
@@ -66,4 +66,4 @@ const QuizBasicScreen: React.FC<null> = () => {
   );
 };
 
-export default QuizBasicScreen;
+export default QuizIntroScreen;
