@@ -11,10 +11,10 @@ import UserContext from "./src/contexts/UserContext";
 import useAuth from "./src/hooks/useAuth";
 import ErrorBoundary from "./src/base/ErrorBoundary/ErrorBoundary";
 
-// LogBox.ignoreAllLogs();
 const Stack = createStackNavigator();
 const App = (): JSX.Element => {
   const { auth, state } = useAuth();
+  LogBox.ignoreAllLogs();
 
   function renderScreens() {
     return state.user ? (
