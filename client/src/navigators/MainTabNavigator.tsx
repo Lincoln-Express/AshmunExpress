@@ -7,10 +7,14 @@ import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "../screens/home/HomeScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
 import SettingsScreen from "../screens/settings/SettingsScreen";
-import QuizBasicScreen from "../screens/quiz/QuizBasicScreen";
+import QuizIntroScreen from "../screens/quiz/QuizIntroScreen";
 import QuizPageScreen from "../screens/quiz/QuizPageScreen";
 import QuizListScreen from "../screens/quiz/QuizListScreen";
-import QuizResultsScreen from "../screens/quiz/QuizResultsScreen";
+import QuizResultScreen from "../screens/quiz/QuizResultScreen";
+import ExampleScreen from "../screens/quiz/ExampleScreen";
+import TestScreen from "../screens/quiz/TestScreen";
+import PracticeScreen from "../screens/quiz/PracticeScreen";
+import TutorialScreen from "../screens/quiz/TutorialScreen";
 
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -35,7 +39,7 @@ const QuizStackScreen = () => (
   <QuizStack.Navigator>
     <QuizStack.Screen
       name="Quiz"
-      component={QuizBasicScreen}
+      component={QuizIntroScreen}
       options={{
         title: "Topics",
         headerTitleAlign: "center",
@@ -45,20 +49,40 @@ const QuizStackScreen = () => (
       name="QuizList"
       component={QuizListScreen}
       options={({ route }) => ({
-        title: `${route.params.name}`,
+        title: `${route.params.topic}`,
       })}
     />
     <QuizStack.Screen
       name="QuizResult"
-      component={QuizResultsScreen}
-      options={{ title: "Quiz Results" }}
+      component={QuizResultScreen}
+      options={{ title: "Quiz Result" }}
     />
     <QuizStack.Screen
       name="QuizPage"
       component={QuizPageScreen}
       options={({ route }) => ({
-        title: `${route.params.quizType}: Level ${route.params.levelNum}`,
+        title: `${route.params.topic} ${route.params.quiz}`,
       })}
+    />
+    <QuizStack.Screen
+      name="Example"
+      component={QuizPageScreen}
+      options={{ headerShown: false }}
+    />
+    <QuizStack.Screen
+      name="Test"
+      component={QuizPageScreen}
+      options={{ headerShown: false }}
+    />
+    <QuizStack.Screen
+      name="Tutorial"
+      component={QuizPageScreen}
+      options={{ headerShown: false }}
+    />
+    <QuizStack.Screen
+      name="Practice"
+      component={QuizPageScreen}
+      options={{ headerShown: false }}
     />
   </QuizStack.Navigator>
 );

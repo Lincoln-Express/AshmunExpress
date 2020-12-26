@@ -1,38 +1,75 @@
-/* eslint-disable react/jsx-curly-newline */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable react/jsx-fragments */
 import * as React from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import FilledButton from "../../base/FilledButton/FilledButton";
-import Loading from "../../base/Loading/Loading";
+import { ScrollView, Text, StyleSheet } from "react-native";
+import { useRoute } from "@react-navigation/native";
+import shuffle from "lodash/shuffle";
+import BASE_URL from "../../config";
 import useFetch from "../../hooks/useFetch/useFetch";
-import BASE_URL from "../../config/index";
+import Loading from "../../base/Loading/Loading";
+import ExampleScreen from "./ExampleScreen";
+import PracticeScreen from "./PracticeScreen";
+import TestScreen from "./TestScreen";
+import TutorialScreen from "./TutorialScreen";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    backgroundColor: "#fff",
+    justifyContent: "center",
+  },
+  text: {
+    textAlign: "center",
+    fontSize: 36,
   },
 });
-const QuizPageScreen = () => {
-  /* TODO: get the list of questions based on the quiztype and quiztopic and use format them here. 
-  Next randomly choose  5 - 10 questions and depending on the quiz type, format each object.
-    */
-  // eslint-disable-next-line no-unused-vars
-  const navigation = useNavigation();
+const QuizPageScreen: React.FC<null> = (): JSX.Element => {
   const route = useRoute();
-  const { quizType, quizTopic, level } = route.params;
+  const { section, quiz, level } = route.params;
+
   const { isError, isLoading, data } = useFetch(
-    `${BASE_URL}/${quizType}/${level}/section/${quizTopic}`,
+    `${quiz.toLowerCase()}/${level}/section/${section}`,
   );
 
+  if (data !== undefined) {
+    const shuffledArray: Array<Record<string, any>> = shuffle(data);
+    const len = shuffledArray.length;
+    const endIndex = getEndIndex(len);
+    const questions = shuffledArray.slice(0, endIndex);
+    const QuizType = getQuizScreen(quiz, questions);
+    return <ScrollView>{QuizType}</ScrollView>;
+  }
+
   return (
-    <View style={styles.container}>
-      {isError && <View>{isError}</View>}
+    <ScrollView contentContainerStyle={styles.container}>
       {isLoading && <Loading loading={isLoading} />}
-    </View>
+      {isError && <Text style={styles.text}>Failed to Load!</Text>}
+    </ScrollView>
   );
 };
+
+function getEndIndex(len: number) {
+  if (len < 11) {
+    return len + 1;
+  }
+
+  if (len > 20) {
+    return 11;
+  }
+
+  return len / 2 + 1;
+}
+
+function getQuizScreen(quiz: string, questions: Array<Record<string, any>>) {
+  if (quiz === "Example") {
+    return <ExampleScreen questions={questions} quizType={quiz} />;
+  }
+  if (quiz === "Practice") {
+    return <PracticeScreen />;
+  }
+
+  if (quiz === "Tutorial") {
+    return <TutorialScreen />;
+  }
+  return <TestScreen />;
+}
 
 export default QuizPageScreen;
