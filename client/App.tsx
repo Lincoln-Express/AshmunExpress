@@ -18,9 +18,9 @@ const App = (): JSX.Element => {
 
   function renderScreens() {
     return state.user ? (
-      <Stack.Screen name="MainStack" component={MainTabNavigator} />
-    ) : (
       <Stack.Screen name="AuthStack" component={AuthStackNavigator} />
+    ) : (
+      <Stack.Screen name="MainStack" component={MainTabNavigator} />
     );
   }
 

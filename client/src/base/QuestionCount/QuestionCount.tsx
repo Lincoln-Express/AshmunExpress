@@ -20,7 +20,7 @@ const QuestionCount: React.FC<QuestionCountProps> = (
   return (
     <View>
       <Text style={styles.text}>
-        {`Question ${counter + 1}/${totalNumberOfQuestions + 1}`}
+        {`Question ${counter + 1}/${totalNumberOfQuestions}`}
       </Text>
     </View>
   );
