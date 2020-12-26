@@ -93,7 +93,6 @@ const RegistrationScreen: React.FC<null> = () => {
               values.firstName,
               values.lastName,
               values.email,
-              // eslint-disable-next-line comma-dangle
               values.password,
             );
             navigation.goBack();
@@ -106,7 +105,7 @@ const RegistrationScreen: React.FC<null> = () => {
         {(formikProps) => (
           <>
             <InputField
-              label="FirstName"
+              label="First Name"
               formikProps={formikProps}
               pointer="firstName"
               placeholder="John"
@@ -114,7 +113,7 @@ const RegistrationScreen: React.FC<null> = () => {
               autoFocus
             />
             <InputField
-              label="LastName"
+              label="Last Name"
               formikProps={formikProps}
               pointer="lastName"
               placeholder="Doe"
