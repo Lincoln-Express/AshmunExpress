@@ -67,9 +67,7 @@ const QuizResultScreen: React.FC<QuizResultProps> = (
       upperQuartile,
     );
   }
-  const Buttons = React.useMemo(() => viewNextOptions(navigation), [
-    navigation,
-  ]);
+  const Buttons = viewNextOptions(navigation);
 
   if (quiz === "Example" || quiz === "Practice") {
     return (

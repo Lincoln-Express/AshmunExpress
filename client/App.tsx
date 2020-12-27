@@ -20,17 +20,14 @@ const App = (): JSX.Element => {
   const [isThemeDark, setIsThemeDark] = React.useState(colorScheme === "dark");
   const theme = colorScheme === "dark" ? DarkTheme : LightTheme;
 
-  const toggleTheme = React.useCallback(() => {
+  const toggleTheme = () => {
     return setIsThemeDark(!isThemeDark);
-  }, [isThemeDark]);
+  };
 
-  const preferences = React.useMemo(
-    () => ({
-      toggleTheme,
-      isThemeDark,
-    }),
-    [toggleTheme, isThemeDark],
-  );
+  const preferences = {
+    toggleTheme,
+    isThemeDark,
+  };
 
   const { auth, state } = useAuth();
 
