@@ -27,7 +27,7 @@ interface CustomListProps {
   children: any;
 }
 
-const CustomList = (props: CustomListProps): JSX.Element => {
+const CustomList: React.FC<CustomListProps> = (props: CustomListProps) => {
   const [expanded, setExpanded] = React.useState(false);
   const { title, description, children } = props;
 

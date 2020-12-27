@@ -33,6 +33,7 @@
     "@react-navigation/native": "^5.5.1",
     "@react-navigation/stack": "^5.5.1",
     "axios": "^0.19.2",
+    "deepmerge": "^4.2.2",
     "eq": "^0.1.0",
     "expo": "^40.0.0",
     "expo-cli": "^3.27.14",

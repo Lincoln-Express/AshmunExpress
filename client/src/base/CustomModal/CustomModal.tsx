@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Modal, Portal, Divider, Paragraph, Title } from "react-native-paper";
+import { Modal, Portal, Paragraph, Title } from "react-native-paper";
 import { View } from "react-native";
 
 interface CustomModalProps {
@@ -16,7 +16,6 @@ const CustomModal: React.FC<CustomModalProps> = (props: CustomModalProps) => {
     <Portal>
       <Modal visible={visible} dismissable>
         <Title>{title}</Title>
-        <Divider />
         <Paragraph>{content}</Paragraph>
         {actionButtons?.map((actionButton) => (
           <View>{actionButton}</View>

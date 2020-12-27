@@ -4,6 +4,7 @@ import { Platform } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
+import ThemeContext from "../contexts/ThemeContext";
 import HomeScreen from "../screens/home/HomeScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
 import SettingsScreen from "../screens/settings/SettingsScreen";
@@ -93,51 +94,55 @@ const SettingsStackScreen = () => (
   </SettingsStack.Navigator>
 );
 
-const MainTabNavigator = (): JSX.Element => (
-  <MainTab.Navigator
-    // initialRoute.name='Home'
-    screenOptions={({ route }) => ({
-      tabBarIcon: ({ color, size }) => {
-        let iconName = "";
+const MainTabNavigator = (): JSX.Element => {
+  const { isThemeDark } = React.useContext(ThemeContext);
 
-        if (route.name === "Home") {
-          if (Platform.OS === "ios") {
-            iconName = "ios-home";
-          } else {
-            iconName = "md-home";
+  return (
+    <MainTab.Navigator
+      // initialRoute.name='Home'
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName = "";
+
+          if (route.name === "Home") {
+            if (Platform.OS === "ios") {
+              iconName = "ios-home";
+            } else {
+              iconName = "md-home";
+            }
+          } else if (route.name === "Settings") {
+            if (Platform.OS === "ios") {
+              iconName = "ios-settings";
+            } else {
+              iconName = "md-settings";
+            }
+          } else if (route.name === "Quiz") {
+            if (Platform.OS === "ios") {
+              iconName = "ios-list";
+            } else {
+              iconName = "md-list";
+            }
+          } else if (route.name === "Profile") {
+            if (Platform.OS === "ios") {
+              iconName = "ios-person";
+            } else {
+              iconName = "md-person";
+            }
           }
-        } else if (route.name === "Settings") {
-          if (Platform.OS === "ios") {
-            iconName = "ios-settings";
-          } else {
-            iconName = "md-settings";
-          }
-        } else if (route.name === "Quiz") {
-          if (Platform.OS === "ios") {
-            iconName = "ios-list";
-          } else {
-            iconName = "md-list";
-          }
-        } else if (route.name === "Profile") {
-          if (Platform.OS === "ios") {
-            iconName = "ios-person";
-          } else {
-            iconName = "md-person";
-          }
-        }
-        return <Ionicons name={iconName} size={size} color={color} />;
-      },
-    })}
-    tabBarOptions={{
-      activeTintColor: "#273A7F",
-      inactiveTintColor: "#808080",
-    }}
-  >
-    <MainTab.Screen name="Home" component={HomeStackScreen} />
-    <MainTab.Screen name="Quiz" component={QuizStackScreen} />
-    <MainTab.Screen name="Profile" component={ProfileStackScreen} />
-    <MainTab.Screen name="Settings" component={SettingsStackScreen} />
-  </MainTab.Navigator>
-);
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: isThemeDark ? "#F57C00" : "#273A7F",
+        inactiveTintColor: isThemeDark ? "#FFF" : "#808080",
+      }}
+    >
+      <MainTab.Screen name="Home" component={HomeStackScreen} />
+      <MainTab.Screen name="Quiz" component={QuizStackScreen} />
+      <MainTab.Screen name="Profile" component={ProfileStackScreen} />
+      <MainTab.Screen name="Settings" component={SettingsStackScreen} />
+    </MainTab.Navigator>
+  );
+};
 
 export default MainTabNavigator;
