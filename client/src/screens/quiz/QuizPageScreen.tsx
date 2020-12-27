@@ -1,14 +1,15 @@
 import * as React from "react";
 import { ScrollView, Text, StyleSheet } from "react-native";
 import { useRoute } from "@react-navigation/native";
+import { useTheme } from "react-native-paper";
 import shuffle from "lodash/shuffle";
-import BASE_URL from "../../config";
 import useFetch from "../../hooks/useFetch/useFetch";
-import Loading from "../../base/Loading/Loading";
+import Loading from "../../base/loading/Loading";
 import ExampleScreen from "./ExampleScreen";
 import PracticeScreen from "./PracticeScreen";
 import TestScreen from "./TestScreen";
 import TutorialScreen from "./TutorialScreen";
+import QuizHelper from "../../utils/quizHelper/QuizHelper";
 
 const styles = StyleSheet.create({
   container: {
@@ -21,9 +22,13 @@ const styles = StyleSheet.create({
     fontSize: 36,
   },
 });
+
+const quizPageScreenHelper = QuizHelper();
 const QuizPageScreen: React.FC<null> = (): JSX.Element => {
+  const theme = useTheme();
   const route = useRoute();
   const { section, quiz, level } = route.params;
+  const { getEndIndex } = quizPageScreenHelper;
 
   const { isError, isLoading, data } = useFetch(
     `${quiz.toLowerCase()}/${level}/section/${section}`,
@@ -41,24 +46,16 @@ const QuizPageScreen: React.FC<null> = (): JSX.Element => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {isLoading && <Loading loading={isLoading} />}
-      {isError && <Text style={styles.text}>Failed to Load!</Text>}
+      {isError && (
+        <Text style={{ ...styles.text, color: theme.colors.text }}>
+          Failed to Load!
+        </Text>
+      )}
     </ScrollView>
   );
 };
 
-function getEndIndex(len: number) {
-  if (len < 11) {
-    return len + 1;
-  }
-
-  if (len > 20) {
-    return 11;
-  }
-
-  return len / 2 + 1;
-}
-
-function getQuizScreen(quiz: string, questions: Array<Record<string, any>>) {
+const getQuizScreen = (quiz: string, questions: Array<Record<string, any>>) => {
   if (quiz === "Example") {
     return <ExampleScreen questions={questions} quizType={quiz} />;
   }
@@ -70,6 +67,6 @@ function getQuizScreen(quiz: string, questions: Array<Record<string, any>>) {
     return <TutorialScreen />;
   }
   return <TestScreen />;
-}
+};
 
 export default QuizPageScreen;

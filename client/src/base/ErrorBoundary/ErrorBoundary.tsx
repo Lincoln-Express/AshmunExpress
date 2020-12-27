@@ -1,8 +1,8 @@
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import * as Updates from "expo-updates";
-import FilledButton from "../FilledButton/FilledButton";
-import IconButton from "../IconButton/IconButton";
+import FilledButton from "../filledButton/FilledButton";
+import IconButton from "../iconButton/IconButton";
 
 const styles = StyleSheet.create({
   container: {
@@ -65,7 +65,7 @@ class ErrorBoundary extends React.Component<Record<string, unknown>, IState> {
           </Text>
           <FilledButton
             title="Back to the Home Page"
-            handlePress={() => this.handleError()}
+            onPress={() => this.handleError()}
           />
         </View>
       );

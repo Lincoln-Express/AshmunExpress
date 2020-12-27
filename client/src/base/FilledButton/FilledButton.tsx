@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 
 interface FilledButtonProps {
   title: string;
-  handlePress: () => void;
+  onPress: () => void;
   style?: Record<string, unknown>;
   buttonStyle?: Record<string, unknown>;
 }
@@ -43,18 +43,18 @@ interface FilledButtonProps {
 const FilledButton: React.FC<FilledButtonProps> = (
   props: FilledButtonProps,
 ) => {
-  const { title, handlePress, style, buttonStyle } = props;
+  const { title, onPress, style, buttonStyle } = props;
   const titleValue = Platform.OS === "ios" ? title : title.toUpperCase();
 
   return Platform.OS === "ios" ? (
     <TouchableHighlight
       style={{ ...styles.container, ...style }}
-      onPress={handlePress}
+      onPress={onPress}
     >
       <Text style={{ ...styles.text, ...buttonStyle }}>{titleValue}</Text>
     </TouchableHighlight>
   ) : (
-    <TouchableNativeFeedback onPress={handlePress}>
+    <TouchableNativeFeedback onPress={onPress}>
       <View style={{ ...styles.container, ...style }}>
         <Text style={{ ...styles.text, ...buttonStyle }}>{titleValue}</Text>
       </View>

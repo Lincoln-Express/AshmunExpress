@@ -1,9 +1,9 @@
 import * as React from "react";
 import { StyleSheet, ScrollView } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import CustomCard from "../../base/CustomCard/CustomCard";
-import IconButton from "../../base/IconButton/IconButton";
-import CustomList from "../../base/CustomList/CustomList";
+import CustomCard from "../../base/customCard/CustomCard";
+import IconButton from "../../base/iconButton/IconButton";
+import CustomList from "../../base/customList/CustomList";
 
 const styles = StyleSheet.create({
   container: {

@@ -14,24 +14,24 @@ const styles = StyleSheet.create({
 
 export interface IconButtonProps {
   name: string;
-  handlePress?: () => void;
+  onPress?: () => void;
   style?: Record<string, unknown>;
   size?: number;
 }
 
 const IconButton: React.FC<IconButtonProps> = (props: IconButtonProps) => {
-  const { name, handlePress, style, size } = props;
+  const { name, onPress, style, size } = props;
   const nameValue = Platform.OS === "ios" ? `ios-${name}` : `md-${name}`;
 
   return Platform.OS === "ios" ? (
     <TouchableOpacity
       style={{ ...styles.container, ...style }}
-      onPress={handlePress}
+      onPress={onPress}
     >
       <Ionicons name={nameValue} size={size} color="#273A7F" />
     </TouchableOpacity>
   ) : (
-    <TouchableNativeFeedback onPress={handlePress}>
+    <TouchableNativeFeedback onPress={onPress}>
       <View style={{ ...styles.container, ...style }}>
         <Ionicons name={nameValue} size={size} color="#273A7F" />
       </View>
@@ -41,6 +41,6 @@ const IconButton: React.FC<IconButtonProps> = (props: IconButtonProps) => {
 
 IconButton.defaultProps = {
   size: 32,
-  handlePress: undefined,
+  onPress: undefined,
 };
 export default IconButton;

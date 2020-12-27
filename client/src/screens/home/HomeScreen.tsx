@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
 });
+
 const HomeScreen: React.FC<null> = () => {
   const theme = useTheme();
   // eslint-disable-next-line no-unused-vars

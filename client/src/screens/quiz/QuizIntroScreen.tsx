@@ -1,13 +1,14 @@
+/* eslint-disable react/jsx-indent */
 import * as React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Loading from "../../base/Loading/Loading";
-import CustomList from "../../base/CustomList/CustomList";
+import Loading from "../../base/loading/Loading";
+import CustomList from "../../base/customList/CustomList";
 import useFetch from "../../hooks/useFetch/useFetch";
-import mergeQuizData from "../../utils/mergeQuizData/mergeQuizData";
-import transformData from "../../utils/transformData/transformData";
-import IconButton from "../../base/IconButton/IconButton";
-import CustomCard from "../../base/CustomCard/CustomCard";
+import mergeQuizData from "../../utils/mergeQuizData/MergeQuizData";
+import transformData from "../../utils/transformData/TransformData";
+import IconButton from "../../base/iconButton/IconButton";
+import CustomCard from "../../base/customCard/CustomCard";
 
 const styles = StyleSheet.create({
   container: {
@@ -31,7 +32,10 @@ const QuizIntroScreen: React.FC<null> = () => {
   const navigation = useNavigation();
   const keyword = "topics";
   const { isError, isLoading, data } = useFetch(keyword);
-  const mergedQuizData = transformData(mergeQuizData(data));
+  const mergedQuizData = React.useMemo(
+    () => transformData(mergeQuizData(data)),
+    [data],
+  );
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

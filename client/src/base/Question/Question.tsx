@@ -1,5 +1,6 @@
 import * as React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { useTheme } from "react-native-paper/src/core/theming";
 
 const styles = StyleSheet.create({
   text: {
@@ -13,9 +14,12 @@ interface QuestionProps {
 }
 const Question: React.FC<QuestionProps> = (props: QuestionProps) => {
   const { question } = props;
+  const theme = useTheme();
   return (
     <View>
-      <Text style={styles.text}>{question}</Text>
+      <Text style={{ ...styles.text, color: theme.colors.text }}>
+        {question}
+      </Text>
     </View>
   );
 };

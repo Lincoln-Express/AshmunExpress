@@ -1,11 +1,11 @@
 import * as React from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
-import FilledButton from "../../base/FilledButton/FilledButton";
-import Question from "../../base/Question/Question";
-import QuestionCount from "../../base/QuestionCount/QuestionCount";
+import FilledButton from "../../base/filledButton/FilledButton";
+import Question from "../../base/question/Question";
+import QuestionCount from "../../base/questionCount/QuestionCount";
 import QuizResultScreen from "./QuizResultScreen";
-import QuizHelper from "../../utils/QuizHelper";
+import QuizHelper from "../../utils/quizHelper/QuizHelper";
 
 const styles = StyleSheet.create({
   button: {
@@ -21,12 +21,11 @@ interface ExampleScreenProps {
   quizType: string;
 }
 
-const ExampleQuizHelper = QuizHelper();
+const exampleQuizHelper = QuizHelper();
 const ExampleScreen: React.FC<ExampleScreenProps> = (
   props: ExampleScreenProps,
 ) => {
   const navigation = useNavigation();
-  const route = useRoute();
   const { questions, quizType } = props;
 
   const {
@@ -35,7 +34,7 @@ const ExampleScreen: React.FC<ExampleScreenProps> = (
     getQuestionObject,
     hasFinishedQuiz,
     moveToNextQuiz,
-  } = ExampleQuizHelper;
+  } = exampleQuizHelper;
 
   const questionObject = getQuestionObject(questions);
   const { question } = questionObject;
@@ -51,7 +50,7 @@ const ExampleScreen: React.FC<ExampleScreenProps> = (
 
         <FilledButton
           title={counter < questions.length ? "Next" : "Show Results"}
-          handlePress={() => {
+          onPress={() => {
             if (!canGoBack(quizType)) {
               navigation.setOptions({
                 headerLeft: null,

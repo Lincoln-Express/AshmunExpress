@@ -1,7 +1,9 @@
 import * as React from "react";
 import { StyleSheet, View, Text, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import FilledButton from "../../base/FilledButton/FilledButton";
+import { useTheme } from "react-native-paper/src/core/theming";
+import FilledButton from "../../base/filledButton/FilledButton";
+import QuizHelper from "../../utils/quizHelper/QuizHelper";
 
 const HEIGHT = Dimensions.get("window").height;
 
@@ -43,12 +45,15 @@ interface QuizResultProps {
   quiz?: string;
 }
 
+const quizResultHelper = QuizHelper();
 const QuizResultScreen: React.FC<QuizResultProps> = (
   props: QuizResultProps,
 ): JSX.Element => {
+  const theme = useTheme();
   const navigation = useNavigation();
   const { totalQuestions, correctChoices, quiz } = props;
   let review = "empty";
+  const { getResultReview } = quizResultHelper;
 
   if (totalQuestions !== undefined && correctChoices !== undefined) {
     const lowerQuartile = (correctChoices + 1) / 4;
@@ -62,12 +67,16 @@ const QuizResultScreen: React.FC<QuizResultProps> = (
       upperQuartile,
     );
   }
-  const Buttons = viewNextOptions(navigation);
+  const Buttons = React.useMemo(() => viewNextOptions(navigation), [
+    navigation,
+  ]);
 
   if (quiz === "Example" || quiz === "Practice") {
     return (
       <View style={styles.outerContainer}>
-        <Text style={styles.reviewText}>Good Job!</Text>
+        <Text style={{ ...styles.reviewText, color: theme.colors.text }}>
+          Good Job!
+        </Text>
         {Buttons}
       </View>
     );
@@ -75,9 +84,11 @@ const QuizResultScreen: React.FC<QuizResultProps> = (
 
   return (
     <View style={styles.outerContainer}>
-      <Text style={styles.reviewText}>{review}</Text>
-      <Text>YOUR SCORE</Text>
-      <Text style={styles.scoreText}>
+      <Text style={{ ...styles.reviewText, color: theme.colors.text }}>
+        {review}
+      </Text>
+      <Text style={{ color: theme.colors.primary }}>YOUR SCORE</Text>
+      <Text style={{ ...styles.scoreText, color: theme.colors.text }}>
         {`${correctChoices} / ${totalQuestions}`}
       </Text>
       {Buttons}
@@ -92,42 +103,21 @@ QuizResultScreen.defaultProps = {
   correctChoices: 0,
   quiz: "",
 };
-function getResultReview(
-  totalQuestions: number,
-  correctChoices: number,
-  lowerQuartile: number,
-  middleQuartile: number,
-  upperQuartile: number,
-) {
-  if (correctChoices <= lowerQuartile) {
-    return "Not Enough!";
-  }
-  if (correctChoices > lowerQuartile && correctChoices <= middleQuartile) {
-    return "You can do better!";
-  }
-  if (correctChoices > middleQuartile && correctChoices <= upperQuartile) {
-    return "Good Job!";
-  }
-  if (correctChoices === totalQuestions) {
-    return "Perfect!";
-  }
-  return "Awesome!";
-}
 
-function viewNextOptions(navigation: any) {
+const viewNextOptions = (navigation: any) => {
   return (
     <View style={styles.innerContainer}>
       <FilledButton
         title="Go Home"
-        handlePress={() => navigation.popToTop()}
+        onPress={() => navigation.popToTop()}
         style={styles.firstButton}
       />
       <FilledButton
         title="New Quiz"
-        handlePress={() => navigation.navigate("Quiz")}
+        onPress={() => navigation.navigate("Quiz")}
         style={styles.secondButton}
         buttonStyle={styles.secondButtonText}
       />
     </View>
   );
-}
+};

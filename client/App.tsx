@@ -12,7 +12,7 @@ import AuthContext from "./src/contexts/AuthContext";
 import UserContext from "./src/contexts/UserContext";
 import ThemeContext from "./src/contexts/ThemeContext";
 import useAuth from "./src/hooks/useAuth";
-import ErrorBoundary from "./src/base/ErrorBoundary/ErrorBoundary";
+import ErrorBoundary from "./src/base/errorBoundary/ErrorBoundary";
 
 const Stack = createStackNavigator();
 const App = (): JSX.Element => {
@@ -33,7 +33,6 @@ const App = (): JSX.Element => {
   );
 
   const { auth, state } = useAuth();
-  LogBox.ignoreAllLogs();
 
   const renderScreens = () => {
     return state.user ? (

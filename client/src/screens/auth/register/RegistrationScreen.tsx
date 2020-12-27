@@ -4,12 +4,12 @@ import { useNavigation } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
 import * as yup from "yup";
-import Logo from "../../../base/Logo/Logo";
-import Header from "../../../base/Header/Header";
-import FilledButton from "../../../base/FilledButton/FilledButton";
-import IconButton from "../../../base/IconButton/IconButton";
-import Loading from "../../../base/Loading/Loading";
-import InputField from "../../../base/InputField/InputField";
+import Logo from "../../../base/logo/Logo";
+import Header from "../../../base/header/Header";
+import FilledButton from "../../../base/filledButton/FilledButton";
+import IconButton from "../../../base/iconButton/IconButton";
+import Loading from "../../../base/loading/Loading";
+import InputField from "../../../base/inputField/InputField";
 import AuthContext from "../../../contexts/AuthContext";
 
 const styles = StyleSheet.create({
@@ -72,7 +72,7 @@ const RegistrationScreen: React.FC<null> = () => {
       <Logo />
       <IconButton
         name="close-circle-outline"
-        handlePress={() => {
+        onPress={() => {
           navigation.goBack();
         }}
       />
@@ -142,10 +142,7 @@ const RegistrationScreen: React.FC<null> = () => {
               autoFocus
             />
 
-            <FilledButton
-              title="Register"
-              handlePress={formikProps.handleSubmit}
-            />
+            <FilledButton title="Register" onPress={formikProps.handleSubmit} />
           </>
         )}
       </Formik>

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { RadioButton } from "react-native-paper";
+import { RadioButton, useTheme } from "react-native-paper";
 
 const styles = StyleSheet.create({
   outerContainer: {
@@ -35,6 +35,7 @@ const CustomRadioButton: React.FC<CustomRadioButtonProps> = (
   const [radioColor, setRadioColor] = React.useState("");
   const { text, value, onPress } = props;
   const isCorrect = onPress();
+  const theme = useTheme();
 
   if (isCorrect === false) {
     setBorderColor("#fc2003");
@@ -47,7 +48,10 @@ const CustomRadioButton: React.FC<CustomRadioButtonProps> = (
   return (
     <View style={styles.outerContainer}>
       <View style={{ ...styles.innerContainer, borderColor }}>
-        <Text style={styles.text} onPress={onPress}>
+        <Text
+          style={{ ...styles.text, color: theme.colors.text }}
+          onPress={onPress}
+        >
           {text}
         </Text>
         <RadioButton

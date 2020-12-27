@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { RadioButton } from "react-native-paper";
-import CustomRadioButton from "../CustomRadioButton/CustomRadioButton";
+import CustomRadioButton from "../customRadioButton/CustomRadioButton";
 
 const styles = StyleSheet.create({
   button: {
