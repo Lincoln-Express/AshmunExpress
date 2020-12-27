@@ -1,5 +1,6 @@
 import * as React from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
+import { useTheme } from "react-native-paper";
 
 const styles = StyleSheet.create({
   container: {
@@ -17,7 +18,6 @@ interface InputFieldProps {
   pointer: string;
   formikProps: any;
   placeholder: string;
-  placeholderTextColor: string;
   autoFocus: boolean;
   secureTextEntry?: boolean;
 }
@@ -27,10 +27,10 @@ const InputField: React.FC<InputFieldProps> = ({
   formikProps,
   pointer,
   placeholder,
-  placeholderTextColor,
   autoFocus,
   secureTextEntry,
 }: InputFieldProps) => {
+  const theme = useTheme();
   const inputBoxStyle = {
     borderColor: "#273A7F",
     borderWidth: 1,
@@ -52,7 +52,7 @@ const InputField: React.FC<InputFieldProps> = ({
         onChangeText={formikProps.handleChange(String(pointer))}
         onBlur={formikProps.handleBlur(String(pointer))}
         placeholder={placeholder}
-        placeholderTextColor={placeholderTextColor}
+        placeholderTextColor={theme.colors.placeholder}
         autoFocus={autoFocus}
         secureTextEntry={secureTextEntry}
       />

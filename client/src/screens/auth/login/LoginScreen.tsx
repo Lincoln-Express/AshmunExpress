@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 250,
     padding: 16,
-    backgroundColor: "white",
   },
   image: {
     position: "absolute",
@@ -50,11 +49,11 @@ const LoginScreen: React.FC<null> = () => {
         contentContainerStyle={styles.container}
         enableOnAndroid
       >
-        <ImageBackground
+        {/* <ImageBackground
           // eslint-disable-next-line global-require
           source={require("../../../../assets/background.jpg")}
           style={styles.image}
-        />
+        /> */}
         <Logo />
         <Header>Welcome</Header>
         <Formik

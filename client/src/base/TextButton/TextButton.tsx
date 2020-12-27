@@ -6,7 +6,7 @@ import {
   Text,
   Platform,
 } from "react-native";
-import PropTypes from "prop-types";
+import { useTheme } from "react-native-paper";
 
 const styles = StyleSheet.create({
   container: {
@@ -27,21 +27,17 @@ interface TextButtonProps {
   handlePress: () => void;
 }
 const TextButton: React.FC<TextButtonProps> = (props: TextButtonProps) => {
+  const theme = useTheme();
   const { title, handlePress } = props;
   return Platform.OS === "ios" ? (
     <TouchableOpacity style={styles.container} onPress={handlePress}>
-      <Text style={styles.text}>{title}</Text>
+      <Text style={{ ...styles.text, color: theme.colors.text }}>{title}</Text>
     </TouchableOpacity>
   ) : (
     <TouchableNativeFeedback style={styles.container} onPress={handlePress}>
-      <Text style={styles.text}>{title}</Text>
+      <Text style={{ ...styles.text, color: theme.colors.text }}>{title}</Text>
     </TouchableNativeFeedback>
   );
-};
-
-TextButton.propTypes = {
-  title: PropTypes.string.isRequired,
-  handlePress: PropTypes.func.isRequired,
 };
 
 export default TextButton;

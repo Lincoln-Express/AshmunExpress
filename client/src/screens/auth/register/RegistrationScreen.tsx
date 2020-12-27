@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 80,
     padding: 16,
-    backgroundColor: "#fff",
   },
   header: { paddingTop: 170 },
   image: {
@@ -65,11 +64,11 @@ const RegistrationScreen: React.FC<null> = () => {
       contentContainerStyle={styles.container}
       enableOnAndroid
     >
-      <ImageBackground
+      {/* <ImageBackground
         // eslint-disable-next-line global-require
         source={require("../../../../assets/background.jpg")}
         style={styles.image}
-      />
+      /> */}
       <Logo />
       <IconButton
         name="close-circle-outline"
@@ -110,7 +109,6 @@ const RegistrationScreen: React.FC<null> = () => {
               formikProps={formikProps}
               pointer="firstName"
               placeholder="John"
-              placeholderTextColor="#808080"
               autoFocus
             />
             <InputField
@@ -118,7 +116,6 @@ const RegistrationScreen: React.FC<null> = () => {
               formikProps={formikProps}
               pointer="lastName"
               placeholder="Doe"
-              placeholderTextColor="#808080"
               autoFocus
             />
             <InputField
@@ -126,7 +123,6 @@ const RegistrationScreen: React.FC<null> = () => {
               formikProps={formikProps}
               pointer="email"
               placeholder="johndoe@gmail.com"
-              placeholderTextColor="#808080"
               autoFocus
             />
             <InputField
@@ -134,7 +130,6 @@ const RegistrationScreen: React.FC<null> = () => {
               formikProps={formikProps}
               pointer="password"
               placeholder="********"
-              placeholderTextColor="#808080"
               secureTextEntry
               autoFocus
             />
@@ -144,7 +139,6 @@ const RegistrationScreen: React.FC<null> = () => {
               formikProps={formikProps}
               pointer="confirmPassword"
               placeholder="confirm password"
-              placeholderTextColor="#808080"
               secureTextEntry
               autoFocus
             />
