@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import BASE_URL from "../../config";
-import fetcher from "../../utils/fetcher/Fetcher";
+import fetcher from "../../utils/fetcher/fetcher";
 
 const useFetch = (
   keyword: string | number,

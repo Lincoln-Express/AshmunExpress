@@ -5,8 +5,8 @@ import { useNavigation } from "@react-navigation/native";
 import Loading from "../../base/loading/Loading";
 import CustomList from "../../base/customList/CustomList";
 import useFetch from "../../hooks/useFetch/useFetch";
-import mergeQuizData from "../../utils/mergeQuizData/MergeQuizData";
-import transformData from "../../utils/transformData/TransformData";
+import mergeQuizData from "../../utils/mergeQuizData/mergeQuizData";
+import transformData from "../../utils/transformData/transformData";
 import IconButton from "../../base/iconButton/IconButton";
 import CustomCard from "../../base/customCard/CustomCard";
 
