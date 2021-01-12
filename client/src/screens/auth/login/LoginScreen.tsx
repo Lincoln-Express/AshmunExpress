@@ -4,13 +4,13 @@ import { useNavigation } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
 import * as yup from "yup";
-import Logo from "../../../base/Logo/Logo";
-import FilledButton from "../../../base/FilledButton/FilledButton";
-import TextButton from "../../../base/TextButton/TextButton";
+import Logo from "../../../base/logo/Logo";
+import FilledButton from "../../../base/filledButton/FilledButton";
+import TextButton from "../../../base/textButton/TextButton";
 import AuthContext from "../../../contexts/AuthContext";
-import Loading from "../../../base/Loading/Loading";
-import Header from "../../../base/Header/Header";
-import InputField from "../../../base/InputField/InputField";
+import Loading from "../../../base/loading/Loading";
+import Header from "../../../base/header/Header";
+import InputField from "../../../base/inputField/InputField";
 
 const styles = StyleSheet.create({
   container: {
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   },
 });
 
+// TODO: replace login function with logout
 const LoginScreen: React.FC<null> = () => {
   const navigation = useNavigation();
   const { login } = React.useContext(AuthContext);

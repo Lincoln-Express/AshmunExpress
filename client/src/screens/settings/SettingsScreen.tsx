@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 // import AuthContext from '../contexts/AuthContext';
 // import UserContext from '../contexts/UserContext';
 import ThemeContext from "../../contexts/ThemeContext";
-import CustomSwitch from "../../base/CustomSwitch/CustomSwitch";
+import CustomSwitch from "../../base/customSwitch/CustomSwitch";
 
 const styles = StyleSheet.create({
   container: {

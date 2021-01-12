@@ -6,7 +6,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import BASE_URL from "../../config/index";
-import FilledButton from "../../base/FilledButton/FilledButton";
+import FilledButton from "../../base/filledButton/FilledButton";
 
 const styles = StyleSheet.create({
   container: {

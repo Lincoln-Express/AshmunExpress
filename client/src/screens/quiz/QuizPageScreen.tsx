@@ -4,8 +4,8 @@
 import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import FilledButton from "../../base/FilledButton/FilledButton";
-import Loading from "../../base/Loading/Loading";
+import FilledButton from "../../base/filledButton/FilledButton";
+import Loading from "../../base/loading/Loading";
 import useFetch from "../../hooks/useFetch/useFetch";
 import BASE_URL from "../../config/index";
 

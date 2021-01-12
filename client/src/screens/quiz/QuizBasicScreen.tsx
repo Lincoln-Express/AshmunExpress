@@ -1,13 +1,13 @@
 import * as React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Loading from "../../base/Loading/Loading";
-import CustomList from "../../base/CustomList/CustomList";
+import Loading from "../../base/loading/Loading";
+import CustomList from "../../base/customList/CustomList";
 import useFetch from "../../hooks/useFetch/useFetch";
 import mergeQuizData from "../../utils/mergeQuizData/mergeQuizData";
 import transformData from "../../utils/transformData/transformData";
-import IconButton from "../../base/IconButton/IconButton";
-import CustomCard from "../../base/CustomCard/CustomCard";
+import IconButton from "../../base/iconButton/IconButton";
+import CustomCard from "../../base/customCard/CustomCard";
 
 const styles = StyleSheet.create({
   container: {
