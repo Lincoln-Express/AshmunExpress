@@ -2,6 +2,7 @@ import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
 import FilledButton from "../../base/filledButton/FilledButton";
+import CustomProgressBar from "../../base/customProgressBar/CustomProgressBar";
 import Question from "../../base/question/Question";
 import QuestionCount from "../../base/questionCount/QuestionCount";
 import QuizResultScreen from "./QuizResultScreen";
@@ -45,6 +46,10 @@ const ExampleScreen: React.FC<ExampleScreenProps> = (
         <QuestionCount
           counter={counter}
           totalNumberOfQuestions={questions.length}
+        />
+        <CustomProgressBar
+          color="#273A7F"
+          progress={counter / questions.length}
         />
         <Question question={question} />
 

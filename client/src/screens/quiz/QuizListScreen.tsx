@@ -1,7 +1,6 @@
 import * as React from "react";
 import { StyleSheet, ScrollView } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import capitalize from "lodash/capitalize";
 import CustomCard from "../../base/customCard/CustomCard";
 import IconButton from "../../base/iconButton/IconButton";
 import CustomList from "../../base/customList/CustomList";
