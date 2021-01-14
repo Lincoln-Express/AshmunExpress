@@ -1,16 +1,17 @@
 import * as React from "react";
 import { StyleSheet, ScrollView } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { useTheme } from "react-native-paper";
 import CustomCard from "../../base/customCard/CustomCard";
 import IconButton from "../../base/iconButton/IconButton";
 import CustomList from "../../base/customList/CustomList";
+import ThemeContext from "../../contexts/ThemeContext";
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     justifyContent: "flex-start",
     padding: 8,
-    backgroundColor: "#fff",
   },
   icon: {
     right: 0,
@@ -28,6 +29,8 @@ const QuizListScreen: React.FC<null> = (): JSX.Element => {
   const levels = ["1", "2", "3", "4"];
   const route = useRoute();
   const { section, topic } = route.params;
+  const { isThemeDark } = React.useContext(ThemeContext);
+  const theme = useTheme();
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -48,7 +51,15 @@ const QuizListScreen: React.FC<null> = (): JSX.Element => {
                     quiz,
                   });
                 }}
-                left={() => <IconButton name="hourglass" style={styles.icon} />}
+                left={() => (
+                  <IconButton
+                    name="hourglass"
+                    style={styles.icon}
+                    color={
+                      isThemeDark ? theme.colors.primary : theme.colors.accent
+                    }
+                  />
+                )}
               />
             );
           })}

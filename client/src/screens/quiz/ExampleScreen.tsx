@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
 import FilledButton from "../../base/filledButton/FilledButton";
 import CustomProgressBar from "../../base/customProgressBar/CustomProgressBar";
@@ -10,59 +10,60 @@ import QuizHelper from "../../utils/quizHelper/QuizHelper";
 
 const styles = StyleSheet.create({
   button: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     maxWidth: "40%",
+    marginLeft: 10,
+  },
+  container: {
+    flexGrow: 1,
+  },
+  questionCount: {
+    fontSize: 20,
+    marginVertical: 10,
+    marginLeft: 10,
+    fontWeight: "bold",
+  },
+  progressBar: {
+    marginLeft: 10,
+    marginBottom: 50,
   },
 });
 
-interface ExampleScreenProps {
-  questions: Array<Record<string, any>>;
-  quizType: string;
-}
-
-const exampleQuizHelper = QuizHelper();
-const ExampleScreen: React.FC<ExampleScreenProps> = (
-  props: ExampleScreenProps,
-) => {
+const ExampleScreen: React.FC<null> = (): JSX.Element => {
   const navigation = useNavigation();
-  const { questions, quizType } = props;
+  const route = useRoute();
+  const { questions, quiz } = route.params;
+  const exampleQuizHelper = QuizHelper();
 
   const {
-    counter,
-    canGoBack,
+    getCounter,
     getQuestionObject,
     hasFinishedQuiz,
     moveToNextQuiz,
   } = exampleQuizHelper;
 
-  const questionObject = getQuestionObject(questions);
-  const { question } = questionObject;
-
   if (!hasFinishedQuiz(questions.length)) {
+    const counter = getCounter();
+    const questionObject = getQuestionObject(questions);
+    const { question } = questionObject;
+
     return (
-      <View>
+      <View style={styles.container}>
         <QuestionCount
           counter={counter}
           totalNumberOfQuestions={questions.length}
+          style={styles.questionCount}
         />
         <CustomProgressBar
-          color="#273A7F"
-          progress={counter / questions.length}
+          progress={counter + 1 / questions.length}
+          style={styles.progressBar}
         />
         <Question question={question} />
 
         <FilledButton
           title={counter < questions.length ? "Next" : "Show Results"}
           onPress={() => {
-            if (!canGoBack(quizType)) {
-              navigation.setOptions({
-                headerLeft: null,
-              });
-            }
             moveToNextQuiz();
-            navigation.navigate("Example");
+            navigation.navigate("Example", { questions, quiz });
           }}
           style={styles.button}
         />
@@ -71,7 +72,7 @@ const ExampleScreen: React.FC<ExampleScreenProps> = (
   }
   return (
     <View>
-      <QuizResultScreen quiz={quizType} />
+      <QuizResultScreen quiz={quiz} />
     </View>
   );
 };

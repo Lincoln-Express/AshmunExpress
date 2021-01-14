@@ -2,6 +2,7 @@
 import * as React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "react-native-paper";
 import Loading from "../../base/loading/Loading";
 import CustomList from "../../base/customList/CustomList";
 import useFetch from "../../hooks/useFetch/useFetch";
@@ -9,13 +10,13 @@ import mergeQuizData from "../../utils/mergeQuizData/mergeQuizData";
 import transformData from "../../utils/transformData/transformData";
 import IconButton from "../../base/iconButton/IconButton";
 import CustomCard from "../../base/customCard/CustomCard";
+import ThemeContext from "../../contexts/ThemeContext";
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     justifyContent: "flex-start",
     padding: 8,
-    backgroundColor: "#fff",
   },
   icon: {
     right: 0,
@@ -37,6 +38,8 @@ const QuizIntroScreen: React.FC<null> = () => {
     [data],
   );
 
+  const { isThemeDark } = React.useContext(ThemeContext);
+  const theme = useTheme();
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {isError && <View>{isError}</View>}
@@ -58,7 +61,15 @@ const QuizIntroScreen: React.FC<null> = () => {
                       });
                     }}
                     left={() => (
-                      <IconButton name="hourglass" style={styles.icon} />
+                      <IconButton
+                        name="hourglass"
+                        style={styles.icon}
+                        color={
+                          isThemeDark
+                            ? theme.colors.primary
+                            : theme.colors.accent
+                        }
+                      />
                     )}
                   />
                 );

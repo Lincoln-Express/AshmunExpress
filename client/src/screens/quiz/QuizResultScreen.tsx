@@ -5,14 +5,13 @@ import { useTheme } from "react-native-paper/src/core/theming";
 import FilledButton from "../../base/filledButton/FilledButton";
 import QuizHelper from "../../utils/quizHelper/QuizHelper";
 
-const HEIGHT = Dimensions.get("window").height;
+const HEIGHT = Dimensions.get("screen").height;
 
 const styles = StyleSheet.create({
   outerContainer: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: "center",
-    backgroundColor: "#fff",
-    height: HEIGHT,
+    height: "100%",
   },
   innerContainer: {
     flexDirection: "row",
@@ -107,12 +106,12 @@ const viewNextOptions = (navigation: any) => {
     <View style={styles.innerContainer}>
       <FilledButton
         title="Go Home"
-        onPress={() => navigation.popToTop()}
+        onPress={() => navigation.navigate("Home")}
         style={styles.firstButton}
       />
       <FilledButton
         title="New Quiz"
-        onPress={() => navigation.navigate("Quiz")}
+        onPress={() => navigation.popToTop()}
         style={styles.secondButton}
         buttonStyle={styles.secondButtonText}
       />

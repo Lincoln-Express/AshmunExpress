@@ -1,21 +1,42 @@
 import * as React from "react";
-import { ScrollView, Text, StyleSheet } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { ScrollView, Text, StyleSheet, View } from "react-native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useTheme } from "react-native-paper";
 import shuffle from "lodash/shuffle";
 import Loading from "../../base/loading/Loading";
 import useFetch from "../../hooks/useFetch/useFetch";
-import ExampleScreen from "./ExampleScreen";
-import PracticeScreen from "./PracticeScreen";
-import TestScreen from "./TestScreen";
-import TutorialScreen from "./TutorialScreen";
 import QuizHelper from "../../utils/quizHelper/QuizHelper";
+import FilledButton from "../../base/filledButton/FilledButton";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     justifyContent: "center",
+  },
+  firstButton: {
+    maxWidth: "40%",
+  },
+  innerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  outerContainer: {
+    flex: 1,
+    justifyContent: "center",
+  },
+
+  readyText: {
+    fontSize: 24,
+    textAlign: "center",
+  },
+  secondButton: {
+    maxWidth: "40%",
+    backgroundColor: "#FFF",
+    borderWidth: 2,
+    borderColor: "#273A8F",
+  },
+  secondButtonText: {
+    color: "#273A8F",
   },
   text: {
     textAlign: "center",
@@ -27,6 +48,7 @@ const quizPageScreenHelper = QuizHelper();
 const QuizPageScreen: React.FC<null> = (): JSX.Element => {
   const theme = useTheme();
   const route = useRoute();
+  const navigation = useNavigation();
   const { section, quiz, level } = route.params;
   const { getEndIndex } = quizPageScreenHelper;
 
@@ -39,8 +61,34 @@ const QuizPageScreen: React.FC<null> = (): JSX.Element => {
     const len = shuffledArray.length;
     const endIndex = getEndIndex(len);
     const questions = shuffledArray.slice(0, endIndex);
-    const QuizType = getQuizScreen(quiz, questions);
-    return <ScrollView>{QuizType}</ScrollView>;
+    return (
+      <View style={styles.outerContainer}>
+        <Text style={{ ...styles.readyText, color: theme.colors.text }}>
+          Are you ready ?
+        </Text>
+        <View style={styles.innerContainer}>
+          <FilledButton
+            title="Not yet"
+            onPress={() => {
+              navigation.goBack();
+            }}
+            style={styles.firstButton}
+          />
+
+          <FilledButton
+            title="Get Started"
+            onPress={() => {
+              navigation.navigate(`${quiz}`, {
+                questions,
+                quiz,
+              });
+            }}
+            style={styles.secondButton}
+            buttonStyle={styles.secondButtonText}
+          />
+        </View>
+      </View>
+    );
   }
 
   return (
@@ -53,20 +101,6 @@ const QuizPageScreen: React.FC<null> = (): JSX.Element => {
       )}
     </ScrollView>
   );
-};
-
-const getQuizScreen = (quiz: string, questions: Array<Record<string, any>>) => {
-  if (quiz === "Example") {
-    return <ExampleScreen questions={questions} quizType={quiz} />;
-  }
-  if (quiz === "Practice") {
-    return <PracticeScreen />;
-  }
-
-  if (quiz === "Tutorial") {
-    return <TutorialScreen />;
-  }
-  return <TestScreen />;
 };
 
 export default QuizPageScreen;

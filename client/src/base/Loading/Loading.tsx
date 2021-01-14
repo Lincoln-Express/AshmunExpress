@@ -27,7 +27,6 @@ interface LoadingProps {
   loading: boolean;
 }
 const Loading: React.FC<LoadingProps> = (props: LoadingProps) => {
-  const theme = useTheme();
   const { loading } = props;
   if (!loading) {
     return <View />;
@@ -36,9 +35,7 @@ const Loading: React.FC<LoadingProps> = (props: LoadingProps) => {
     <View style={styles.overlay}>
       <View style={styles.container}>
         <ActivityIndicator color="#273A7F" />
-        <Text style={{ ...styles.text, color: theme.colors.text }}>
-          Loading...
-        </Text>
+        <Text style={styles.text}>Loading...</Text>
       </View>
     </View>
   );

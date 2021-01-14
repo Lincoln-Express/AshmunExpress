@@ -49,7 +49,11 @@ const App = (): JSX.Element => {
               <PaperProvider theme={theme}>
                 <NavigationContainer theme={theme}>
                   <StatusBar
-                    backgroundColor={theme === LightTheme ? "#F57C00" : "#000"}
+                    backgroundColor={
+                      theme === LightTheme
+                        ? theme.colors.primary
+                        : theme.colors.surface
+                    }
                     barStyle="default"
                   />
 

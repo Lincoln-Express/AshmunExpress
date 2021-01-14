@@ -17,10 +17,11 @@ export interface IconButtonProps {
   onPress?: () => void;
   style?: Record<string, unknown>;
   size?: number;
+  color: string;
 }
 
 const IconButton: React.FC<IconButtonProps> = (props: IconButtonProps) => {
-  const { name, onPress, style, size } = props;
+  const { name, onPress, style, size, color } = props;
   const nameValue = Platform.OS === "ios" ? `ios-${name}` : `md-${name}`;
 
   return Platform.OS === "ios" ? (
@@ -28,12 +29,12 @@ const IconButton: React.FC<IconButtonProps> = (props: IconButtonProps) => {
       style={{ ...styles.container, ...style }}
       onPress={onPress}
     >
-      <Ionicons name={nameValue} size={size} color="#273A7F" />
+      <Ionicons name={nameValue} size={size} color={color} />
     </TouchableOpacity>
   ) : (
     <TouchableNativeFeedback onPress={onPress}>
       <View style={{ ...styles.container, ...style }}>
-        <Ionicons name={nameValue} size={size} color="#273A7F" />
+        <Ionicons name={nameValue} size={size} color={color} />
       </View>
     </TouchableNativeFeedback>
   );
@@ -42,5 +43,6 @@ const IconButton: React.FC<IconButtonProps> = (props: IconButtonProps) => {
 IconButton.defaultProps = {
   size: 32,
   onPress: undefined,
+  style: {},
 };
 export default IconButton;

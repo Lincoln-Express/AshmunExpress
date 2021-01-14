@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
 });
 
 //TODO: replace the login function with logout
-// TODO: replace login function with logout
 const LoginScreen: React.FC<null> = () => {
   const navigation = useNavigation();
   const { login } = React.useContext(AuthContext);

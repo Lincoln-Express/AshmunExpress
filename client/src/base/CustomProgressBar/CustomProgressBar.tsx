@@ -1,17 +1,29 @@
 import * as React from "react";
-import ProgressBar from "react-native-paper/src/components/ProgressBar";
+import { ProgressBar, useTheme } from "react-native-paper";
+import ThemeContext from "../../contexts/ThemeContext";
 
 interface CustomProgressBarProps {
   progress: number;
-  color: string;
+  style?: Record<string, any>;
 }
 
 const CustomProgressBar: React.FC<CustomProgressBarProps> = (
   props: CustomProgressBarProps,
 ) => {
-  const { progress, color } = props;
-
-  return <ProgressBar progress={progress} color={color} />;
+  const { progress, style } = props;
+  const theme = useTheme();
+  const isThemeDark = React.useContext(ThemeContext);
+  return (
+    <ProgressBar
+      progress={progress}
+      color={isThemeDark ? theme.colors.primary : theme.colors.accent}
+      style={style}
+    />
+  );
 };
 
 export default CustomProgressBar;
+
+CustomProgressBar.defaultProps = {
+  style: {},
+};

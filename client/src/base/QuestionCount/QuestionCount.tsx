@@ -11,16 +11,17 @@ const styles = StyleSheet.create({
 interface QuestionCountProps {
   counter: number;
   totalNumberOfQuestions: number;
+  style?: Record<string, any>;
 }
 
 const QuestionCount: React.FC<QuestionCountProps> = (
   props: QuestionCountProps,
 ) => {
-  const { counter, totalNumberOfQuestions } = props;
+  const { counter, totalNumberOfQuestions, style } = props;
   const theme = useTheme();
   return (
     <View>
-      <Text style={{ ...styles.text, color: theme.colors.text }}>
+      <Text style={{ ...styles.text, color: theme.colors.text, ...style }}>
         {`Question ${counter + 1}/${totalNumberOfQuestions}`}
       </Text>
     </View>
@@ -28,3 +29,7 @@ const QuestionCount: React.FC<QuestionCountProps> = (
 };
 
 export default QuestionCount;
+
+QuestionCount.defaultProps = {
+  style: {},
+};

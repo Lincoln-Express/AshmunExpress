@@ -8,7 +8,6 @@ const AuthStack = createStackNavigator();
 const LoginStack = createStackNavigator();
 const AuthStackNavigator = (): JSX.Element => (
   <AuthStack.Navigator
-    mode="modal"
     screenOptions={{ headerShown: false, animationEnabled: false }}
   >
     <AuthStack.Screen name="Login">

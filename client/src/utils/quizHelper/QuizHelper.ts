@@ -5,9 +5,13 @@ type QuizHelperReturnType = {
     questionObject: Record<string, any>,
     buttonValue: string,
   ) => boolean;
+  getAnswers: (questionObject: Record<string, any>) => Array<string>;
+  getCounter: () => number;
   getCorrectAnswersCount: () => number;
   getEndIndex: (len: number) => number;
-  getQuestionObject: (questions: Record<string, any>[]) => Record<string, any>;
+  getQuestionObject: (
+    questions: Array<Record<string, any>>,
+  ) => Record<string, any>;
   getResultReview: (
     totalQuestions: number,
     correctChoices: number,
@@ -36,6 +40,22 @@ const QuizHelper = (): QuizHelperReturnType => {
     }
     return false;
   };
+
+  const getAnswers = (questionObject) => {
+    const result: Array<string> = [];
+
+    Object.entries(questionObject).forEach(([key, value]) => {
+      if (key.includes("option") && typeof value === "string") {
+        result.push(value);
+      }
+    });
+
+    return result;
+  };
+
+  const getCounter = () => {
+    return counter;
+  };
   const getCorrectAnswersCount = () => {
     return correctAnswer;
   };
@@ -51,7 +71,7 @@ const QuizHelper = (): QuizHelperReturnType => {
     return len / 2 + 1;
   };
 
-  const getQuestionObject = (questions: Record<string, any>[]) => {
+  const getQuestionObject = (questions: Array<Record<string, any>>) => {
     return questions[counter];
   };
 
@@ -78,7 +98,7 @@ const QuizHelper = (): QuizHelperReturnType => {
   };
 
   const hasFinishedQuiz = (questionsLength: number) => {
-    return counter > questionsLength;
+    return counter === questionsLength;
   };
   const moveToNextQuiz = () => {
     counter += 1;
@@ -89,6 +109,8 @@ const QuizHelper = (): QuizHelperReturnType => {
     counter,
     canGoBack,
     checkValidAnswer,
+    getAnswers,
+    getCounter,
     getCorrectAnswersCount,
     getEndIndex,
     getQuestionObject,

@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 interface CustomRadioButtonProps {
   text: string;
   value: string;
-  onPress: () => boolean;
+  isCorrect: boolean;
 }
 
 const CustomRadioButton: React.FC<CustomRadioButtonProps> = (
@@ -33,8 +33,7 @@ const CustomRadioButton: React.FC<CustomRadioButtonProps> = (
 ) => {
   const [borderColor, setBorderColor] = React.useState("#273A7F");
   const [radioColor, setRadioColor] = React.useState("");
-  const { text, value, onPress } = props;
-  const isCorrect = onPress();
+  const { text, value, isCorrect } = props;
   const theme = useTheme();
 
   if (isCorrect === false) {
@@ -48,15 +47,9 @@ const CustomRadioButton: React.FC<CustomRadioButtonProps> = (
   return (
     <View style={styles.outerContainer}>
       <View style={{ ...styles.innerContainer, borderColor }}>
-        <Text
-          style={{ ...styles.text, color: theme.colors.text }}
-          onPress={onPress}
-        >
-          {text}
-        </Text>
+        <Text style={{ ...styles.text, color: theme.colors.text }}>{text}</Text>
         <RadioButton
           value={value}
-          onPress={onPress}
           color={radioColor}
           uncheckedColor="#273A7F"
         />
