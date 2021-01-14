@@ -24,17 +24,17 @@ const styles = StyleSheet.create({
 
 interface TextButtonProps {
   title: string;
-  handlePress: () => void;
+  onPress: () => void;
 }
 const TextButton: React.FC<TextButtonProps> = (props: TextButtonProps) => {
   const theme = useTheme();
-  const { title, handlePress } = props;
+  const { title, onPress } = props;
   return Platform.OS === "ios" ? (
-    <TouchableOpacity style={styles.container} onPress={handlePress}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <Text style={{ ...styles.text, color: theme.colors.text }}>{title}</Text>
     </TouchableOpacity>
   ) : (
-    <TouchableNativeFeedback style={styles.container} onPress={handlePress}>
+    <TouchableNativeFeedback style={styles.container} onPress={onPress}>
       <Text style={{ ...styles.text, color: theme.colors.text }}>{title}</Text>
     </TouchableNativeFeedback>
   );

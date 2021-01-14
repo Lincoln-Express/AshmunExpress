@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import * as React from "react";
 import {
   StyleSheet,
@@ -7,17 +8,17 @@ import {
   Platform,
   View,
 } from "react-native";
-import buttonElevationStyle from "../../utils/buttonElevation";
+import { useTheme } from "react-native-paper";
 
 const styles = StyleSheet.create({
   container: {
     ...Platform.select({
       ios: {
-        backgroundColor: buttonElevationStyle.ios,
+        backgroundColor: "#0A84FF",
       },
       android: {
-        backgroundColor: buttonElevationStyle.android.color,
-        elevation: buttonElevationStyle.android.elevation,
+        backgroundColor: "#273A7F",
+        elevation: 5,
       },
     }),
     width: "100%",
@@ -36,27 +37,39 @@ const styles = StyleSheet.create({
 
 interface FilledButtonProps {
   title: string;
-  handlePress: () => void;
+  onPress: () => void;
   style?: Record<string, unknown>;
+  buttonStyle?: Record<string, unknown>;
 }
 
 const FilledButton: React.FC<FilledButtonProps> = (
   props: FilledButtonProps,
 ) => {
-  const { title, handlePress, style } = props;
+  const theme = useTheme();
+  const { title, onPress, style, buttonStyle } = props;
   const titleValue = Platform.OS === "ios" ? title : title.toUpperCase();
 
   return Platform.OS === "ios" ? (
     <TouchableHighlight
-      style={{ ...styles.container, ...style }}
-      onPress={handlePress}
+      style={{
+        ...styles.container,
+        backgroundColor: theme.dark ? "#F57C00" : "#0A84FF",
+        ...style,
+      }}
+      onPress={onPress}
     >
-      <Text style={styles.text}>{titleValue}</Text>
+      <Text style={{ ...styles.text, ...buttonStyle }}>{titleValue}</Text>
     </TouchableHighlight>
   ) : (
-    <TouchableNativeFeedback onPress={handlePress}>
-      <View style={{ ...styles.container, ...style }}>
-        <Text style={styles.text}>{titleValue}</Text>
+    <TouchableNativeFeedback onPress={onPress}>
+      <View
+        style={{
+          ...styles.container,
+          backgroundColor: theme.dark ? "#F57C00" : "#273A7F",
+          ...style,
+        }}
+      >
+        <Text style={{ ...styles.text, ...buttonStyle }}>{titleValue}</Text>
       </View>
     </TouchableNativeFeedback>
   );
@@ -64,5 +77,6 @@ const FilledButton: React.FC<FilledButtonProps> = (
 
 FilledButton.defaultProps = {
   style: {},
+  buttonStyle: {},
 };
 export default FilledButton;

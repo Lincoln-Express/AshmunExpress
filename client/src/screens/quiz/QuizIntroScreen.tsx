@@ -1,20 +1,22 @@
+/* eslint-disable react/jsx-indent */
 import * as React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Loading from "../../base/Loading/Loading";
-import CustomList from "../../base/CustomList/CustomList";
+import { useTheme } from "react-native-paper";
+import Loading from "../../base/loading/Loading";
+import CustomList from "../../base/customList/CustomList";
 import useFetch from "../../hooks/useFetch/useFetch";
 import mergeQuizData from "../../utils/mergeQuizData/mergeQuizData";
 import transformData from "../../utils/transformData/transformData";
-import IconButton from "../../base/IconButton/IconButton";
-import CustomCard from "../../base/CustomCard/CustomCard";
+import IconButton from "../../base/iconButton/IconButton";
+import CustomCard from "../../base/customCard/CustomCard";
+import ThemeContext from "../../contexts/ThemeContext";
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     justifyContent: "flex-start",
     padding: 8,
-    backgroundColor: "#fff",
   },
   icon: {
     right: 0,
@@ -27,12 +29,17 @@ const styles = StyleSheet.create({
   },
 });
 
-const QuizBasicScreen: React.FC<null> = () => {
+const QuizIntroScreen: React.FC<null> = () => {
   const navigation = useNavigation();
   const keyword = "topics";
   const { isError, isLoading, data } = useFetch(keyword);
-  const mergedQuizData = transformData(mergeQuizData(data));
+  const mergedQuizData = React.useMemo(
+    () => transformData(mergeQuizData(data)),
+    [data],
+  );
 
+  const { isThemeDark } = React.useContext(ThemeContext);
+  const theme = useTheme();
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {isError && <View>{isError}</View>}
@@ -49,12 +56,20 @@ const QuizBasicScreen: React.FC<null> = () => {
                     elevation={5}
                     onPress={() => {
                       navigation.navigate("QuizList", {
-                        name: topic.title,
+                        topic: topic.title,
                         section,
                       });
                     }}
                     left={() => (
-                      <IconButton name="hourglass" style={styles.icon} />
+                      <IconButton
+                        name="hourglass"
+                        style={styles.icon}
+                        color={
+                          isThemeDark
+                            ? theme.colors.primary
+                            : theme.colors.accent
+                        }
+                      />
                     )}
                   />
                 );
@@ -66,4 +81,4 @@ const QuizBasicScreen: React.FC<null> = () => {
   );
 };
 
-export default QuizBasicScreen;
+export default QuizIntroScreen;

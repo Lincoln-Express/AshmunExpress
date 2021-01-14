@@ -3,15 +3,20 @@ import * as React from "react";
 import { Platform } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useTheme } from "react-native-paper/src/core/theming";
 import { Ionicons } from "@expo/vector-icons";
 import ThemeContext from "../contexts/ThemeContext";
 import HomeScreen from "../screens/home/HomeScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
 import SettingsScreen from "../screens/settings/SettingsScreen";
-import QuizBasicScreen from "../screens/quiz/QuizBasicScreen";
+import QuizIntroScreen from "../screens/quiz/QuizIntroScreen";
 import QuizPageScreen from "../screens/quiz/QuizPageScreen";
 import QuizListScreen from "../screens/quiz/QuizListScreen";
-import QuizResultsScreen from "../screens/quiz/QuizResultsScreen";
+import QuizResultScreen from "../screens/quiz/QuizResultScreen";
+import ExampleScreen from "../screens/quiz/ExampleScreen";
+import TestScreen from "../screens/quiz/TestScreen";
+import PracticeScreen from "../screens/quiz/PracticeScreen";
+import TutorialScreen from "../screens/quiz/TutorialScreen";
 
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -20,59 +25,134 @@ const SettingsStack = createStackNavigator();
 
 const MainTab = createBottomTabNavigator();
 
-const HomeStackScreen = () => (
-  <HomeStack.Navigator>
-    <HomeStack.Screen name="Home" component={HomeScreen} />
-  </HomeStack.Navigator>
-);
-
-const ProfileStackScreen = () => (
-  <ProfileStack.Navigator>
-    <ProfileStack.Screen name="Profile" component={ProfileScreen} />
-  </ProfileStack.Navigator>
-);
-
-const QuizStackScreen = () => (
-  <QuizStack.Navigator>
-    <QuizStack.Screen
-      name="Quiz"
-      component={QuizBasicScreen}
-      options={{
-        title: "Topics",
-        headerTitleAlign: "center",
+const HomeStackScreen = () => {
+  const { isThemeDark } = React.useContext(ThemeContext);
+  const theme = useTheme();
+  return (
+    <HomeStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          borderBottomColor: isThemeDark
+            ? theme.colors.primary
+            : theme.colors.accent,
+          borderBottomWidth: 0.5,
+        },
       }}
-    />
-    <QuizStack.Screen
-      name="QuizList"
-      component={QuizListScreen}
-      options={({ route }) => ({
-        title: `${route.params.name}`,
-      })}
-    />
-    <QuizStack.Screen
-      name="QuizResult"
-      component={QuizResultsScreen}
-      options={{ title: "Quiz Results" }}
-    />
-    <QuizStack.Screen
-      name="QuizPage"
-      component={QuizPageScreen}
-      options={({ route }) => ({
-        title: `${route.params.quizType}: Level ${route.params.levelNum}`,
-      })}
-    />
-  </QuizStack.Navigator>
-);
+    >
+      <HomeStack.Screen name="Home" component={HomeScreen} />
+    </HomeStack.Navigator>
+  );
+};
 
-const SettingsStackScreen = () => (
-  <SettingsStack.Navigator>
-    <SettingsStack.Screen name="Settings" component={SettingsScreen} />
-  </SettingsStack.Navigator>
-);
+const ProfileStackScreen = () => {
+  const { isThemeDark } = React.useContext(ThemeContext);
+  const theme = useTheme();
+  return (
+    <ProfileStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          borderBottomColor: isThemeDark
+            ? theme.colors.primary
+            : theme.colors.accent,
+          borderBottomWidth: 0.5,
+        },
+      }}
+    >
+      <ProfileStack.Screen name="Profile" component={ProfileScreen} />
+    </ProfileStack.Navigator>
+  );
+};
+
+const QuizStackScreen = () => {
+  const { isThemeDark } = React.useContext(ThemeContext);
+  const theme = useTheme();
+
+  return (
+    <QuizStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          borderBottomColor: isThemeDark
+            ? theme.colors.primary
+            : theme.colors.accent,
+          borderBottomWidth: 0.5,
+        },
+      }}
+    >
+      <QuizStack.Screen
+        name="Quiz"
+        component={QuizIntroScreen}
+        options={{
+          title: "Topics",
+          headerTitleAlign: "center",
+        }}
+      />
+      <QuizStack.Screen
+        name="QuizList"
+        component={QuizListScreen}
+        options={({ route }) => ({
+          title: `${route.params.topic}`,
+        })}
+      />
+      <QuizStack.Screen
+        name="QuizResult"
+        component={QuizResultScreen}
+        options={{ title: "Quiz Result" }}
+      />
+      <QuizStack.Screen
+        name="QuizPage"
+        component={QuizPageScreen}
+        options={({ route }) => ({
+          title: `${route.params.topic} ${route.params.quiz}`,
+        })}
+      />
+      <QuizStack.Screen
+        name="Example"
+        component={ExampleScreen}
+        options={{
+          headerTitleAlign: "center",
+        }}
+      />
+      <QuizStack.Screen
+        name="Test"
+        component={TestScreen}
+        options={{ headerTitleAlign: "center" }}
+      />
+      <QuizStack.Screen
+        name="Tutorial"
+        component={TutorialScreen}
+        options={{ headerTitleAlign: "center" }}
+      />
+      <QuizStack.Screen
+        name="Practice"
+        component={PracticeScreen}
+        options={{ headerTitleAlign: "center" }}
+      />
+    </QuizStack.Navigator>
+  );
+};
+
+const SettingsStackScreen = () => {
+  const { isThemeDark } = React.useContext(ThemeContext);
+  const theme = useTheme();
+  return (
+    <SettingsStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          borderBottomColor: isThemeDark
+            ? theme.colors.primary
+            : theme.colors.accent,
+          borderBottomWidth: 0.5,
+        },
+      }}
+    >
+      <SettingsStack.Screen name="Settings" component={SettingsScreen} />
+    </SettingsStack.Navigator>
+  );
+};
 
 const MainTabNavigator = (): JSX.Element => {
   const { isThemeDark } = React.useContext(ThemeContext);
-
+  const theme = useTheme();
   return (
     <MainTab.Navigator
       // initialRoute.name='Home'
@@ -109,8 +189,12 @@ const MainTabNavigator = (): JSX.Element => {
         },
       })}
       tabBarOptions={{
-        activeTintColor: isThemeDark ? "#F57C00" : "#273A7F",
-        inactiveTintColor: isThemeDark ? "#FFF" : "#808080",
+        activeTintColor: isThemeDark
+          ? theme.colors.primary
+          : theme.colors.accent,
+        inactiveTintColor: isThemeDark
+          ? theme.colors.text
+          : theme.colors.backdrop,
       }}
     >
       <MainTab.Screen name="Home" component={HomeStackScreen} />

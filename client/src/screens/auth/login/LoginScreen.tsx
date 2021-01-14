@@ -4,13 +4,13 @@ import { useNavigation } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
 import * as yup from "yup";
-import Logo from "../../../base/Logo/Logo";
-import FilledButton from "../../../base/FilledButton/FilledButton";
-import TextButton from "../../../base/TextButton/TextButton";
+import Logo from "../../../base/logo/Logo";
+import FilledButton from "../../../base/filledButton/FilledButton";
+import TextButton from "../../../base/textButton/TextButton";
 import AuthContext from "../../../contexts/AuthContext";
-import Loading from "../../../base/Loading/Loading";
-import Header from "../../../base/Header/Header";
-import InputField from "../../../base/InputField/InputField";
+import Loading from "../../../base/loading/Loading";
+import Header from "../../../base/header/Header";
+import InputField from "../../../base/inputField/InputField";
 
 const styles = StyleSheet.create({
   container: {
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   },
 });
 
+//TODO: replace the login function with logout
 const LoginScreen: React.FC<null> = () => {
   const navigation = useNavigation();
   const { login } = React.useContext(AuthContext);
@@ -76,7 +77,6 @@ const LoginScreen: React.FC<null> = () => {
                 formikProps={formikProps}
                 pointer="email"
                 placeholder="johndoe@email.com"
-                placeholderTextColor="#808080"
                 autoFocus
               />
               <InputField
@@ -84,18 +84,14 @@ const LoginScreen: React.FC<null> = () => {
                 formikProps={formikProps}
                 pointer="password"
                 placeholder="********"
-                placeholderTextColor="#808080"
                 secureTextEntry
                 autoFocus
               />
 
-              <FilledButton
-                title="Login"
-                handlePress={formikProps.handleSubmit}
-              />
+              <FilledButton title="Login" onPress={formikProps.handleSubmit} />
               <TextButton
                 title={"Don't have an account? create one here"}
-                handlePress={() => {
+                onPress={() => {
                   navigation.navigate("Registration");
                 }}
               />

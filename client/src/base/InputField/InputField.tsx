@@ -9,8 +9,8 @@ const styles = StyleSheet.create({
   warning: {
     color: "red",
   },
-  text: {
-    marginRight: 295,
+  label: {
+    marginTop: 10,
   },
 });
 interface InputFieldProps {
@@ -45,7 +45,7 @@ const InputField: React.FC<InputFieldProps> = ({
   }
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{label}</Text>
+      <Text style={styles.label}>{label}</Text>
       <TextInput
         style={inputBoxStyle}
         value={formikProps.values[pointer]}
@@ -64,7 +64,7 @@ const InputField: React.FC<InputFieldProps> = ({
 };
 
 InputField.defaultProps = {
-  secureTextEntry: true,
+  secureTextEntry: false,
 };
 
 export default InputField;

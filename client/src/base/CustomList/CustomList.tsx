@@ -31,7 +31,7 @@ const CustomList: React.FC<CustomListProps> = (props: CustomListProps) => {
   const [expanded, setExpanded] = React.useState(false);
   const { title, description, children } = props;
 
-  const handlePress = () => setExpanded(!expanded);
+  const onPress = () => setExpanded(!expanded);
 
   return (
     <List.AccordionGroup>
@@ -40,7 +40,7 @@ const CustomList: React.FC<CustomListProps> = (props: CustomListProps) => {
         title={title}
         id={title}
         expanded={expanded}
-        onPress={handlePress}
+        onPress={onPress}
         titleStyle={styles.sectionTitle}
         description={description || null}
       >
