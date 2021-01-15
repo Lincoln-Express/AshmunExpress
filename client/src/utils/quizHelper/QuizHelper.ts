@@ -103,7 +103,7 @@ const QuizHelper = (): QuizHelperReturnType => {
   const moveToNextQuiz = () => {
     counter += 1;
   };
-  // TODO: Can show modal
+  // TODO: function that shows modal
 
   return {
     counter,

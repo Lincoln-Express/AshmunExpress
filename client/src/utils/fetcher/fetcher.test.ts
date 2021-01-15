@@ -1,5 +1,5 @@
 import axios from "axios";
-import fetcher from "./Fetcher";
+import fetcher from "./fetcher";
 import BASE_URL from "../../config/index";
 
 jest.mock("axios");
