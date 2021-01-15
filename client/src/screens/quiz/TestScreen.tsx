@@ -29,11 +29,12 @@ const styles = StyleSheet.create({
   },
 });
 
+const testQuizHelper = QuizHelper();
+
 const TestScreen: React.FC<null> = (): JSX.Element => {
   const navigation = useNavigation();
   const route = useRoute();
   const { questions, quiz } = route.params;
-  const testQuizHelper = QuizHelper();
 
   const {
     getAnswers,

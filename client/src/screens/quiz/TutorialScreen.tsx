@@ -28,11 +28,12 @@ const styles = StyleSheet.create({
   },
 });
 
+const tutorialQuizHelper = QuizHelper();
+
 const TutorialScreen: React.FC<null> = (): JSX.Element => {
   const navigation = useNavigation();
   const route = useRoute();
   const { questions, quiz } = route.params;
-  const tutorialQuizHelper = QuizHelper();
 
   const {
     getCounter,
