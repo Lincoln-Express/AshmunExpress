@@ -1,11 +1,11 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { List } from "react-native-paper";
+import { List, useTheme } from "react-native-paper";
 
 const styles = StyleSheet.create({
   container: {
-    elevation: 1,
-    borderRadius: 1.5,
+    borderWidth: 1.5,
+    borderRadius: 3,
     marginVertical: 5,
     height: 72,
   },
@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 });
+
 interface CustomListProps {
   title: string;
   description?: string;
@@ -30,13 +31,14 @@ interface CustomListProps {
 const CustomList: React.FC<CustomListProps> = (props: CustomListProps) => {
   const [expanded, setExpanded] = React.useState(false);
   const { title, description, children } = props;
-
+  const theme = useTheme();
+  const borderColor = theme.dark ? "#F5F5F5" : "#273A7F";
   const onPress = () => setExpanded(!expanded);
 
   return (
     <List.AccordionGroup>
       <List.Accordion
-        style={styles.container}
+        style={{ ...styles.container, borderColor }}
         title={title}
         id={title}
         expanded={expanded}

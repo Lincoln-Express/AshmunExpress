@@ -1,9 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { useTheme } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
-// import AuthContext from '../contexts/AuthContext';
-// import UserContext from '../contexts/UserContext';
 import ThemeContext from "../../contexts/ThemeContext";
 import CustomSwitch from "../../base/customSwitch/CustomSwitch";
 
@@ -18,11 +15,6 @@ const styles = StyleSheet.create({
 const SettingsScreen = () => {
   const theme = useTheme();
   const { toggleTheme, isThemeDark } = React.useContext(ThemeContext);
-  // const navigation = useNavigation();
-
-  //   const { logout } = useContext(AuthContext);
-  //   const { user } = useContext(UserContext);
-  //   useEffect(() => {}, []);
 
   return (
     <View style={styles.container}>

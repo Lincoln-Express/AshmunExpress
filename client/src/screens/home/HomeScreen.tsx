@@ -2,8 +2,7 @@ import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTheme } from "react-native-paper";
-import AuthContext from "../../contexts/AuthContext";
-import UserContext from "../../contexts/UserContext";
+import { useUserState } from "../../providers/userProvider/UserProvider";
 
 const styles = StyleSheet.create({
   container: {
@@ -16,14 +15,16 @@ const styles = StyleSheet.create({
 
 const HomeScreen: React.FC<null> = () => {
   const theme = useTheme();
-  // eslint-disable-next-line no-unused-vars
   const navigation = useNavigation();
-  const { user } = React.useContext(UserContext);
-  // here we use scoreContext to show the user's score and display some type of message
-  // user is in this format: `${firstName}-${lastName}-${email}`;
+
+  const user = useUserState();
+  const { firstName } = user;
+
   return (
     <View style={styles.container}>
-      <Text style={{ color: theme.colors.text }}>{`Welcome, ${user}`}</Text>
+      <Text style={{ color: theme.colors.text }}>
+        {`Welcome, ${firstName}`}
+      </Text>
     </View>
   );
 };

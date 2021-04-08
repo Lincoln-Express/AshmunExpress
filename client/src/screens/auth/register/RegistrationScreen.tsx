@@ -10,7 +10,7 @@ import FilledButton from "../../../base/filledButton/FilledButton";
 import IconButton from "../../../base/iconButton/IconButton";
 import Loading from "../../../base/loading/Loading";
 import InputField from "../../../base/inputField/InputField";
-import AuthContext from "../../../contexts/AuthContext";
+import useAuth from "../../../hooks/useAuth/useAuth";
 
 const styles = StyleSheet.create({
   container: {
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 
 const RegistrationScreen: React.FC<null> = () => {
   const navigation = useNavigation();
-  const { register } = React.useContext(AuthContext);
+  const { register } = useAuth();
   const [loading, setLoading] = React.useState(false);
   const validationSchema = yup.object().shape({
     firstName: yup.string().required().label("First Name"),
@@ -52,7 +52,6 @@ const RegistrationScreen: React.FC<null> = () => {
         "passwords-match",
         "Passwords don't match",
         function checkPassword(value) {
-          // eslint-disable-next-line react/no-this-in-sfc
           return this.parent.password === value;
         },
       ),
@@ -64,11 +63,6 @@ const RegistrationScreen: React.FC<null> = () => {
       contentContainerStyle={styles.container}
       enableOnAndroid
     >
-      {/* <ImageBackground
-        // eslint-disable-next-line global-require
-        source={require("../../../../assets/background.jpg")}
-        style={styles.image}
-      /> */}
       <Logo />
       <IconButton
         name="close-circle-outline"

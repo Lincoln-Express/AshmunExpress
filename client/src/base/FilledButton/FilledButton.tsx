@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   text: {
-    color: "#fff",
+    color: "#F5F5F5",
     fontSize: 16,
   },
 });
@@ -38,45 +38,47 @@ const styles = StyleSheet.create({
 interface FilledButtonProps {
   title: string;
   onPress: () => void;
-  style?: Record<string, unknown>;
   buttonStyle?: Record<string, unknown>;
+  textStyle?: Record<string, unknown>;
+  disabled?: boolean;
 }
 
 const FilledButton: React.FC<FilledButtonProps> = (
   props: FilledButtonProps,
 ) => {
   const theme = useTheme();
-  const { title, onPress, style, buttonStyle } = props;
-  const titleValue = Platform.OS === "ios" ? title : title.toUpperCase();
+  const { title, onPress, buttonStyle, textStyle, disabled } = props;
 
   return Platform.OS === "ios" ? (
     <TouchableHighlight
       style={{
         ...styles.container,
         backgroundColor: theme.dark ? "#F57C00" : "#0A84FF",
-        ...style,
+        ...buttonStyle,
       }}
       onPress={onPress}
+      disabled={disabled}
     >
-      <Text style={{ ...styles.text, ...buttonStyle }}>{titleValue}</Text>
+      <Text style={{ ...styles.text, ...textStyle }}>{title}</Text>
     </TouchableHighlight>
   ) : (
-    <TouchableNativeFeedback onPress={onPress}>
+    <TouchableNativeFeedback onPress={onPress} disabled={disabled}>
       <View
         style={{
           ...styles.container,
           backgroundColor: theme.dark ? "#F57C00" : "#273A7F",
-          ...style,
+          ...buttonStyle,
         }}
       >
-        <Text style={{ ...styles.text, ...buttonStyle }}>{titleValue}</Text>
+        <Text style={{ ...styles.text, ...textStyle }}>{title}</Text>
       </View>
     </TouchableNativeFeedback>
   );
 };
 
 FilledButton.defaultProps = {
-  style: {},
   buttonStyle: {},
+  textStyle: {},
+  disabled: false,
 };
 export default FilledButton;

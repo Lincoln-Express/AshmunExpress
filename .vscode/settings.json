@@ -16,7 +16,11 @@
     "titleBar.inactiveForeground": "#e7e7e799"
   },
   "peacock.color": "#832561",
-  "cSpell.words": ["Ionicons"],
+  "cSpell.words": [
+    "Ionicons",
+    "dismissable",
+    "uuidv"
+  ],
   "eslint.validate": [
     "vue",
     "html",

@@ -7,10 +7,10 @@ import * as yup from "yup";
 import Logo from "../../../base/logo/Logo";
 import FilledButton from "../../../base/filledButton/FilledButton";
 import TextButton from "../../../base/textButton/TextButton";
-import AuthContext from "../../../contexts/AuthContext";
 import Loading from "../../../base/loading/Loading";
 import Header from "../../../base/header/Header";
 import InputField from "../../../base/inputField/InputField";
+import useAuth from "../../../hooks/useAuth/useAuth";
 
 const styles = StyleSheet.create({
   container: {
@@ -29,10 +29,9 @@ const styles = StyleSheet.create({
   },
 });
 
-//TODO: replace the login function with logout
 const LoginScreen: React.FC<null> = () => {
   const navigation = useNavigation();
-  const { login } = React.useContext(AuthContext);
+  const { login } = useAuth();
   const [loading, setLoading] = React.useState(false);
   const validationSchema = yup.object().shape({
     email: yup.string().email().required().label("Your input"),
@@ -50,11 +49,6 @@ const LoginScreen: React.FC<null> = () => {
         contentContainerStyle={styles.container}
         enableOnAndroid
       >
-        {/* <ImageBackground
-          // eslint-disable-next-line global-require
-          source={require("../../../../assets/background.jpg")}
-          style={styles.image}
-        /> */}
         <Logo />
         <Header>Welcome</Header>
         <Formik
@@ -62,7 +56,7 @@ const LoginScreen: React.FC<null> = () => {
           onSubmit={async (values) => {
             try {
               await login(values.email, values.password);
-              // setLoading(true);
+              setLoading(true);
               navigation.navigate("MainStack");
             } catch (e) {
               setLoading(false);

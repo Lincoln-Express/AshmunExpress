@@ -15,17 +15,18 @@ const styles = StyleSheet.create({
   },
   icon: {
     right: 0,
-    top: 3,
-    left: 5,
+    top: 5,
   },
   title: {
     alignItems: "center",
+    paddingTop: 10,
+    textAlign: "auto",
   },
 });
 
 const QuizListScreen: React.FC<null> = (): JSX.Element => {
   const navigation = useNavigation();
-  const quizzes = ["Example", "Practice", "Test", "Tutorial"];
+  const quizzes = ["Tutorial", "Example", "Practice", "Test"];
   const levels = ["1", "2", "3", "4"];
   const route = useRoute();
   const { section, topic } = route.params;

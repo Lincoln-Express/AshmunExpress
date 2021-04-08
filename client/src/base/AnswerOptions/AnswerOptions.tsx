@@ -1,47 +1,57 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { RadioButton } from "react-native-paper";
-import QuizHelper from "../../utils/quizHelper/QuizHelper";
-import CustomRadioButton from "../customRadioButton/CustomRadioButton";
+import { shuffle } from "lodash/shuffle";
+import AnswerButton from "../answerButton/AnswerButton";
+import AnswerButtonContext from "../../contexts/AnswerButtonContext";
 
 const styles = StyleSheet.create({
-  button: {
-    marginVertical: 5,
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    marginHorizontal: 30,
   },
 });
 
 interface AnswerOptionsProps {
   answers: Array<string>;
   questionObject: Record<string, any>;
+  isCorrect: (questionObject: Record<string, any>, answer: string) => boolean;
 }
 
 const AnswerOptions: React.FC<AnswerOptionsProps> = (
   props: AnswerOptionsProps,
 ) => {
-  const [value, setValue] = React.useState("");
-  const { answers, questionObject } = props;
-  const answerOptionsHelper = QuizHelper();
+  const { answers, questionObject, isCorrect } = props;
+  const [disabled, setDisabled] = React.useState(false);
 
-  const { checkValidAnswer } = answerOptionsHelper;
+  const toggleDisability = (hasBeenPressed: boolean) => {
+    return setDisabled(hasBeenPressed);
+  };
+
+  const answerButtonPreferences = {
+    toggleDisability,
+    disabled,
+  };
+
+  const shuffledAnswers = shuffle(answers);
   return (
-    <RadioButton.Group
-      onValueChange={(newValue) => setValue(newValue)}
-      value={value}
-    >
-      {answers.map((answer) => {
-        const isCorrect = checkValidAnswer(questionObject, answer);
-
-        return (
-          <View style={styles.button}>
-            <CustomRadioButton
-              text={answer}
-              value={answer}
-              isCorrect={isCorrect}
-            />
-          </View>
-        );
-      })}
-    </RadioButton.Group>
+    <AnswerButtonContext.Provider value={answerButtonPreferences}>
+      <View>
+        {shuffledAnswers.map((answer) => {
+          const isCorrectAnswer = isCorrect(questionObject, answer);
+          return (
+            <View style={styles.container} key={answer}>
+              <AnswerButton
+                answer={answer}
+                isCorrectAnswer={isCorrectAnswer}
+                disabled={disabled}
+                questionObject={questionObject}
+              />
+            </View>
+          );
+        })}
+      </View>
+    </AnswerButtonContext.Provider>
   );
 };
 
