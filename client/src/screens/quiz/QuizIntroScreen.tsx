@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-indent */
 import * as React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useNavigationState } from "@react-navigation/native";
 import { useTheme } from "react-native-paper";
 import Loading from "../../base/loading/Loading";
 import CustomList from "../../base/customList/CustomList";
 import useFetch from "../../hooks/useFetch/useFetch";
-import mergeQuizData from "../../utils/mergeQuizData/mergeQuizData";
-import transformData from "../../utils/transformData/transformData";
+import mergeQuizData from "../../mergeQuizData/mergeQuizData";
+import transformData from "../../transformData/transformData";
 import IconButton from "../../base/iconButton/IconButton";
 import CustomCard from "../../base/customCard/CustomCard";
 import ThemeContext from "../../contexts/ThemeContext";
@@ -20,12 +20,12 @@ const styles = StyleSheet.create({
   },
   icon: {
     right: 0,
-    top: 3,
-    left: 5,
+    top: 5,
   },
   title: {
-    flexGrow: 1,
     alignItems: "center",
+    paddingTop: 10,
+    textAlign: "auto",
   },
 });
 
@@ -33,11 +33,7 @@ const QuizIntroScreen: React.FC<null> = () => {
   const navigation = useNavigation();
   const keyword = "topics";
   const { isError, isLoading, data } = useFetch(keyword);
-  const mergedQuizData = React.useMemo(
-    () => transformData(mergeQuizData(data)),
-    [data],
-  );
-
+  const mergedQuizData = transformData(mergeQuizData(data));
   const { isThemeDark } = React.useContext(ThemeContext);
   const theme = useTheme();
   return (

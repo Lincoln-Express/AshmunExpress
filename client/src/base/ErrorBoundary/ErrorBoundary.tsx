@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable react/destructuring-assignment */
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import * as Updates from "expo-updates";
@@ -25,12 +27,12 @@ const styles = StyleSheet.create({
   },
 });
 
-interface IState {
+interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-class ErrorBoundary extends React.Component<Record<string, unknown>, IState> {
-  constructor(props: Record<string, unknown>) {
+class ErrorBoundary extends React.Component<any, ErrorBoundaryState> {
+  constructor(props: any) {
     super(props);
     this.state = {
       hasError: false,
@@ -47,16 +49,20 @@ class ErrorBoundary extends React.Component<Record<string, unknown>, IState> {
     console.error("ErrorBoundary caught an error", error, info);
   }
 
-  handleError = (): void => {
-    setTimeout(async () => Updates.reloadAsync(), 3000);
+  handleError = () => {
+    return Updates.reloadAsync();
   };
 
-  public render(): JSX.Element | null | undefined {
+  render() {
     const { hasError } = this.state;
     if (hasError) {
       return (
         <View style={styles.container}>
-          <IconButton name="information-circle-outline" size={60} />
+          <IconButton
+            name="information-circle-outline"
+            size={60}
+            color="#273A7F"
+          />
           <Text style={styles.errorHeader}> Oops, Something went wrong! </Text>
           <Text style={styles.errorMessage}>
             The app ran into a problem and could not continue. We apologize for

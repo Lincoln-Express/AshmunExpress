@@ -17,7 +17,7 @@ export interface IconButtonProps {
   onPress?: () => void;
   style?: Record<string, unknown>;
   size?: number;
-  color: string;
+  color?: string;
 }
 
 const IconButton: React.FC<IconButtonProps> = (props: IconButtonProps) => {

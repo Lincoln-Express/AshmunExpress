@@ -2,8 +2,7 @@ import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import AuthContext from "../../contexts/AuthContext";
-import UserContext from "../../contexts/UserContext";
+import { useAuthState } from "../../providers/authProvider/AuthProvider";
 
 const styles = StyleSheet.create({
   container: {
@@ -16,12 +15,7 @@ const styles = StyleSheet.create({
 
 const ProfileScreen: React.FC<null> = () => {
   const theme = useTheme();
-  // eslint-disable-next-line no-unused-vars
-  // const navigation = useNavigation();
 
-  // const { logout } = useContext(AuthContext);
-  // const { user } = useContext(UserContext);
-  //   useEffect(() => {}, []);
   return (
     <View style={styles.container}>
       <Text style={{ color: theme.colors.text }}>Welcome, students</Text>

@@ -9,10 +9,11 @@
   "extends": [
     "plugin:react/recommended",
     "airbnb",
-    "prettier",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "prettier",
+    "plugin:jsx-a11y/recommended"
   ],
   "globals": {
     "Atomics": "readonly",
@@ -25,13 +26,21 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": ["react", "react-native", "@typescript-eslint", "react-hooks"],
+  "plugins": [
+    "react",
+    "react-native",
+    "@typescript-eslint",
+    "react-hooks",
+    "jsx-ally"
+  ],
   "rules": {
     "consistent-return": "off",
+    "no-shadow": "off",
     "no-console": "off",
+    "react/jsx-curly-newline": 0,
     "quotes": ["error", "double"],
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/exhaustive-deps": "error",
     "jsx-quotes": ["error", "prefer-double"],
     "react-native/no-unused-styles": 2,
     "react-native/split-platform-components": 2,
@@ -56,7 +65,8 @@
       2,
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ],
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-empty-function": "off"
   },
   "settings": {
     "import/resolver": {

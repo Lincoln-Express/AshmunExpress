@@ -7,7 +7,10 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     borderRadius: 10,
     marginVertical: 10,
-    height: 72,
+  },
+  paragraph: {
+    marginVertical: 10,
+    textAlign: "left",
   },
 });
 
@@ -17,10 +20,11 @@ interface CustomCardProps {
   subtitle?: string;
   left?: () => JSX.Element;
   right?: () => JSX.Element;
-  paragraph?: string;
+  paragraphs?: Array<string>;
   elevation?: number;
   onPress: () => void;
   style?: Record<string, unknown>;
+  subtitleNumberOfLines?: number;
 }
 
 const CustomCard: React.FC<CustomCardProps> = (props: CustomCardProps) => {
@@ -28,12 +32,13 @@ const CustomCard: React.FC<CustomCardProps> = (props: CustomCardProps) => {
     title,
     subtitle,
     right,
-    paragraph,
+    paragraphs,
     elevation,
     onPress,
     left,
     style,
     titleStyle,
+    subtitleNumberOfLines,
   } = props;
 
   return (
@@ -48,9 +53,13 @@ const CustomCard: React.FC<CustomCardProps> = (props: CustomCardProps) => {
         right={right}
         left={left}
         style={titleStyle}
+        subtitleNumberOfLines={subtitleNumberOfLines}
       />
       <Card.Content>
-        <Paragraph>{paragraph}</Paragraph>
+        {paragraphs &&
+          paragraphs.map((paragraph) => (
+            <Paragraph style={styles.paragraph}>{paragraph}</Paragraph>
+          ))}
       </Card.Content>
     </Card>
   );
@@ -59,7 +68,7 @@ const CustomCard: React.FC<CustomCardProps> = (props: CustomCardProps) => {
 CustomCard.defaultProps = {
   subtitle: "",
   elevation: 0,
-  paragraph: "",
+  paragraphs: undefined,
   right: undefined,
   left: undefined,
   style: {},

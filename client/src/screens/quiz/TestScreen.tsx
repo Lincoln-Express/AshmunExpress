@@ -1,13 +1,13 @@
 import * as React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, ScrollView, Text, Alert } from "react-native";
 import FilledButton from "../../base/filledButton/FilledButton";
 import CustomProgressBar from "../../base/customProgressBar/CustomProgressBar";
 import Question from "../../base/question/Question";
 import QuestionCount from "../../base/questionCount/QuestionCount";
 import AnswerOptions from "../../base/answerOptions/AnswerOptions";
-import QuizResultScreen from "./QuizResultScreen";
-import QuizHelper from "../../utils/quizHelper/QuizHelper";
+import QuizHelper from "../../quizHelper/QuizHelper";
+import { useQuizState } from "../../providers/quizProvider/QuizProvider";
 
 const styles = StyleSheet.create({
   button: {
@@ -34,58 +34,80 @@ const testQuizHelper = QuizHelper();
 const TestScreen: React.FC<null> = (): JSX.Element => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { questions, quiz } = route.params;
+  const { questions, quiz, url } = route.params;
 
   const {
+    canGoBack,
+    isCorrect,
     getAnswers,
-    getCorrectAnswersCount,
     getCounter,
     getQuestionObject,
     hasFinishedQuiz,
-    moveToNextQuiz,
+    moveToNextQuestion,
+    resetCounter,
   } = testQuizHelper;
 
-  if (!hasFinishedQuiz(questions.length)) {
-    const counter = getCounter();
-    const questionObject = getQuestionObject(questions);
-    const { question } = questionObject;
-    const answers = getAnswers(questionObject);
+  const userCanGoBack = canGoBack(quiz);
+  const counter = getCounter();
+  const questionObject = getQuestionObject(questions);
+  const { question, picture, id } = questionObject;
+  const answers = getAnswers(questionObject);
+  const { correctAnswersCount } = useQuizState();
+  const pictureName = picture === "yes" ? `${url}${id}` : undefined;
 
-    return (
-      <View style={styles.container}>
-        <QuestionCount
-          counter={counter}
-          totalNumberOfQuestions={questions.length}
-          style={styles.questionCount}
-        />
-        <CustomProgressBar
-          progress={counter + 1 / questions.length}
-          style={styles.progressBar}
-        />
-        <Question question={question} />
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener("beforeRemove", (event) => {
+      if (userCanGoBack) {
+        return;
+      }
 
-        <AnswerOptions answers={answers} questionObject={questionObject} />
+      event.preventDefault();
+      Alert.alert(
+        "Sorry!",
+        `You cannot go back as this is a ${quiz.toLowerCase()} session`,
+        [{ text: "Cancel", onPress: () => {}, style: "cancel" }],
+      );
+    });
 
-        <FilledButton
-          title={counter < questions.length ? "Next" : "Show Results"}
-          onPress={() => {
-            moveToNextQuiz();
-            navigation.navigate("Test", { questions, quiz });
-          }}
-          style={styles.button}
-        />
-      </View>
-    );
-  }
+    return unsubscribe();
+  }, []);
 
   return (
-    <View>
-      <QuizResultScreen
-        quiz={quiz}
-        totalQuestions={questions.length}
-        correctChoices={getCorrectAnswersCount()}
+    <ScrollView contentContainerStyle={styles.container}>
+      <QuestionCount
+        counter={counter}
+        totalNumberOfQuestions={questions.length}
+        style={styles.questionCount}
       />
-    </View>
+      <CustomProgressBar
+        progress={(counter + 1) / questions.length}
+        style={styles.progressBar}
+      />
+      <Question question={question} pictureName={pictureName} />
+      <AnswerOptions
+        answers={answers}
+        questionObject={questionObject}
+        isCorrect={isCorrect}
+      />
+
+      <FilledButton
+        title={hasFinishedQuiz(questions.length) ? "Show Results" : "Next"}
+        onPress={() => {
+          if (!hasFinishedQuiz(questions.length)) {
+            moveToNextQuestion();
+            navigation.navigate("Test", { questions, quiz });
+          } else {
+            resetCounter();
+            navigation.navigate("QuizResult", {
+              quiz,
+              correctAnswersCount,
+              totalQuestions: questions.length,
+            });
+          }
+        }}
+        buttonStyle={styles.button}
+      />
+    </ScrollView>
   );
 };
 

@@ -2,6 +2,7 @@ import "react-native-gesture-handler";
 import * as React from "react";
 import { Platform } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useTheme } from "react-native-paper/src/core/theming";
 import { Ionicons } from "@expo/vector-icons";
@@ -77,6 +78,7 @@ const QuizStackScreen = () => {
           borderBottomWidth: 0.5,
         },
       }}
+      initialRouteName="Quiz"
     >
       <QuizStack.Screen
         name="Quiz"
@@ -115,7 +117,7 @@ const QuizStackScreen = () => {
       <QuizStack.Screen
         name="Test"
         component={TestScreen}
-        options={{ headerTitleAlign: "center" }}
+        options={{ headerTitleAlign: "center", headerLeft: undefined }}
       />
       <QuizStack.Screen
         name="Tutorial"
@@ -125,7 +127,7 @@ const QuizStackScreen = () => {
       <QuizStack.Screen
         name="Practice"
         component={PracticeScreen}
-        options={{ headerTitleAlign: "center" }}
+        options={{ headerTitleAlign: "center", headerLeft: undefined }}
       />
     </QuizStack.Navigator>
   );
@@ -155,7 +157,6 @@ const MainTabNavigator = (): JSX.Element => {
   const theme = useTheme();
   return (
     <MainTab.Navigator
-      // initialRoute.name='Home'
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           let iconName = "";
@@ -198,7 +199,21 @@ const MainTabNavigator = (): JSX.Element => {
       }}
     >
       <MainTab.Screen name="Home" component={HomeStackScreen} />
-      <MainTab.Screen name="Quiz" component={QuizStackScreen} />
+      <MainTab.Screen
+        name="Quiz"
+        component={QuizStackScreen}
+        options={({ route }) => ({
+          tabBarVisible: ((route) => {
+            const routeName = getFocusedRouteNameFromRoute(route) ?? "";
+
+            if (routeName === "Practice" || routeName === "Test") {
+              return false;
+            }
+
+            return true;
+          })(route),
+        })}
+      />
       <MainTab.Screen name="Profile" component={ProfileStackScreen} />
       <MainTab.Screen name="Settings" component={SettingsStackScreen} />
     </MainTab.Navigator>

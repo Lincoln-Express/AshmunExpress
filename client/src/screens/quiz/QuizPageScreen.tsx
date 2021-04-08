@@ -5,7 +5,7 @@ import { useTheme } from "react-native-paper";
 import shuffle from "lodash/shuffle";
 import Loading from "../../base/loading/Loading";
 import useFetch from "../../hooks/useFetch/useFetch";
-import QuizHelper from "../../utils/quizHelper/QuizHelper";
+import QuizHelper from "../../quizHelper/QuizHelper";
 import FilledButton from "../../base/filledButton/FilledButton";
 
 const styles = StyleSheet.create({
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   innerContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
+    marginTop: 20,
   },
   outerContainer: {
     flex: 1,
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
   },
   secondButton: {
     maxWidth: "40%",
-    backgroundColor: "#FFF",
+    backgroundColor: "#F5F5F5",
     borderWidth: 2,
     borderColor: "#273A8F",
   },
@@ -45,24 +46,32 @@ const styles = StyleSheet.create({
 });
 
 const quizPageScreenHelper = QuizHelper();
-const QuizPageScreen: React.FC<null> = (): JSX.Element => {
+const QuizPageScreen: React.FC<any> = (): JSX.Element => {
   const theme = useTheme();
   const route = useRoute();
   const navigation = useNavigation();
   const { section, quiz, level } = route.params;
   const { getEndIndex } = quizPageScreenHelper;
+  const url = `${quiz.toLowerCase()}/${level}/section/${section}`;
 
-  const { isError, isLoading, data } = useFetch(
-    `${quiz.toLowerCase()}/${level}/section/${section}`,
-  );
+  const { isError, isLoading, data } = useFetch(url);
 
   if (data !== undefined) {
-    const shuffledArray: Array<Record<string, any>> = shuffle(data);
+    if (data.length === 0) {
+      return (
+        <ScrollView contentContainerStyle={styles.container}>
+          <Text style={{ ...styles.text, color: theme.colors.text }}>
+            There are no questions for this section for now.
+          </Text>
+        </ScrollView>
+      );
+    }
+    const shuffledArray = shuffle(data);
     const len = shuffledArray.length;
     const endIndex = getEndIndex(len);
     const questions = shuffledArray.slice(0, endIndex);
     return (
-      <View style={styles.outerContainer}>
+      <ScrollView contentContainerStyle={styles.outerContainer}>
         <Text style={{ ...styles.readyText, color: theme.colors.text }}>
           Are you ready ?
         </Text>
@@ -72,7 +81,7 @@ const QuizPageScreen: React.FC<null> = (): JSX.Element => {
             onPress={() => {
               navigation.goBack();
             }}
-            style={styles.firstButton}
+            buttonStyle={styles.firstButton}
           />
 
           <FilledButton
@@ -80,14 +89,15 @@ const QuizPageScreen: React.FC<null> = (): JSX.Element => {
             onPress={() => {
               navigation.navigate(`${quiz}`, {
                 questions,
+                url,
                 quiz,
               });
             }}
-            style={styles.secondButton}
-            buttonStyle={styles.secondButtonText}
+            buttonStyle={styles.secondButton}
+            textStyle={styles.secondButtonText}
           />
         </View>
-      </View>
+      </ScrollView>
     );
   }
 
