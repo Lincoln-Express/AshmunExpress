@@ -26,34 +26,6 @@ const QuizHelper = (): QuizHelperType => {
     return questions[counter];
   };
 
-  const getResultReview = (
-    totalQuestions: number,
-    correctAnswersCount: number,
-    lowerQuartile: number,
-    middleQuartile: number,
-    upperQuartile: number,
-  ): string => {
-    if (correctAnswersCount <= lowerQuartile) {
-      return "Not good enough!";
-    }
-    if (
-      correctAnswersCount > lowerQuartile &&
-      correctAnswersCount <= middleQuartile
-    ) {
-      return "You can do better!";
-    }
-    if (
-      correctAnswersCount > middleQuartile &&
-      correctAnswersCount <= upperQuartile
-    ) {
-      return "Good Job!";
-    }
-    if (correctAnswersCount === totalQuestions) {
-      return "Perfect!";
-    }
-    return "Awesome!";
-  };
-
   const hasFinishedQuiz = (questionsLength: number) => {
     return counter + 1 === questionsLength;
   };
@@ -83,7 +55,6 @@ const QuizHelper = (): QuizHelperType => {
     getAnswers,
     getCounter,
     getQuestionObject,
-    getResultReview,
     hasFinishedQuiz,
     isCorrect,
     moveToNextQuestion,

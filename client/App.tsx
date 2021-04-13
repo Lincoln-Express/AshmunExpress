@@ -53,44 +53,42 @@ const App = (): JSX.Element => {
   };
 
   return (
-    <React.StrictMode>
-      <ErrorBoundary>
-        <AppearanceProvider>
-          <AuthProvider>
-            <UserProvider>
-              <QuizProvider>
-                <QuizSessionProvider>
-                  <ThemeContext.Provider value={themePreferences}>
-                    <PaperProvider theme={theme}>
-                      <NavigationContainer theme={theme}>
-                        <StatusBar
-                          backgroundColor={
-                            theme === LightTheme
-                              ? theme.colors.primary
-                              : theme.colors.surface
-                          }
-                          barStyle="default"
-                        />
+    <ErrorBoundary>
+      <AppearanceProvider>
+        <AuthProvider>
+          <UserProvider>
+            <QuizProvider>
+              <QuizSessionProvider>
+                <ThemeContext.Provider value={themePreferences}>
+                  <PaperProvider theme={theme}>
+                    <NavigationContainer theme={theme}>
+                      <StatusBar
+                        backgroundColor={
+                          theme === LightTheme
+                            ? theme.colors.primary
+                            : theme.colors.surface
+                        }
+                        barStyle="default"
+                      />
 
-                        <Stack.Navigator
-                          screenOptions={{
-                            headerShown: false,
-                            animationEnabled: false,
-                            gestureEnabled: true,
-                          }}
-                        >
-                          {renderScreens()}
-                        </Stack.Navigator>
-                      </NavigationContainer>
-                    </PaperProvider>
-                  </ThemeContext.Provider>
-                </QuizSessionProvider>
-              </QuizProvider>
-            </UserProvider>
-          </AuthProvider>
-        </AppearanceProvider>
-      </ErrorBoundary>
-    </React.StrictMode>
+                      <Stack.Navigator
+                        screenOptions={{
+                          headerShown: false,
+                          animationEnabled: false,
+                          gestureEnabled: true,
+                        }}
+                      >
+                        {renderScreens()}
+                      </Stack.Navigator>
+                    </NavigationContainer>
+                  </PaperProvider>
+                </ThemeContext.Provider>
+              </QuizSessionProvider>
+            </QuizProvider>
+          </UserProvider>
+        </AuthProvider>
+      </AppearanceProvider>
+    </ErrorBoundary>
   );
 };
 

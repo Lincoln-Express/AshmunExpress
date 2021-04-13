@@ -6,8 +6,7 @@ import { useTheme } from "react-native-paper";
 import Loading from "../../base/loading/Loading";
 import CustomList from "../../base/customList/CustomList";
 import useFetch from "../../hooks/useFetch/useFetch";
-import mergeQuizData from "../../mergeQuizData/mergeQuizData";
-import transformData from "../../transformData/transformData";
+import { changeObjectPropsName, mergeQuizData } from "../../utils/utils";
 import IconButton from "../../base/iconButton/IconButton";
 import CustomCard from "../../base/customCard/CustomCard";
 import ThemeContext from "../../contexts/ThemeContext";
@@ -33,7 +32,10 @@ const QuizIntroScreen: React.FC<null> = () => {
   const navigation = useNavigation();
   const keyword = "topics";
   const { isError, isLoading, data } = useFetch(keyword);
-  const mergedQuizData = transformData(mergeQuizData(data));
+  const mergedQuizData = React.useMemo(
+    () => changeObjectPropsName(mergeQuizData(data)),
+    [data],
+  );
   const { isThemeDark } = React.useContext(ThemeContext);
   const theme = useTheme();
   return (

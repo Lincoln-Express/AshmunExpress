@@ -65,7 +65,7 @@ describe("tests for validating the Quiz Helper Object", () => {
   });
 
   test("gets the correct answer option", () => {
-    const { isCorrect, getCorrectAnswersCount } = mockQuizHelper;
+    const { isCorrect } = mockQuizHelper;
     const result1 = isCorrect(data[0], "AA");
     const result2 = isCorrect(data[1], "Aa");
     const result3 = isCorrect(data[2], "aA");
@@ -73,6 +73,12 @@ describe("tests for validating the Quiz Helper Object", () => {
     expect(result1).toEqual(true);
     expect(result2).toEqual(true);
     expect(result3).toEqual(false);
-    expect(getCorrectAnswersCount()).toEqual(2);
+  });
+
+  test("given valid params, getQuestionObject() returns the expected question object, ", () => {
+    const counter = mockQuizHelper.getCounter();
+    const questionObject = data[counter];
+
+    expect(questionObject.id).toBe(1);
   });
 });

@@ -55,9 +55,8 @@ const LoginScreen: React.FC<null> = () => {
           initialValues={{ email: "", password: "" }}
           onSubmit={async (values) => {
             try {
-              await login(values.email, values.password);
               setLoading(true);
-              navigation.navigate("MainStack");
+              await login(values.email, values.password);
             } catch (e) {
               setLoading(false);
             }

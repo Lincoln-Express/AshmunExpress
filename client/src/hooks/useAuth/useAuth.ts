@@ -3,7 +3,7 @@ import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import BASE_URL from "../../config/index";
 import { useAuthDispatch } from "../../providers/authProvider/AuthProvider";
-import createUser from "../../utils/utils";
+import { createUser } from "../../utils/utils";
 import { ActionType } from "../../types/types";
 
 const useAuth = () => {

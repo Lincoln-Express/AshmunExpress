@@ -33,7 +33,7 @@ const AnswerOptions: React.FC<AnswerOptionsProps> = (
     disabled,
   };
 
-  const shuffledAnswers = shuffle(answers);
+  const shuffledAnswers = React.useMemo(() => shuffle(answers), [answers]);
   return (
     <AnswerButtonContext.Provider value={answerButtonPreferences}>
       <View>
