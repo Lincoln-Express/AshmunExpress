@@ -54,10 +54,7 @@ interface AuthProviderProps {
 const AuthProvider: React.FC<AuthProviderProps> = ({
   children,
 }: AuthProviderProps) => {
-  const [state, dispatch] = React.useReducer(reducer, {
-    user: null,
-    isLoading: false,
-  });
+  const [state, dispatch] = React.useReducer(reducer, initialState);
   return (
     <AuthStateContext.Provider value={state}>
       <AuthDispatchContext.Provider value={dispatch}>

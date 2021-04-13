@@ -1,16 +1,20 @@
+import { useAuthState } from "./../../providers/authProvider/AuthProvider";
 import * as React from "react";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import BASE_URL from "../../config/index";
 import { useAuthDispatch } from "../../providers/authProvider/AuthProvider";
-import createUser from "../../utils/utils";
+import { createUser } from "../../utils/utils";
 import { ActionType } from "../../types/types";
 
 const useAuth = () => {
-  const dispatch = useAuthDispatch()!;
+  const dispatch = useAuthDispatch();
+  const stuff = useAuthState().user;
+
   const auth = {
     login: async (email: string, password: string) => {
       try {
+        console.log("1" + stuff);
         await axios
           .post(`${BASE_URL}/auth`, {
             username: email,
@@ -20,10 +24,14 @@ const useAuth = () => {
             if (res.data.success) {
               const user = await SecureStore.getItemAsync("user");
               if (user) {
-                dispatch({
-                  type: ActionType.SET_USER,
-                  payload: JSON.parse(user),
-                });
+                if (dispatch) {
+                  console.log("Dispatch works!");
+                  dispatch({
+                    type: ActionType.SET_USER,
+                    payload: JSON.parse(user),
+                  });
+                }
+                console.log(stuff);
               }
             } else {
               throw new Error("Couldn't find user");
@@ -42,7 +50,9 @@ const useAuth = () => {
     },
     logout: async () => {
       await SecureStore.deleteItemAsync("user");
-      dispatch({ type: ActionType.DELETE_USER });
+      if (dispatch) {
+        dispatch({ type: ActionType.DELETE_USER });
+      }
     },
     register: async (
       firstName: string,
@@ -63,7 +73,9 @@ const useAuth = () => {
             if (res.data.success) {
               const user = createUser(firstName, lastName, email, password);
 
-              dispatch({ type: ActionType.SET_USER, payload: user });
+              if (dispatch) {
+                dispatch({ type: ActionType.SET_USER, payload: user });
+              }
               await SecureStore.setItemAsync("user", JSON.stringify(user));
             }
           });
@@ -85,7 +97,7 @@ const useAuth = () => {
     const fetchUser = async () => {
       try {
         const user = await SecureStore.getItemAsync("user");
-        if (user) {
+        if (user && dispatch) {
           dispatch({ type: ActionType.SET_LOADING, payload: JSON.parse(user) });
         }
       } catch (e) {

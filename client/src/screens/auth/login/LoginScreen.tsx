@@ -11,6 +11,7 @@ import Loading from "../../../base/loading/Loading";
 import Header from "../../../base/header/Header";
 import InputField from "../../../base/inputField/InputField";
 import useAuth from "../../../hooks/useAuth/useAuth";
+import { useAuthState } from "../../../providers/authProvider/AuthProvider";
 
 const styles = StyleSheet.create({
   container: {
@@ -56,8 +57,7 @@ const LoginScreen: React.FC<null> = () => {
           onSubmit={async (values) => {
             try {
               await login(values.email, values.password);
-              setLoading(true);
-              navigation.navigate("MainStack");
+              // setLoading(true);
             } catch (e) {
               setLoading(false);
             }

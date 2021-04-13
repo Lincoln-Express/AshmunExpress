@@ -15,7 +15,7 @@ const LightTheme = {
     border: "#273A7F",
     notification: "#FF0000",
     accent: "#273A7F",
-    placeholder: "#273A7F",
+    placeholder: "#C0C0C0",
     backdrop: "#767577",
     surface: "#F5F5F5",
   },

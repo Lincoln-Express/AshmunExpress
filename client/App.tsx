@@ -12,7 +12,6 @@ import AuthStackNavigator from "./src/navigators/AuthStackNavigator";
 import MainTabNavigator from "./src/navigators/MainTabNavigator";
 import ThemeContext from "./src/contexts/ThemeContext";
 import ErrorBoundary from "./src/base/errorBoundary/ErrorBoundary";
-import useAuth from "./src/hooks/useAuth/useAuth";
 import UserProvider, {
   useUserDispatch,
 } from "./src/providers/userProvider/UserProvider";
@@ -29,11 +28,7 @@ const App = (): JSX.Element => {
   const state = useAuthState();
   const [isThemeDark, setIsThemeDark] = React.useState(colorScheme === "dark");
   const theme = isThemeDark ? DarkTheme : LightTheme;
-
   const dispatch = useUserDispatch();
-  if (dispatch) {
-    dispatch({ type: ActionType.SET_USER, payload: state.user ?? null });
-  }
 
   const toggleTheme = () => {
     return setIsThemeDark(!isThemeDark);
@@ -44,53 +39,57 @@ const App = (): JSX.Element => {
     isThemeDark,
   };
 
+  React.useEffect(() => {
+    if (dispatch) {
+      dispatch({ type: ActionType.SET_USER, payload: state.user ?? null });
+    }
+  }, [dispatch]);
+
   const renderScreens = () => {
-    return state.user ? (
-      <Stack.Screen name="AuthStack" component={AuthStackNavigator} />
+    return state.user?.firstName ? (
+      <Stack.Screen name="MainTab" component={MainTabNavigator} />
     ) : (
-      <Stack.Screen name="MainStack" component={MainTabNavigator} />
+      <Stack.Screen name="AuthStack" component={AuthStackNavigator} />
     );
   };
 
   return (
-    <React.StrictMode>
-      <ErrorBoundary>
-        <AppearanceProvider>
-          <AuthProvider>
-            <UserProvider>
-              <QuizProvider>
-                <QuizSessionProvider>
-                  <ThemeContext.Provider value={themePreferences}>
-                    <PaperProvider theme={theme}>
-                      <NavigationContainer theme={theme}>
-                        <StatusBar
-                          backgroundColor={
-                            theme === LightTheme
-                              ? theme.colors.primary
-                              : theme.colors.surface
-                          }
-                          barStyle="default"
-                        />
+    <ErrorBoundary>
+      <AppearanceProvider>
+        <AuthProvider>
+          <UserProvider>
+            <QuizProvider>
+              <QuizSessionProvider>
+                <ThemeContext.Provider value={themePreferences}>
+                  <PaperProvider theme={theme}>
+                    <NavigationContainer theme={theme}>
+                      <StatusBar
+                        backgroundColor={
+                          theme === LightTheme
+                            ? theme.colors.primary
+                            : theme.colors.surface
+                        }
+                        barStyle="default"
+                      />
 
-                        <Stack.Navigator
-                          screenOptions={{
-                            headerShown: false,
-                            animationEnabled: false,
-                            gestureEnabled: true,
-                          }}
-                        >
-                          {renderScreens()}
-                        </Stack.Navigator>
-                      </NavigationContainer>
-                    </PaperProvider>
-                  </ThemeContext.Provider>
-                </QuizSessionProvider>
-              </QuizProvider>
-            </UserProvider>
-          </AuthProvider>
-        </AppearanceProvider>
-      </ErrorBoundary>
-    </React.StrictMode>
+                      <Stack.Navigator
+                        screenOptions={{
+                          headerShown: false,
+                          animationEnabled: false,
+                          gestureEnabled: true,
+                        }}
+                      >
+                        {renderScreens()}
+                      </Stack.Navigator>
+                    </NavigationContainer>
+                  </PaperProvider>
+                </ThemeContext.Provider>
+              </QuizSessionProvider>
+            </QuizProvider>
+          </UserProvider>
+        </AuthProvider>
+      </AppearanceProvider>
+    </ErrorBoundary>
   );
 };
 
