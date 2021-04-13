@@ -5,9 +5,7 @@ import {
   User,
   Appearance,
   ActionType,
-  Quiz,
 } from "../../types/types";
-import { v4 as uuidv4 } from "uuid";
 
 const UserStateContext = React.createContext({} as User);
 

@@ -56,8 +56,8 @@ const LoginScreen: React.FC<null> = () => {
           initialValues={{ email: "", password: "" }}
           onSubmit={async (values) => {
             try {
+              setLoading(true);
               await login(values.email, values.password);
-              // setLoading(true);
             } catch (e) {
               setLoading(false);
             }

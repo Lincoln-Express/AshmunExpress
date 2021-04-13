@@ -9,13 +9,6 @@ export type QuizHelperType = {
   getQuestionObject: (
     questions: Array<Record<string, any>>,
   ) => Record<string, any>;
-  getResultReview: (
-    totalQuestions: number,
-    correctChoices: number,
-    lowerQuartile: number,
-    middleQuartile: number,
-    upperQuartile: number,
-  ) => string;
   hasFinishedQuiz: (questionsLength: number) => boolean;
   moveToNextQuestion: () => void;
   resetCounter: () => void;

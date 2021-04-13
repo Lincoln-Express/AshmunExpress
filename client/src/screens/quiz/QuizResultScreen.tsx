@@ -8,7 +8,6 @@ import {
 } from "@react-navigation/native";
 import { useTheme } from "react-native-paper/src/core/theming";
 import FilledButton from "../../base/filledButton/FilledButton";
-import QuizHelper from "../../quizHelper/QuizHelper";
 import { useUserDispatch } from "../../providers/userProvider/UserProvider";
 import {
   useQuizDispatch,
@@ -18,6 +17,7 @@ import { useQuizSessionDispatch } from "../../providers/quizSessionProvider/Quiz
 import { ActionType } from "../../types/types";
 import { v4 as uuidv4 } from "uuid";
 import CustomCard from "../../base/customCard/CustomCard";
+import { getResultReview } from "../../utils/utils";
 
 const styles = StyleSheet.create({
   outerContainer: {
@@ -71,18 +71,18 @@ const createTimeStamp = () => {
   return new Date().toISOString();
 };
 
-const quizResultHelper = QuizHelper();
 const QuizResultScreen: React.FC<null> = (): JSX.Element => {
   const theme = useTheme();
   const navigation = useNavigation();
 
   const route = useRoute();
   const { totalQuestions, correctAnswersCount, quiz } = route.params;
-  const { getResultReview } = quizResultHelper;
-  const Buttons = viewNextOptions(navigation);
+  const Buttons = React.useMemo(() => viewNextOptions(navigation), [
+    navigation,
+  ]);
 
   const quizState = useQuizState();
-  const timeStamp = createTimeStamp();
+  const timeStamp = React.useMemo(() => createTimeStamp(), []);
   const currQuizObject = Object.freeze({
     ...quizState,
     id: uuidv4(),

@@ -7,6 +7,7 @@ import Loading from "../../base/loading/Loading";
 import useFetch from "../../hooks/useFetch/useFetch";
 import QuizHelper from "../../quizHelper/QuizHelper";
 import FilledButton from "../../base/filledButton/FilledButton";
+import { getEndIndex } from "../../utils/utils";
 
 const styles = StyleSheet.create({
   container: {
@@ -45,13 +46,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const quizPageScreenHelper = QuizHelper();
 const QuizPageScreen: React.FC<any> = (): JSX.Element => {
   const theme = useTheme();
   const route = useRoute();
   const navigation = useNavigation();
   const { section, quiz, level } = route.params;
-  const { getEndIndex } = quizPageScreenHelper;
   const url = `${quiz.toLowerCase()}/${level}/section/${section}`;
 
   const { isError, isLoading, data } = useFetch(url);
@@ -66,7 +65,7 @@ const QuizPageScreen: React.FC<any> = (): JSX.Element => {
         </ScrollView>
       );
     }
-    const shuffledArray = shuffle(data);
+    const shuffledArray = React.useMemo(() => shuffle(data), [data]);
     const len = shuffledArray.length;
     const endIndex = getEndIndex(len);
     const questions = shuffledArray.slice(0, endIndex);
