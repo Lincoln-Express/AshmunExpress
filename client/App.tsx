@@ -12,41 +12,51 @@ import AuthStackNavigator from "./src/navigators/AuthStackNavigator";
 import MainTabNavigator from "./src/navigators/MainTabNavigator";
 import ThemeContext from "./src/contexts/ThemeContext";
 import ErrorBoundary from "./src/base/errorBoundary/ErrorBoundary";
-import UserProvider, {
-  useUserDispatch,
-} from "./src/providers/userProvider/UserProvider";
-import AuthProvider, {
-  useAuthState,
-} from "./src/providers/authProvider/AuthProvider";
+import useAuth from "./src/hooks/useAuth/useAuth";
 import QuizProvider from "./src/providers/quizProvider/QuizProvider";
 import QuizSessionProvider from "./src/providers/quizSessionProvider/QuizSessionProvider";
-import { ActionType } from "./src/types/types";
+import AuthContext from "./src/contexts/AuthContext";
+import UserContext from "./src/contexts/UserContext";
 
 const Stack = createStackNavigator();
 const App = (): JSX.Element => {
   const colorScheme = useColorScheme();
-  const state = useAuthState();
+  const { state } = useAuth();
   const [isThemeDark, setIsThemeDark] = React.useState(colorScheme === "dark");
+  const [user, setUser] = React.useState(state.user);
   const theme = isThemeDark ? DarkTheme : LightTheme;
-  const dispatch = useUserDispatch();
 
+  React.useEffect(() => {
+    setUser(state.user);
+  }, [state.user]);
   const toggleTheme = () => {
     return setIsThemeDark(!isThemeDark);
   };
 
-  const themePreferences = {
+  const themeContextProps = {
     toggleTheme,
     isThemeDark,
   };
 
-  React.useEffect(() => {
-    if (dispatch) {
-      dispatch({ type: ActionType.SET_USER, payload: state.user ?? null });
+  const updateUser = (newValue, attribute) => {
+    if (attribute === "quiz") {
+      const { quizzes } = user;
+      quizzes.push(newValue);
+      return setUser({ ...user, quizzes });
     }
-  }, [dispatch]);
+
+    const newUser = user;
+    newUser[attribute] = newValue;
+    return setUser(newUser);
+  };
+
+  const userContextProps = {
+    user,
+    updateUser,
+  };
 
   const renderScreens = () => {
-    return state.user?.firstName ? (
+    return state.isSignedIn ? (
       <Stack.Screen name="MainTab" component={MainTabNavigator} />
     ) : (
       <Stack.Screen name="AuthStack" component={AuthStackNavigator} />
@@ -56,11 +66,11 @@ const App = (): JSX.Element => {
   return (
     <ErrorBoundary>
       <AppearanceProvider>
-        <AuthProvider>
-          <UserProvider>
+        <AuthContext.Provider value={state}>
+          <UserContext.Provider value={userContextProps}>
             <QuizProvider>
               <QuizSessionProvider>
-                <ThemeContext.Provider value={themePreferences}>
+                <ThemeContext.Provider value={themeContextProps}>
                   <PaperProvider theme={theme}>
                     <NavigationContainer theme={theme}>
                       <StatusBar
@@ -86,8 +96,8 @@ const App = (): JSX.Element => {
                 </ThemeContext.Provider>
               </QuizSessionProvider>
             </QuizProvider>
-          </UserProvider>
-        </AuthProvider>
+          </UserContext.Provider>
+        </AuthContext.Provider>
       </AppearanceProvider>
     </ErrorBoundary>
   );

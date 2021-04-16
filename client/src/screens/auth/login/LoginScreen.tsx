@@ -11,7 +11,6 @@ import Loading from "../../../base/loading/Loading";
 import Header from "../../../base/header/Header";
 import InputField from "../../../base/inputField/InputField";
 import useAuth from "../../../hooks/useAuth/useAuth";
-import { useAuthState } from "../../../providers/authProvider/AuthProvider";
 
 const styles = StyleSheet.create({
   container: {
@@ -32,7 +31,8 @@ const styles = StyleSheet.create({
 
 const LoginScreen: React.FC<null> = () => {
   const navigation = useNavigation();
-  const { login } = useAuth();
+  const { auth } = useAuth();
+  const { login } = auth;
   const [loading, setLoading] = React.useState(false);
   const validationSchema = yup.object().shape({
     email: yup.string().email().required().label("Your input"),
@@ -92,7 +92,7 @@ const LoginScreen: React.FC<null> = () => {
             </>
           )}
         </Formik>
-        <Loading loading={loading} />
+        {/* <Loading loading={loading} /> */}
       </KeyboardAwareScrollView>
     </>
   );

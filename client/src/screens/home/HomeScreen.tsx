@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTheme } from "react-native-paper";
-import { useUserState } from "../../providers/userProvider/UserProvider";
+import UserContext from "../../contexts/UserContext";
 
 const styles = StyleSheet.create({
   container: {
@@ -16,8 +16,9 @@ const styles = StyleSheet.create({
 const HomeScreen: React.FC<null> = () => {
   const theme = useTheme();
   const navigation = useNavigation();
+  const userContext = React.useContext(UserContext);
+  const { user } = userContext;
 
-  const user = useUserState();
   const { firstName } = user;
 
   return (

@@ -1,20 +1,21 @@
-import { useAuthState } from "./../../providers/authProvider/AuthProvider";
 import * as React from "react";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import BASE_URL from "../../config/index";
-import { useAuthDispatch } from "../../providers/authProvider/AuthProvider";
 import { createUser } from "../../utils/utils";
-import { ActionType } from "../../types/types";
+import { ActionType, User } from "../../types/types";
+import authReducer from "../../reducers/authReducer";
 
 const useAuth = () => {
-  const dispatch = useAuthDispatch();
-  const stuff = useAuthState().user;
+  const [state, dispatch] = React.useReducer(authReducer, {
+    isSignedIn: false,
+    isLoading: false,
+    user: {} as User,
+  });
 
   const auth = {
     login: async (email: string, password: string) => {
       try {
-        console.log("1" + stuff);
         await axios
           .post(`${BASE_URL}/auth`, {
             username: email,
@@ -23,15 +24,19 @@ const useAuth = () => {
           .then(async (res) => {
             if (res.data.success) {
               const user = await SecureStore.getItemAsync("user");
+              console.log("Dispatch works!");
+              console.log("This is user" + user);
+
               if (user) {
-                if (dispatch) {
-                  console.log("Dispatch works!");
-                  dispatch({
-                    type: ActionType.SET_USER,
-                    payload: JSON.parse(user),
-                  });
-                }
-                console.log(stuff);
+                dispatch({
+                  type: ActionType.SET_LOADING,
+                });
+
+                dispatch({
+                  type: ActionType.SIGN_IN,
+                  payload: JSON.parse(user),
+                });
+                console.log("isSigned In: " + state.isSignedIn);
               }
             } else {
               throw new Error("Couldn't find user");
@@ -50,9 +55,7 @@ const useAuth = () => {
     },
     logout: async () => {
       await SecureStore.deleteItemAsync("user");
-      if (dispatch) {
-        dispatch({ type: ActionType.DELETE_USER });
-      }
+      dispatch({ type: ActionType.SIGN_OUT });
     },
     register: async (
       firstName: string,
@@ -73,9 +76,8 @@ const useAuth = () => {
             if (res.data.success) {
               const user = createUser(firstName, lastName, email, password);
 
-              if (dispatch) {
-                dispatch({ type: ActionType.SET_USER, payload: user });
-              }
+              // dispatch({ type: ActionType.SET_USER, payload: user });
+
               await SecureStore.setItemAsync("user", JSON.stringify(user));
             }
           });
@@ -97,8 +99,9 @@ const useAuth = () => {
     const fetchUser = async () => {
       try {
         const user = await SecureStore.getItemAsync("user");
-        if (user && dispatch) {
-          dispatch({ type: ActionType.SET_LOADING, payload: JSON.parse(user) });
+        if (user) {
+          dispatch({ type: ActionType.SET_LOADING });
+          dispatch({ type: ActionType.SIGN_IN, payload: JSON.parse(user) });
         }
       } catch (e) {
         console.error(`Restoring user error: ${e.message}`);
@@ -107,7 +110,7 @@ const useAuth = () => {
     fetchUser();
   }, [dispatch]);
 
-  return auth;
+  return { auth, state };
 };
 
 export default useAuth;

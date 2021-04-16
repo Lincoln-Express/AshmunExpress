@@ -1,5 +1,4 @@
 import * as React from "react";
-import { TouchableRipple } from "react-native-paper";
 import { Switch } from "react-native";
 
 interface CustomSwitchProps {

@@ -8,7 +8,6 @@ import {
 } from "@react-navigation/native";
 import { useTheme } from "react-native-paper/src/core/theming";
 import FilledButton from "../../base/filledButton/FilledButton";
-import { useUserDispatch } from "../../providers/userProvider/UserProvider";
 import {
   useQuizDispatch,
   useQuizState,
@@ -18,6 +17,7 @@ import { ActionType } from "../../types/types";
 import { v4 as uuidv4 } from "uuid";
 import CustomCard from "../../base/customCard/CustomCard";
 import { getResultReview } from "../../utils/utils";
+import UserContext from "../../contexts/UserContext";
 
 const styles = StyleSheet.create({
   outerContainer: {
@@ -74,6 +74,7 @@ const createTimeStamp = () => {
 const QuizResultScreen: React.FC<null> = (): JSX.Element => {
   const theme = useTheme();
   const navigation = useNavigation();
+  const { updateUser } = React.useContext(UserContext);
 
   const route = useRoute();
   const { totalQuestions, correctAnswersCount, quiz } = route.params;
@@ -97,7 +98,7 @@ const QuizResultScreen: React.FC<null> = (): JSX.Element => {
   );
   const quizSessionDispatch = useQuizSessionDispatch();
   const quizDispatch = useQuizDispatch();
-  const userDispatch = useUserDispatch();
+  updateUser(currQuizObject, "quiz");
 
   React.useEffect(() => {
     if (quizDispatch) {
@@ -106,10 +107,6 @@ const QuizResultScreen: React.FC<null> = (): JSX.Element => {
 
     if (quizSessionDispatch) {
       quizSessionDispatch({ type: ActionType.RESET_QUIZ_SESSION });
-    }
-
-    if (userDispatch) {
-      userDispatch({ type: ActionType.ADD_QUIZ, payload: currQuizObject });
     }
 
     if (quizDispatch) {

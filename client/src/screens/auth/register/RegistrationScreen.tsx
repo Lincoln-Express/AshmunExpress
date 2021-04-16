@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
 
 const RegistrationScreen: React.FC<null> = () => {
   const navigation = useNavigation();
-  const { register } = useAuth();
+  const { auth } = useAuth();
+  const { register } = auth;
   const [loading, setLoading] = React.useState(false);
   const validationSchema = yup.object().shape({
     firstName: yup.string().required().label("First Name"),

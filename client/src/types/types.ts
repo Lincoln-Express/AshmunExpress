@@ -1,3 +1,4 @@
+import { axios } from "axios";
 export type QuizHelperType = {
   canGoBack: (quizType: string) => boolean;
   isCorrect: (
@@ -25,14 +26,15 @@ export enum ActionType {
   RESET_QUIZ = "RESET_QUIZ",
   UPDATE_QUIZ_SESSION = "UPDATE_QUIZ_SESSION",
   RESET_QUIZ_SESSION = "RESET_QUIZ_SESSION",
+  SIGN_IN = "SIGN_IN",
+  SIGN_OUT = "SIGN_OUT",
 }
 
 export type AuthAction =
-  | { type: ActionType.SET_USER; payload: User | null }
-  | { type: ActionType.DELETE_USER }
+  | { type: ActionType.SIGN_IN; payload: User }
+  | { type: ActionType.SIGN_OUT }
   | {
       type: ActionType.SET_LOADING;
-      payload: User | null;
     };
 
 export type User = {
@@ -46,7 +48,8 @@ export type User = {
 };
 
 export type UserAction =
-  | { type: ActionType.SET_USER; payload: User | null }
+  | { type: ActionType.SET_USER; payload: User }
+  | { type: ActionType.DELETE_USER }
   | { type: ActionType.ADD_QUIZ; payload: Quiz };
 
 export type QuizAction =
@@ -80,8 +83,9 @@ export type QuizSession = {
 };
 
 export type SessionState = {
-  user: User | null;
+  isSignedIn: boolean;
   isLoading: boolean;
+  user: User;
 };
 
 export type Auth = {
