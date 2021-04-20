@@ -6,14 +6,18 @@ const styles = StyleSheet.create({
     position: "absolute",
     padding: 50,
     justifyContent: "center",
-    alignSelf: "center",
+    alignItems: "center",
   },
   image: { width: 330, height: 190 },
 });
 
-const Logo: React.FC = () => {
+interface LogoProps {
+  style?: Record<string, unknown>;
+}
+const Logo: React.FC<LogoProps> = (props: LogoProps) => {
+  const { style } = props;
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...style }}>
       <Image
         style={styles.image}
         source={require("../../../assets/images/logo.png")}

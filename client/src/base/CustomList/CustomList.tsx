@@ -4,10 +4,10 @@ import { List, useTheme } from "react-native-paper";
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 1,
     borderWidth: 1.5,
     borderRadius: 3,
     marginVertical: 5,
-    height: 72,
   },
   sectionTitle: {
     fontSize: 24,

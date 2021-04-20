@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, ScrollView } from "react-native";
 import {
   StackActions,
   useNavigation,
-  useNavigationState,
   useRoute,
 } from "@react-navigation/native";
 import { useTheme } from "react-native-paper/src/core/theming";
@@ -68,7 +67,7 @@ const styles = StyleSheet.create({
 });
 
 const createTimeStamp = () => {
-  return new Date().toISOString();
+  return new Date().toDateString();
 };
 
 const QuizResultScreen: React.FC<null> = (): JSX.Element => {

@@ -48,6 +48,9 @@ const FilledButton: React.FC<FilledButtonProps> = (
 ) => {
   const theme = useTheme();
   const { title, onPress, buttonStyle, textStyle, disabled } = props;
+  const handleOnPress = () => {
+    requestAnimationFrame(() => onPress());
+  };
 
   return Platform.OS === "ios" ? (
     <TouchableHighlight
@@ -56,13 +59,13 @@ const FilledButton: React.FC<FilledButtonProps> = (
         backgroundColor: theme.dark ? "#F57C00" : "#0A84FF",
         ...buttonStyle,
       }}
-      onPress={onPress}
+      onPress={handleOnPress}
       disabled={disabled}
     >
       <Text style={{ ...styles.text, ...textStyle }}>{title}</Text>
     </TouchableHighlight>
   ) : (
-    <TouchableNativeFeedback onPress={onPress} disabled={disabled}>
+    <TouchableNativeFeedback onPress={handleOnPress} disabled={disabled}>
       <View
         style={{
           ...styles.container,

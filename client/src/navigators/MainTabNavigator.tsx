@@ -18,9 +18,12 @@ import ExampleScreen from "../screens/quiz/ExampleScreen";
 import TestScreen from "../screens/quiz/TestScreen";
 import PracticeScreen from "../screens/quiz/PracticeScreen";
 import TutorialScreen from "../screens/quiz/TutorialScreen";
+import AboutScreen from "../screens/settings/AboutScreen";
+import FeedbackScreen from "../screens/settings/FeedbackScreen";
+import NotificationsScreen from "../screens/settings/NotificationsScreen";
+import AccountScreen from "../screens/settings/AccountScreen";
 
 const HomeStack = createStackNavigator();
-const ProfileStack = createStackNavigator();
 const QuizStack = createStackNavigator();
 const SettingsStack = createStackNavigator();
 
@@ -42,25 +45,6 @@ const HomeStackScreen = () => {
     >
       <HomeStack.Screen name="Home" component={HomeScreen} />
     </HomeStack.Navigator>
-  );
-};
-
-const ProfileStackScreen = () => {
-  const { isThemeDark } = React.useContext(ThemeContext);
-  const theme = useTheme();
-  return (
-    <ProfileStack.Navigator
-      screenOptions={{
-        headerStyle: {
-          borderBottomColor: isThemeDark
-            ? theme.colors.primary
-            : theme.colors.accent,
-          borderBottomWidth: 0.5,
-        },
-      }}
-    >
-      <ProfileStack.Screen name="Profile" component={ProfileScreen} />
-    </ProfileStack.Navigator>
   );
 };
 
@@ -133,7 +117,7 @@ const QuizStackScreen = () => {
   );
 };
 
-const SettingsStackScreen = () => {
+const ProfileStackScreen = () => {
   const { isThemeDark } = React.useContext(ThemeContext);
   const theme = useTheme();
   return (
@@ -147,7 +131,15 @@ const SettingsStackScreen = () => {
         },
       }}
     >
+      <SettingsStack.Screen name="Profile" component={ProfileScreen} />
       <SettingsStack.Screen name="Settings" component={SettingsScreen} />
+      <SettingsStack.Screen name="About" component={AboutScreen} />
+      <SettingsStack.Screen name="Account" component={AccountScreen} />
+      <SettingsStack.Screen
+        name="Notifications"
+        component={NotificationsScreen}
+      />
+      <SettingsStack.Screen name="Feedback" component={FeedbackScreen} />
     </SettingsStack.Navigator>
   );
 };
@@ -166,12 +158,6 @@ const MainTabNavigator = (): JSX.Element => {
               iconName = "ios-home";
             } else {
               iconName = "md-home";
-            }
-          } else if (route.name === "Settings") {
-            if (Platform.OS === "ios") {
-              iconName = "ios-settings";
-            } else {
-              iconName = "md-settings";
             }
           } else if (route.name === "Quiz") {
             if (Platform.OS === "ios") {
@@ -215,7 +201,6 @@ const MainTabNavigator = (): JSX.Element => {
         })}
       />
       <MainTab.Screen name="Profile" component={ProfileStackScreen} />
-      <MainTab.Screen name="Settings" component={SettingsStackScreen} />
     </MainTab.Navigator>
   );
 };

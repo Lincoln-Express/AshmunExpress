@@ -1,4 +1,3 @@
-import { axios } from "axios";
 export type QuizHelperType = {
   canGoBack: (quizType: string) => boolean;
   isCorrect: (
@@ -43,7 +42,6 @@ export type User = {
   email: string;
   password: string;
   appearance: Appearance;
-  showNotifications: boolean;
   quizzes: Quiz[];
 };
 
@@ -68,6 +66,8 @@ export type QuizSessionAction =
 export type Quiz = {
   id: number;
   quizType: string;
+  quizTopic: string;
+  quizSection: string;
   correctAnswersCount: number;
   numberOfQuestions: number;
   timeStamp: string;

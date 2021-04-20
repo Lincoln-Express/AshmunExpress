@@ -1,10 +1,10 @@
 {
   "expo": {
     "name": "Ashmun Express",
-    "slug": "AshmunExpress",
+    "slug": "ashmun-express",
     "privacy": "public",
     "platforms": ["ios", "android", "web"],
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "splash": {

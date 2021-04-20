@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: "center",
     paddingTop: 80,
-    padding: 16,
+    padding: 15,
   },
   header: { paddingTop: 170 },
   image: {

@@ -22,7 +22,7 @@ interface CustomCardProps {
   right?: () => JSX.Element;
   paragraphs?: Array<string>;
   elevation?: number;
-  onPress: () => void;
+  onPress?: () => void;
   style?: Record<string, unknown>;
   subtitleNumberOfLines?: number;
 }

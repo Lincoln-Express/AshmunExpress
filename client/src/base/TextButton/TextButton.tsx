@@ -29,12 +29,18 @@ interface TextButtonProps {
 const TextButton: React.FC<TextButtonProps> = (props: TextButtonProps) => {
   const theme = useTheme();
   const { title, onPress } = props;
+  const handleOnPress = () => {
+    requestAnimationFrame(() => {
+      return onPress();
+    });
+  };
+
   return Platform.OS === "ios" ? (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity style={styles.container} onPress={handleOnPress}>
       <Text style={{ ...styles.text, color: theme.colors.text }}>{title}</Text>
     </TouchableOpacity>
   ) : (
-    <TouchableNativeFeedback style={styles.container} onPress={onPress}>
+    <TouchableNativeFeedback style={styles.container} onPress={handleOnPress}>
       <Text style={{ ...styles.text, color: theme.colors.text }}>{title}</Text>
     </TouchableNativeFeedback>
   );

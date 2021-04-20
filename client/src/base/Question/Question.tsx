@@ -25,24 +25,24 @@ const Question: React.FC<QuestionProps> = (props: QuestionProps) => {
 
   let questionStrings: Array<string> = [];
 
-  if (pictureName) {
-    const firstPictureIndex = question.indexOf(":");
-    // contains one image at the end of the question
-    if (firstPictureIndex == question.length) {
-      questionStrings = question.split(":");
+  // if (pictureName) {
+  //   const firstPictureIndex = question.indexOf(":");
+  //   // contains one image at the end of the question
+  //   if (firstPictureIndex == question.length) {
+  //     questionStrings = question.split(":");
 
-      return (
-        <View>
-          <Text>{questionStrings[0]}</Text>
+  //     return (
+  //       <View>
+  //         <Text>{questionStrings[0]}</Text>
 
-          <Text>{questionStrings[1]}</Text>
-        </View>
-      );
-    }
-    // contains multiple images
-    else {
-    }
-  }
+  //         <Text>{questionStrings[1]}</Text>
+  //       </View>
+  //     );
+  //   }
+  //   // contains multiple images
+  //   else {
+  //   }
+  // }
 
   return (
     <View style={styles.container}>

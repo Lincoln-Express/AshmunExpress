@@ -24,8 +24,6 @@ const useAuth = () => {
           .then(async (res) => {
             if (res.data.success) {
               const user = await SecureStore.getItemAsync("user");
-              console.log("Dispatch works!");
-              console.log("This is user" + user);
 
               if (user) {
                 dispatch({
@@ -36,7 +34,6 @@ const useAuth = () => {
                   type: ActionType.SIGN_IN,
                   payload: JSON.parse(user),
                 });
-                console.log("isSigned In: " + state.isSignedIn);
               }
             } else {
               throw new Error("Couldn't find user");
@@ -75,9 +72,6 @@ const useAuth = () => {
           .then(async (res) => {
             if (res.data.success) {
               const user = createUser(firstName, lastName, email, password);
-
-              // dispatch({ type: ActionType.SET_USER, payload: user });
-
               await SecureStore.setItemAsync("user", JSON.stringify(user));
             }
           });

@@ -48,14 +48,14 @@ app.post("/auth", function (request, response) {
 app.post("/register", function (request, response) {
   console.log("I got a request");
   var postData = request.body;
-  connection.query("INSERT INTO accounts SET ?", postData, function (
-    error,
-    results,
-    fields,
-  ) {
-    if (error) throw error;
-    response.json({ success: true });
-  });
+  connection.query(
+    "INSERT INTO accounts SET ?",
+    postData,
+    function (error, results, fields) {
+      if (error) throw error;
+      response.json({ success: true });
+    },
+  );
 });
 
 //GETS TUTORIAL PROBLEMS
@@ -108,7 +108,7 @@ app.get("/test/:level/section/:section", function (request, response) {
 // GETS TOPIC AND SUBTOPIC
 app.get("/topics", function (request, response) {
   connection.query(
-    "SELECT topics.topic_name, section.section_name FROM section JOIN topics ON section.topic_id = topics.topic_id ORDER BY tname, stname;",
+    "SELECT topics.topic_name, section.section_name FROM section JOIN topics ON section.topic_id = topics.topic_id ORDER BY topic_name, section_name;",
     function (error, results, fields) {
       if (error) throw error;
       response.json(results);

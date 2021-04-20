@@ -5,9 +5,13 @@ import { useTheme } from "react-native-paper";
 import shuffle from "lodash/shuffle";
 import Loading from "../../base/loading/Loading";
 import useFetch from "../../hooks/useFetch/useFetch";
-import QuizHelper from "../../quizHelper/QuizHelper";
 import FilledButton from "../../base/filledButton/FilledButton";
 import { getEndIndex } from "../../utils/utils";
+import {
+  useQuizDispatch,
+  useQuizState,
+} from "../../providers/quizProvider/QuizProvider";
+import { ActionType } from "../../types/types";
 
 const styles = StyleSheet.create({
   container: {
@@ -50,8 +54,21 @@ const QuizPageScreen: React.FC<any> = (): JSX.Element => {
   const theme = useTheme();
   const route = useRoute();
   const navigation = useNavigation();
-  const { section, quiz, level } = route.params;
+  const { topic, section, quiz, level } = route.params;
   const url = `${quiz.toLowerCase()}/${level}/section/${section}`;
+  const quizState = useQuizState();
+  const currQuizObject = Object.freeze({
+    ...quizState,
+    quizSection: section,
+    quizTopic: topic,
+  });
+
+  const quizDispatch = useQuizDispatch();
+  React.useEffect(() => {
+    if (quizDispatch) {
+      quizDispatch({ type: ActionType.UPDATE_QUIZ, payload: currQuizObject });
+    }
+  }, []);
 
   const { isError, isLoading, data } = useFetch(url);
 

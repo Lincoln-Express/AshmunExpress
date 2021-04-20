@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-indent */
 import * as React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import { useNavigation, useNavigationState } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { useTheme } from "react-native-paper";
 import Loading from "../../base/loading/Loading";
 import CustomList from "../../base/customList/CustomList";

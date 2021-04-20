@@ -17,6 +17,7 @@ import QuizProvider from "./src/providers/quizProvider/QuizProvider";
 import QuizSessionProvider from "./src/providers/quizSessionProvider/QuizSessionProvider";
 import AuthContext from "./src/contexts/AuthContext";
 import UserContext from "./src/contexts/UserContext";
+import { Appearance } from "./src/types/types";
 
 const Stack = createStackNavigator();
 const App = (): JSX.Element => {
@@ -30,6 +31,10 @@ const App = (): JSX.Element => {
     setUser(state.user);
   }, [state.user]);
   const toggleTheme = () => {
+    const { appearance } = user;
+    const newAppearance =
+      appearance === Appearance.DARK ? Appearance.LIGHT : Appearance.DARK;
+    setUser({ ...user, appearance: newAppearance });
     return setIsThemeDark(!isThemeDark);
   };
 

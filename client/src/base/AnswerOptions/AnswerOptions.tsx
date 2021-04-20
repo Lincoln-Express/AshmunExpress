@@ -36,21 +36,19 @@ const AnswerOptions: React.FC<AnswerOptionsProps> = (
   const shuffledAnswers = React.useMemo(() => shuffle(answers), [answers]);
   return (
     <AnswerButtonContext.Provider value={answerButtonPreferences}>
-      <View>
-        {shuffledAnswers.map((answer) => {
-          const isCorrectAnswer = isCorrect(questionObject, answer);
-          return (
-            <View style={styles.container} key={answer}>
-              <AnswerButton
-                answer={answer}
-                isCorrectAnswer={isCorrectAnswer}
-                disabled={disabled}
-                questionObject={questionObject}
-              />
-            </View>
-          );
-        })}
-      </View>
+      {shuffledAnswers.map((answer) => {
+        const isCorrectAnswer = isCorrect(questionObject, answer);
+        return (
+          <View style={styles.container} key={answer}>
+            <AnswerButton
+              answer={answer}
+              isCorrectAnswer={isCorrectAnswer}
+              disabled={disabled}
+              questionObject={questionObject}
+            />
+          </View>
+        );
+      })}
     </AnswerButtonContext.Provider>
   );
 };

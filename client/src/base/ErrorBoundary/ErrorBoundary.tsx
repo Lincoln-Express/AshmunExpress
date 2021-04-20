@@ -63,7 +63,7 @@ class ErrorBoundary extends React.Component<any, ErrorBoundaryState> {
             size={60}
             color="#273A7F"
           />
-          <Text style={styles.errorHeader}> Oops, Something went wrong! </Text>
+          <Text style={styles.errorHeader}>Oops, Something went wrong!</Text>
           <Text style={styles.errorMessage}>
             The app ran into a problem and could not continue. We apologize for
             any inconvenience this has caused! Press the button below to reload

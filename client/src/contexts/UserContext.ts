@@ -1,8 +1,15 @@
 import * as React from "react";
-import { User } from "../types/types";
+import { Appearance, User, Quiz } from "../types/types";
 
 const UserContext = React.createContext({
-  user: {} as User,
+  user: {
+    firstName: "",
+    lastName: "",
+    appearance: Appearance.LIGHT,
+    email: "",
+    password: "",
+    quizzes: [] as Quiz[],
+  },
   updateUser: (newValue, attribute) => {},
 });
 
