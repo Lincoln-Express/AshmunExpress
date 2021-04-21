@@ -6,8 +6,8 @@ import CustomProgressBar from "../../base/customProgressBar/CustomProgressBar";
 import Question from "../../base/question/Question";
 import QuestionCount from "../../base/questionCount/QuestionCount";
 import AnswerOptions from "../../base/answerOptions/AnswerOptions";
-import QuizHelper from "../../quizHelper/QuizHelper";
-import { useQuizState } from "../../providers/quizProvider/QuizProvider";
+import ModeHelper from "../../modeHelper/ModeHelper";
+import { useModeState } from "../../providers/modeProvider/ModeProvider";
 
 const styles = StyleSheet.create({
   button: {
@@ -29,12 +29,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const practiceQuizHelper = QuizHelper();
+const practiceModeHelper = ModeHelper();
 
 const PracticeScreen: React.FC<null> = (): JSX.Element => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { questions, quiz, url } = route.params;
+  const { questions, mode, url } = route.params;
 
   const {
     canGoBack,
@@ -42,17 +42,17 @@ const PracticeScreen: React.FC<null> = (): JSX.Element => {
     getAnswers,
     getCounter,
     getQuestionObject,
-    hasFinishedQuiz,
+    hasFinishedMode,
     moveToNextQuestion,
     resetCounter,
-  } = practiceQuizHelper;
+  } = practiceModeHelper;
 
-  const userCanGoBack = canGoBack(quiz);
+  const userCanGoBack = canGoBack(mode);
   const counter = getCounter();
   const questionObject = getQuestionObject(questions);
   const { question, picture, id } = questionObject;
   const answers = getAnswers(questionObject);
-  const { correctAnswersCount } = useQuizState();
+  const { correctAnswersCount } = useModeState();
   const pictureName = picture === "yes" ? `${url}${id}` : undefined;
 
   React.useEffect(() => {
@@ -62,7 +62,7 @@ const PracticeScreen: React.FC<null> = (): JSX.Element => {
       }
 
       event.preventDefault();
-      Alert.alert("Sorry!", `You cannot go back as this is a ${quiz} session`, [
+      Alert.alert("Sorry!", `You cannot go back as this is a ${mode} session`, [
         { text: "Cancel", onPress: () => {}, style: "cancel" },
       ]);
     });
@@ -89,15 +89,15 @@ const PracticeScreen: React.FC<null> = (): JSX.Element => {
       />
 
       <FilledButton
-        title={hasFinishedQuiz(questions.length) ? "Show Results" : "Next"}
+        title={hasFinishedMode(questions.length) ? "Show Results" : "Next"}
         onPress={() => {
-          if (!hasFinishedQuiz(questions.length)) {
+          if (!hasFinishedMode(questions.length)) {
             moveToNextQuestion();
-            navigation.navigate("Practice", { questions, quiz });
+            navigation.navigate("Practice", { questions, mode });
           } else {
             resetCounter();
-            navigation.navigate("QuizResult", {
-              quiz,
+            navigation.navigate("ModeResult", {
+              mode,
               correctAnswersCount,
               totalQuestions: questions.length,
             });

@@ -24,9 +24,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const QuizListScreen: React.FC<null> = (): JSX.Element => {
+const ModeListScreen: React.FC<null> = (): JSX.Element => {
   const navigation = useNavigation();
-  const quizzes = ["Tutorial", "Example", "Practice", "Test"];
+  const modes = ["Tutorial", "Example", "Practice", "Test"];
   const levels = ["1", "2", "3", "4"];
   const route = useRoute();
   const { section, topic } = route.params;
@@ -35,8 +35,8 @@ const QuizListScreen: React.FC<null> = (): JSX.Element => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {quizzes.map((quiz) => (
-        <CustomList title={quiz} key={quiz}>
+      {modes.map((mode) => (
+        <CustomList title={mode} key={mode}>
           {levels.map((level) => {
             return (
               <CustomCard
@@ -45,11 +45,11 @@ const QuizListScreen: React.FC<null> = (): JSX.Element => {
                 titleStyle={styles.title}
                 elevation={5}
                 onPress={() => {
-                  navigation.navigate("QuizPage", {
+                  navigation.navigate("ModePenultimate", {
                     topic,
                     section,
                     level,
-                    quiz,
+                    mode,
                   });
                 }}
                 left={() => (
@@ -70,4 +70,4 @@ const QuizListScreen: React.FC<null> = (): JSX.Element => {
   );
 };
 
-export default QuizListScreen;
+export default ModeListScreen;

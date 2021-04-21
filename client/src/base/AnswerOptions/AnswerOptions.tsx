@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { shuffle } from "lodash/shuffle";
+import shuffle from "lodash/shuffle";
 import AnswerButton from "../answerButton/AnswerButton";
 import AnswerButtonContext from "../../contexts/AnswerButtonContext";
 
@@ -33,7 +33,12 @@ const AnswerOptions: React.FC<AnswerOptionsProps> = (
     disabled,
   };
 
-  const shuffledAnswers = React.useMemo(() => shuffle(answers), [answers]);
+  let shuffledAnswers = answers;
+
+  React.useEffect(() => {
+    shuffledAnswers = shuffle(answers);
+  }, [answers]);
+
   return (
     <AnswerButtonContext.Provider value={answerButtonPreferences}>
       {shuffledAnswers.map((answer) => {

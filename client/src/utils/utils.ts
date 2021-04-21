@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User, Appearance } from "../types/types";
+import { User, Appearance, Mode } from "../types/types";
 
 export const createUser = (
   firstName: string,
@@ -22,7 +22,7 @@ export const createUser = (
     password,
     appearance: Appearance.LIGHT,
     showNotifications: true,
-    quizzes: [],
+    modes: [] as Mode[],
   };
 };
 
@@ -65,7 +65,7 @@ export const changeObjectPropsName = (
   }));
 };
 
-export const mergeQuizData = (
+export const mergeModeData = (
   data: Array<{ topic_name: string; section_name: string }> | undefined,
 ): Array<{ topic_name: string; section_name: Array<string> }> => {
   const result: Array<{ topic_name: string; section_name: Array<string> }> = [];

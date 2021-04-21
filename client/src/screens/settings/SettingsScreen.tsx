@@ -86,9 +86,6 @@ const SettingsScreen: React.FC<null> = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.customImagePlaceholder}>
-        <CustomImagePlaceholder imageSize={48} image={image} />
-      </View>
       <View style={styles.themeButton}>
         <Text style={{ color: theme.colors.text, fontSize: 24 }}>
           Dark Mode

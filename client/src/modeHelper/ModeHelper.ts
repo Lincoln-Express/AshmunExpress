@@ -1,9 +1,9 @@
-import { QuizHelperType } from "../types/types";
+import { ModeHelperType } from "../types/types";
 
-const QuizHelper = (): QuizHelperType => {
+const ModeHelper = (): ModeHelperType => {
   let counter = 0;
-  const canGoBack = (quizType: string) => {
-    return quizType === "Example" || quizType === "Tutorial";
+  const canGoBack = (modeType: string) => {
+    return modeType === "Example" || modeType === "Tutorial";
   };
 
   const getAnswers = (questionObject) => {
@@ -26,7 +26,7 @@ const QuizHelper = (): QuizHelperType => {
     return questions[counter];
   };
 
-  const hasFinishedQuiz = (questionsLength: number) => {
+  const hasFinishedMode = (questionsLength: number) => {
     return counter + 1 === questionsLength;
   };
 
@@ -55,11 +55,11 @@ const QuizHelper = (): QuizHelperType => {
     getAnswers,
     getCounter,
     getQuestionObject,
-    hasFinishedQuiz,
+    hasFinishedMode,
     isCorrect,
     moveToNextQuestion,
     resetCounter,
   };
 };
 
-export default QuizHelper;
+export default ModeHelper;

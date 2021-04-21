@@ -6,7 +6,7 @@ import { useTheme } from "react-native-paper";
 import Loading from "../../base/loading/Loading";
 import CustomList from "../../base/customList/CustomList";
 import useFetch from "../../hooks/useFetch/useFetch";
-import { changeObjectPropsName, mergeQuizData } from "../../utils/utils";
+import { changeObjectPropsName, mergeModeData } from "../../utils/utils";
 import IconButton from "../../base/iconButton/IconButton";
 import CustomCard from "../../base/customCard/CustomCard";
 import ThemeContext from "../../contexts/ThemeContext";
@@ -28,12 +28,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const QuizIntroScreen: React.FC<null> = () => {
+const ModeIntroScreen: React.FC<null> = () => {
   const navigation = useNavigation();
   const keyword = "topics";
   const { isError, isLoading, data } = useFetch(keyword);
-  const mergedQuizData = React.useMemo(
-    () => changeObjectPropsName(mergeQuizData(data)),
+  const mergedModeData = React.useMemo(
+    () => changeObjectPropsName(mergeModeData(data)),
     [data],
   );
   const { isThemeDark } = React.useContext(ThemeContext);
@@ -42,8 +42,8 @@ const QuizIntroScreen: React.FC<null> = () => {
     <ScrollView contentContainerStyle={styles.container}>
       {isError && <View>{isError}</View>}
       {isLoading && <Loading loading={isLoading} />}
-      {mergedQuizData !== undefined
-        ? mergedQuizData.map((topic) => (
+      {mergedModeData !== undefined
+        ? mergedModeData.map((topic) => (
             <CustomList title={topic.title} key={topic.title}>
               {topic.data.map((section) => {
                 return (
@@ -53,7 +53,7 @@ const QuizIntroScreen: React.FC<null> = () => {
                     titleStyle={styles.title}
                     elevation={5}
                     onPress={() => {
-                      navigation.navigate("QuizList", {
+                      navigation.navigate("ModeList", {
                         topic: topic.title,
                         section,
                       });
@@ -79,4 +79,4 @@ const QuizIntroScreen: React.FC<null> = () => {
   );
 };
 
-export default QuizIntroScreen;
+export default ModeIntroScreen;

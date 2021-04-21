@@ -5,7 +5,7 @@ import FilledButton from "../../base/filledButton/FilledButton";
 import CustomProgressBar from "../../base/customProgressBar/CustomProgressBar";
 import Question from "../../base/question/Question";
 import QuestionCount from "../../base/questionCount/QuestionCount";
-import QuizHelper from "../../quizHelper/QuizHelper";
+import ModeHelper from "../../modeHelper/ModeHelper";
 
 const styles = StyleSheet.create({
   button: {
@@ -27,20 +27,20 @@ const styles = StyleSheet.create({
   },
 });
 
-const tutorialQuizHelper = QuizHelper();
+const exampleModeHelper = ModeHelper();
 
-const TutorialScreen: React.FC<null> = (): JSX.Element => {
+const ExampleScreen: React.FC<null> = (): JSX.Element => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { questions, quiz, url } = route.params;
+  const { questions, mode, url } = route.params;
 
   const {
     getCounter,
     getQuestionObject,
-    hasFinishedQuiz,
+    hasFinishedMode,
     moveToNextQuestion,
     resetCounter,
-  } = tutorialQuizHelper;
+  } = exampleModeHelper;
 
   const counter = getCounter();
   const questionObject = getQuestionObject(questions);
@@ -59,17 +59,17 @@ const TutorialScreen: React.FC<null> = (): JSX.Element => {
         style={styles.progressBar}
       />
       <Question question={question} pictureName={pictureName} />
+
       <FilledButton
-        title={hasFinishedQuiz(questions.length) ? "Show Results" : "Next"}
+        title={hasFinishedMode(questions.length) ? "Show Results" : "Next"}
         onPress={() => {
-          if (!hasFinishedQuiz(questions.length)) {
+          if (!hasFinishedMode(questions.length)) {
             moveToNextQuestion();
-            navigation.navigate("Tutorial", { questions, quiz });
+            navigation.navigate("Example", { questions, mode });
           } else {
             resetCounter();
-
-            navigation.navigate("QuizResult", {
-              quiz,
+            navigation.navigate("ModeResult", {
+              mode,
               correctAnswersCount: 0,
               totalQuestions: questions.length,
             });
@@ -81,4 +81,4 @@ const TutorialScreen: React.FC<null> = (): JSX.Element => {
   );
 };
 
-export default TutorialScreen;
+export default ExampleScreen;

@@ -13,11 +13,11 @@ import MainTabNavigator from "./src/navigators/MainTabNavigator";
 import ThemeContext from "./src/contexts/ThemeContext";
 import ErrorBoundary from "./src/base/errorBoundary/ErrorBoundary";
 import useAuth from "./src/hooks/useAuth/useAuth";
-import QuizProvider from "./src/providers/quizProvider/QuizProvider";
-import QuizSessionProvider from "./src/providers/quizSessionProvider/QuizSessionProvider";
+import ModeProvider from "./src/providers/modeProvider/ModeProvider";
+import ModeSessionProvider from "./src/providers/modeSessionProvider/ModeSessionProvider";
 import AuthContext from "./src/contexts/AuthContext";
 import UserContext from "./src/contexts/UserContext";
-import { Appearance } from "./src/types/types";
+import { Appearance, Mode } from "./src/types/types";
 
 const Stack = createStackNavigator();
 const App = (): JSX.Element => {
@@ -44,10 +44,16 @@ const App = (): JSX.Element => {
   };
 
   const updateUser = (newValue, attribute) => {
-    if (attribute === "quiz") {
-      const { quizzes } = user;
-      quizzes.push(newValue);
-      return setUser({ ...user, quizzes });
+    if (attribute === "mode") {
+      const { modes } = user;
+      if (modes) {
+        modes.push(newValue);
+        return setUser({ ...user, modes });
+      } else {
+        const newModesArray = [] as Mode[];
+        newModesArray.push(newValue);
+        return setUser({ ...user, modes: newModesArray });
+      }
     }
 
     const newUser = user;
@@ -73,8 +79,8 @@ const App = (): JSX.Element => {
       <AppearanceProvider>
         <AuthContext.Provider value={state}>
           <UserContext.Provider value={userContextProps}>
-            <QuizProvider>
-              <QuizSessionProvider>
+            <ModeProvider>
+              <ModeSessionProvider>
                 <ThemeContext.Provider value={themeContextProps}>
                   <PaperProvider theme={theme}>
                     <NavigationContainer theme={theme}>
@@ -99,8 +105,8 @@ const App = (): JSX.Element => {
                     </NavigationContainer>
                   </PaperProvider>
                 </ThemeContext.Provider>
-              </QuizSessionProvider>
-            </QuizProvider>
+              </ModeSessionProvider>
+            </ModeProvider>
           </UserContext.Provider>
         </AuthContext.Provider>
       </AppearanceProvider>

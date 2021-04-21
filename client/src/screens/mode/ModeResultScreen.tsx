@@ -8,10 +8,10 @@ import {
 import { useTheme } from "react-native-paper/src/core/theming";
 import FilledButton from "../../base/filledButton/FilledButton";
 import {
-  useQuizDispatch,
-  useQuizState,
-} from "../../providers/quizProvider/QuizProvider";
-import { useQuizSessionDispatch } from "../../providers/quizSessionProvider/QuizSessionProvider";
+  useModeDispatch,
+  useModeState,
+} from "../../providers/modeProvider/ModeProvider";
+import { useModeSessionDispatch } from "../../providers/modeSessionProvider/ModeSessionProvider";
 import { ActionType } from "../../types/types";
 import { v4 as uuidv4 } from "uuid";
 import CustomCard from "../../base/customCard/CustomCard";
@@ -70,47 +70,42 @@ const createTimeStamp = () => {
   return new Date().toDateString();
 };
 
-const QuizResultScreen: React.FC<null> = (): JSX.Element => {
+const ModeResultScreen: React.FC<null> = (): JSX.Element => {
   const theme = useTheme();
   const navigation = useNavigation();
   const { updateUser } = React.useContext(UserContext);
 
   const route = useRoute();
-  const { totalQuestions, correctAnswersCount, quiz } = route.params;
+  const { totalQuestions, correctAnswersCount, mode } = route.params;
   const Buttons = React.useMemo(() => viewNextOptions(navigation), [
     navigation,
   ]);
 
-  const quizState = useQuizState();
+  const modeState = useModeState();
   const timeStamp = React.useMemo(() => createTimeStamp(), []);
-  const currQuizObject = Object.freeze({
-    ...quizState,
+  const currModeObject = Object.freeze({
+    ...modeState,
     id: uuidv4(),
-    quizType: quiz,
+    modeType: mode,
     correctAnswersCount,
     totalQuestions,
     timeStamp,
   });
 
-  const failedQuestions = currQuizObject.quizSessionHistory.filter(
-    (quizSession) => quizSession.userAnswer != quizSession.answer,
+  const failedQuestions = currModeObject.modeSessionHistory.filter(
+    (modeSession) => modeSession.userAnswer != modeSession.answer,
   );
-  const quizSessionDispatch = useQuizSessionDispatch();
-  const quizDispatch = useQuizDispatch();
-  updateUser(currQuizObject, "quiz");
+  const modeSessionDispatch = useModeSessionDispatch()!;
+  const modeDispatch = useModeDispatch()!;
 
   React.useEffect(() => {
-    if (quizDispatch) {
-      quizDispatch({ type: ActionType.UPDATE_QUIZ, payload: currQuizObject });
-    }
+    updateUser(currModeObject, "mode");
 
-    if (quizSessionDispatch) {
-      quizSessionDispatch({ type: ActionType.RESET_QUIZ_SESSION });
-    }
+    modeDispatch({ type: ActionType.UPDATE_MODE, payload: currModeObject });
 
-    if (quizDispatch) {
-      quizDispatch({ type: ActionType.RESET_QUIZ });
-    }
+    modeSessionDispatch({ type: ActionType.RESET_MODE_SESSION });
+
+    modeDispatch({ type: ActionType.RESET_MODE });
   }, []);
 
   const lowerQuartile = 0.25 * totalQuestions;
@@ -124,7 +119,7 @@ const QuizResultScreen: React.FC<null> = (): JSX.Element => {
     upperQuartile,
   );
 
-  if (quiz === "Example" || quiz === "Tutorial") {
+  if (mode === "Example" || mode === "Tutorial") {
     return (
       <View style={styles.outerContainer}>
         <Text style={{ ...styles.reviewText, color: theme.colors.text }}>
@@ -176,13 +171,12 @@ const QuizResultScreen: React.FC<null> = (): JSX.Element => {
 
             return (
               <CustomCard
-                key={id}
+                key={id.toString()}
                 title={`${index + 1}/${failedQuestions.length + 1}`}
                 subtitle={customText("Question: ", question)}
                 subtitleNumberOfLines={5}
                 style={styles.card}
                 titleStyle={styles.cardTitle}
-                onPress={() => {}}
                 elevation={5}
                 paragraphs={[
                   userAnswerParagraph,
@@ -199,7 +193,7 @@ const QuizResultScreen: React.FC<null> = (): JSX.Element => {
   );
 };
 
-export default QuizResultScreen;
+export default ModeResultScreen;
 
 const customText = (string1: string, string2: string) => {
   return `${string1} ${string2}`;
@@ -218,7 +212,7 @@ const viewNextOptions = (navigation) => {
         buttonStyle={styles.firstButton}
       />
       <FilledButton
-        title="New Quiz"
+        title="New Mode"
         onPress={() => {
           navigation.dispatch(StackActions.popToTop());
         }}

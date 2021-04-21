@@ -1,13 +1,11 @@
 import * as React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { StyleSheet, ScrollView, Text, Alert } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import FilledButton from "../../base/filledButton/FilledButton";
 import CustomProgressBar from "../../base/customProgressBar/CustomProgressBar";
 import Question from "../../base/question/Question";
 import QuestionCount from "../../base/questionCount/QuestionCount";
-import AnswerOptions from "../../base/answerOptions/AnswerOptions";
-import QuizHelper from "../../quizHelper/QuizHelper";
-import { useQuizState } from "../../providers/quizProvider/QuizProvider";
+import ModeHelper from "../../modeHelper/ModeHelper";
 
 const styles = StyleSheet.create({
   button: {
@@ -29,48 +27,25 @@ const styles = StyleSheet.create({
   },
 });
 
-const testQuizHelper = QuizHelper();
+const tutorialModeHelper = ModeHelper();
 
-const TestScreen: React.FC<null> = (): JSX.Element => {
+const TutorialScreen: React.FC<null> = (): JSX.Element => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { questions, quiz, url } = route.params;
+  const { questions, mode, url } = route.params;
 
   const {
-    canGoBack,
-    isCorrect,
-    getAnswers,
     getCounter,
     getQuestionObject,
-    hasFinishedQuiz,
+    hasFinishedMode,
     moveToNextQuestion,
     resetCounter,
-  } = testQuizHelper;
+  } = tutorialModeHelper;
 
-  const userCanGoBack = canGoBack(quiz);
   const counter = getCounter();
   const questionObject = getQuestionObject(questions);
   const { question, picture, id } = questionObject;
-  const answers = getAnswers(questionObject);
-  const { correctAnswersCount } = useQuizState();
   const pictureName = picture === "yes" ? `${url}${id}` : undefined;
-
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener("beforeRemove", (event) => {
-      if (userCanGoBack) {
-        return;
-      }
-
-      event.preventDefault();
-      Alert.alert(
-        "Sorry!",
-        `You cannot go back as this is a ${quiz.toLowerCase()} session`,
-        [{ text: "Cancel", onPress: () => {}, style: "cancel" }],
-      );
-    });
-
-    return unsubscribe();
-  }, []);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -80,27 +55,22 @@ const TestScreen: React.FC<null> = (): JSX.Element => {
         style={styles.questionCount}
       />
       <CustomProgressBar
-        progress={(counter + 1) / questions.length}
+        progress={counter + 1 / questions.length}
         style={styles.progressBar}
       />
       <Question question={question} pictureName={pictureName} />
-      <AnswerOptions
-        answers={answers}
-        questionObject={questionObject}
-        isCorrect={isCorrect}
-      />
-
       <FilledButton
-        title={hasFinishedQuiz(questions.length) ? "Show Results" : "Next"}
+        title={hasFinishedMode(questions.length) ? "Show Results" : "Next"}
         onPress={() => {
-          if (!hasFinishedQuiz(questions.length)) {
+          if (!hasFinishedMode(questions.length)) {
             moveToNextQuestion();
-            navigation.navigate("Test", { questions, quiz });
+            navigation.navigate("Tutorial", { questions, mode });
           } else {
             resetCounter();
-            navigation.navigate("QuizResult", {
-              quiz,
-              correctAnswersCount,
+
+            navigation.navigate("ModeResult", {
+              mode,
+              correctAnswersCount: 0,
               totalQuestions: questions.length,
             });
           }
@@ -111,4 +81,4 @@ const TestScreen: React.FC<null> = (): JSX.Element => {
   );
 };
 
-export default TestScreen;
+export default TutorialScreen;

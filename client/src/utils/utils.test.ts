@@ -8,7 +8,7 @@ const {
   getEndIndex,
   getResultReview,
   fetcher,
-  mergeQuizData,
+  mergeModeData,
 } = utils;
 
 jest.mock("axios");
@@ -47,7 +47,7 @@ const data = [
 
 describe("Tests for validating merged objects with section_name and topic_name properties", () => {
   test("a section object has its appropriate topic names as properties", () => {
-    const result = mergeQuizData(data);
+    const result = mergeModeData(data);
     expect(result[0]?.topic_name).toEqual("Genetics");
   });
 });
@@ -63,7 +63,7 @@ describe("Tests for validating the createUser function", () => {
       email: "stuff@stuff.com",
       password: "password",
       showNotifications: true,
-      quizzes: [],
+      modes: [],
       appearance: Appearance.LIGHT,
     });
   });
@@ -78,7 +78,7 @@ describe("Tests for validating the createUser function", () => {
       email: "stuff@stuff.com",
       password: "password",
       showNotifications: true,
-      quizzes: [],
+      modes: [],
       appearance: Appearance.LIGHT,
     });
   });

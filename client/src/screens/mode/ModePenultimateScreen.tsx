@@ -8,9 +8,9 @@ import useFetch from "../../hooks/useFetch/useFetch";
 import FilledButton from "../../base/filledButton/FilledButton";
 import { getEndIndex } from "../../utils/utils";
 import {
-  useQuizDispatch,
-  useQuizState,
-} from "../../providers/quizProvider/QuizProvider";
+  useModeDispatch,
+  useModeState,
+} from "../../providers/modeProvider/ModeProvider";
 import { ActionType } from "../../types/types";
 
 const styles = StyleSheet.create({
@@ -50,24 +50,22 @@ const styles = StyleSheet.create({
   },
 });
 
-const QuizPageScreen: React.FC<any> = (): JSX.Element => {
+const ModePenultimateScreen: React.FC<any> = (): JSX.Element => {
   const theme = useTheme();
   const route = useRoute();
   const navigation = useNavigation();
-  const { topic, section, quiz, level } = route.params;
-  const url = `${quiz.toLowerCase()}/${level}/section/${section}`;
-  const quizState = useQuizState();
-  const currQuizObject = Object.freeze({
-    ...quizState,
-    quizSection: section,
-    quizTopic: topic,
+  const { topic, section, mode, level } = route.params;
+  const url = `${mode.toLowerCase()}/${level}/section/${section}`;
+  const modeState = useModeState();
+  const currModeObject = Object.freeze({
+    ...modeState,
+    modeSection: section,
+    modeTopic: topic,
   });
 
-  const quizDispatch = useQuizDispatch();
+  const modeDispatch = useModeDispatch()!;
   React.useEffect(() => {
-    if (quizDispatch) {
-      quizDispatch({ type: ActionType.UPDATE_QUIZ, payload: currQuizObject });
-    }
+    modeDispatch({ type: ActionType.UPDATE_MODE, payload: currModeObject });
   }, []);
 
   const { isError, isLoading, data } = useFetch(url);
@@ -82,7 +80,7 @@ const QuizPageScreen: React.FC<any> = (): JSX.Element => {
         </ScrollView>
       );
     }
-    const shuffledArray = React.useMemo(() => shuffle(data), [data]);
+    const shuffledArray = shuffle(data);
     const len = shuffledArray.length;
     const endIndex = getEndIndex(len);
     const questions = shuffledArray.slice(0, endIndex);
@@ -103,10 +101,10 @@ const QuizPageScreen: React.FC<any> = (): JSX.Element => {
           <FilledButton
             title="Get Started"
             onPress={() => {
-              navigation.navigate(`${quiz}`, {
+              navigation.navigate(`${mode}`, {
                 questions,
                 url,
-                quiz,
+                mode,
               });
             }}
             buttonStyle={styles.secondButton}
@@ -129,4 +127,4 @@ const QuizPageScreen: React.FC<any> = (): JSX.Element => {
   );
 };
 
-export default QuizPageScreen;
+export default ModePenultimateScreen;

@@ -7,7 +7,7 @@ import CustomCard from "../../base/customCard/CustomCard";
 import useImagePicker from "../../hooks/useImagePicker/useImagePicker";
 import CustomUserAvatar from "../../base/customUserAvatar/CustomUserAvatar";
 import UserContext from "../../contexts/UserContext";
-import { Quiz } from "../../types/types";
+import { Mode } from "../../types/types";
 
 const styles = StyleSheet.create({
   container: {
@@ -33,14 +33,14 @@ const ProfileScreen: React.FC<null> = () => {
   const { image, pickImage } = imagePicker;
   const userContext = React.useContext(UserContext);
   const { user } = userContext;
-  const { firstName, lastName, quizzes } = user;
-  const numberOfTestsTaken = quizzes.length;
+  const { firstName, lastName, modes } = user;
+  const numberOfTestsTaken = modes.length;
   const {
     topic,
     totalNumberOfQuestions,
     highestScore,
     section,
-  } = getHighestScoreText(quizzes);
+  } = getHighestScoreText(modes);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -77,24 +77,24 @@ const ProfileScreen: React.FC<null> = () => {
 
 export default ProfileScreen;
 
-const getHighestScoreText = (quizzes: Quiz[]) => {
+const getHighestScoreText = (modes: Mode[]) => {
   let highestScore = 0;
   let topic = "";
   let section = "";
   let totalNumberOfQuestions = 0;
 
-  quizzes.forEach((quiz) => {
+  modes.forEach((mode) => {
     const {
       correctAnswersCount,
-      quizSection,
-      quizTopic,
+      modeSection,
+      modeTopic,
       numberOfQuestions,
-    } = quiz;
+    } = mode;
     if (correctAnswersCount > highestScore) {
       (highestScore = correctAnswersCount),
-        (topic = quizTopic),
+        (topic = modeTopic),
         (totalNumberOfQuestions = numberOfQuestions),
-        (section = quizSection);
+        (section = modeSection);
     }
   });
   return {

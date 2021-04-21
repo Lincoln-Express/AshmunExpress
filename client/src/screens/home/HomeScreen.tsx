@@ -13,11 +13,14 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     marginLeft: 10,
   },
-  quizText: {
+  modeText: {
     fontSize: 16,
     marginLeft: 10,
   },
 });
+
+// TODO:Check the length of the modes array to determine how many last quizzes to show,
+// TODO: if the length is zero, display a card that says "Check the topics page for the available modes"
 
 const HomeScreen: React.FC<null> = () => {
   const theme = useTheme();
@@ -27,14 +30,14 @@ const HomeScreen: React.FC<null> = () => {
   const time = date.toTimeString().split(" ")[0];
   const [hours, minutes, seconds] = time.split(":");
 
-  const { firstName, quizzes } = user;
+  const { firstName, modes } = user;
   const greetingText = getGreetingText(parseInt(hours));
 
   let len = 0;
-  if (quizzes) {
-    len = quizzes.length > 2 ? quizzes.length - 3 : quizzes.length;
+  if (modes) {
+    len = modes.length > 2 ? modes.length - 3 : modes.length;
   }
-  const lastThreeQuizzes = len === 0 ? null : quizzes.slice(len);
+  const lastThreeModes = len === 0 ? null : modes.slice(len);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -43,18 +46,18 @@ const HomeScreen: React.FC<null> = () => {
       </Text>
 
       <View>
-        <Text style={{ ...styles.quizText, color: theme.colors.text }}>
-          Last Three Quizzes:
+        <Text style={{ ...styles.modeText, color: theme.colors.text }}>
+          Last Three Modes:
         </Text>
         <View>
-          {lastThreeQuizzes &&
-            lastThreeQuizzes.map((quiz) => {
-              const { quizTopic, quizType, timeStamp } = quiz;
+          {lastThreeModes &&
+            lastThreeModes.map((mode) => {
+              const { modeTopic, modeType, timeStamp } = mode;
               const date = timeStamp.split(" ").slice(1).toString().split(" ");
 
               return (
                 <CustomCard
-                  title={`${quizTopic} ${quizType}`}
+                  title={`${modeTopic} ${modeType}`}
                   subtitle={`Finished on ${date}`}
                 />
               );

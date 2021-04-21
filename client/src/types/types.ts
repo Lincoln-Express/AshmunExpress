@@ -1,5 +1,5 @@
-export type QuizHelperType = {
-  canGoBack: (quizType: string) => boolean;
+export type ModeHelperType = {
+  canGoBack: (modeType: string) => boolean;
   isCorrect: (
     questionObject: Record<string, any>,
     buttonValue: string,
@@ -9,22 +9,22 @@ export type QuizHelperType = {
   getQuestionObject: (
     questions: Array<Record<string, any>>,
   ) => Record<string, any>;
-  hasFinishedQuiz: (questionsLength: number) => boolean;
+  hasFinishedMode: (questionsLength: number) => boolean;
   moveToNextQuestion: () => void;
   resetCounter: () => void;
 };
 
 export enum ActionType {
   INCREMENT_SCORE = "INCREMENT_SCORE",
-  ADD_QUIZ_SESSION = "ADD_QUIZ_SESSION",
-  ADD_QUIZ = "ADD_QUIZ",
+  ADD_MODE_SESSION = "ADD_MODE_SESSION",
+  ADD_MODE = "ADD_MODE",
   SET_USER = "SET_USER",
   DELETE_USER = "DELETE_USER",
   SET_LOADING = "SET_LOADING",
-  UPDATE_QUIZ = "UPDATE_QUIZ",
-  RESET_QUIZ = "RESET_QUIZ",
-  UPDATE_QUIZ_SESSION = "UPDATE_QUIZ_SESSION",
-  RESET_QUIZ_SESSION = "RESET_QUIZ_SESSION",
+  UPDATE_MODE = "UPDATE_MODE",
+  RESET_MODE = "RESET_MODE",
+  UPDATE_MODE_SESSION = "UPDATE_MODE_SESSION",
+  RESET_MODE_SESSION = "RESET_MODE_SESSION",
   SIGN_IN = "SIGN_IN",
   SIGN_OUT = "SIGN_OUT",
 }
@@ -42,39 +42,39 @@ export type User = {
   email: string;
   password: string;
   appearance: Appearance;
-  quizzes: Quiz[];
+  modes: Mode[];
 };
 
 export type UserAction =
   | { type: ActionType.SET_USER; payload: User }
   | { type: ActionType.DELETE_USER }
-  | { type: ActionType.ADD_QUIZ; payload: Quiz };
+  | { type: ActionType.ADD_MODE; payload: Mode };
 
-export type QuizAction =
+export type ModeAction =
   | { type: ActionType.INCREMENT_SCORE }
-  | { type: ActionType.ADD_QUIZ_SESSION; payload: QuizSession }
-  | { type: ActionType.UPDATE_QUIZ; payload: Quiz }
-  | { type: ActionType.RESET_QUIZ };
+  | { type: ActionType.ADD_MODE_SESSION; payload: ModeSession }
+  | { type: ActionType.UPDATE_MODE; payload: Mode }
+  | { type: ActionType.RESET_MODE };
 
-export type QuizSessionAction =
+export type ModeSessionAction =
   | {
-      type: ActionType.UPDATE_QUIZ_SESSION;
-      payload: QuizSession;
+      type: ActionType.UPDATE_MODE_SESSION;
+      payload: ModeSession;
     }
-  | { type: ActionType.RESET_QUIZ_SESSION };
+  | { type: ActionType.RESET_MODE_SESSION };
 
-export type Quiz = {
+export type Mode = {
   id: number;
-  quizType: string;
-  quizTopic: string;
-  quizSection: string;
+  modeType: string;
+  modeTopic: string;
+  modeSection: string;
   correctAnswersCount: number;
   numberOfQuestions: number;
   timeStamp: string;
-  quizSessionHistory: QuizSession[];
+  modeSessionHistory: ModeSession[];
 };
 
-export type QuizSession = {
+export type ModeSession = {
   id: number;
   question: string;
   answer: string;

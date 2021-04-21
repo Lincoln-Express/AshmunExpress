@@ -10,21 +10,21 @@ import ThemeContext from "../contexts/ThemeContext";
 import HomeScreen from "../screens/home/HomeScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
 import SettingsScreen from "../screens/settings/SettingsScreen";
-import QuizIntroScreen from "../screens/quiz/QuizIntroScreen";
-import QuizPageScreen from "../screens/quiz/QuizPageScreen";
-import QuizListScreen from "../screens/quiz/QuizListScreen";
-import QuizResultScreen from "../screens/quiz/QuizResultScreen";
-import ExampleScreen from "../screens/quiz/ExampleScreen";
-import TestScreen from "../screens/quiz/TestScreen";
-import PracticeScreen from "../screens/quiz/PracticeScreen";
-import TutorialScreen from "../screens/quiz/TutorialScreen";
+import ModeIntroScreen from "../screens/mode/ModeIntroScreen";
+import ModePenultimateScreen from "../screens/mode/ModePenultimateScreen";
+import ModeListScreen from "../screens/mode/ModeListScreen";
+import ModeResultScreen from "../screens/mode/ModeResultScreen";
+import ExampleScreen from "../screens/mode/ExampleScreen";
+import TestScreen from "../screens/mode/TestScreen";
+import PracticeScreen from "../screens/mode/PracticeScreen";
+import TutorialScreen from "../screens/mode/TutorialScreen";
 import AboutScreen from "../screens/settings/AboutScreen";
 import FeedbackScreen from "../screens/settings/FeedbackScreen";
 import NotificationsScreen from "../screens/settings/NotificationsScreen";
 import AccountScreen from "../screens/settings/AccountScreen";
 
 const HomeStack = createStackNavigator();
-const QuizStack = createStackNavigator();
+const ModeStack = createStackNavigator();
 const SettingsStack = createStackNavigator();
 
 const MainTab = createBottomTabNavigator();
@@ -48,12 +48,12 @@ const HomeStackScreen = () => {
   );
 };
 
-const QuizStackScreen = () => {
+const ModeStackScreen = () => {
   const { isThemeDark } = React.useContext(ThemeContext);
   const theme = useTheme();
 
   return (
-    <QuizStack.Navigator
+    <ModeStack.Navigator
       screenOptions={{
         headerStyle: {
           borderBottomColor: isThemeDark
@@ -62,58 +62,59 @@ const QuizStackScreen = () => {
           borderBottomWidth: 0.5,
         },
       }}
-      initialRouteName="Quiz"
+      initialRouteName="Mode"
     >
-      <QuizStack.Screen
-        name="Quiz"
-        component={QuizIntroScreen}
+      <ModeStack.Screen
+        name="Mode"
+        component={ModeIntroScreen}
         options={{
           title: "Topics",
           headerTitleAlign: "center",
         }}
       />
-      <QuizStack.Screen
-        name="QuizList"
-        component={QuizListScreen}
+      <ModeStack.Screen
+        name="ModeList"
+        component={ModeListScreen}
         options={({ route }) => ({
           title: `${route.params.topic}`,
         })}
       />
-      <QuizStack.Screen
-        name="QuizResult"
-        component={QuizResultScreen}
-        options={{ title: "Quiz Result" }}
+      <ModeStack.Screen
+        name="ModeResult"
+        component={ModeResultScreen}
+        options={{ title: "Mode Result" }}
       />
-      <QuizStack.Screen
-        name="QuizPage"
-        component={QuizPageScreen}
+      <ModeStack.Screen
+        name="ModePenultimate"
+        component={ModePenultimateScreen}
         options={({ route }) => ({
-          title: `${route.params.topic} ${route.params.quiz}`,
+          title: `${route.params.topic} ${route.params.mode}`,
         })}
       />
-      <QuizStack.Screen
+      <ModeStack.Screen
         name="Example"
         component={ExampleScreen}
         options={{
           headerTitleAlign: "center",
+          headerLeft: undefined,
         }}
       />
-      <QuizStack.Screen
+      <ModeStack.Screen
         name="Test"
         component={TestScreen}
         options={{ headerTitleAlign: "center", headerLeft: undefined }}
       />
-      <QuizStack.Screen
+      <ModeStack.Screen
         name="Tutorial"
         component={TutorialScreen}
-        options={{ headerTitleAlign: "center" }}
+        options={{ headerTitleAlign: "center", headerLeft: undefined }}
       />
-      <QuizStack.Screen
+      <ModeStack.Screen
         name="Practice"
         component={PracticeScreen}
         options={{ headerTitleAlign: "center", headerLeft: undefined }}
       />
-    </QuizStack.Navigator>
+    </ModeStack.Navigator>
   );
 };
 
@@ -149,6 +150,7 @@ const MainTabNavigator = (): JSX.Element => {
   const theme = useTheme();
   return (
     <MainTab.Navigator
+      initialRouteName="Topics"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           let iconName = "";
@@ -159,7 +161,7 @@ const MainTabNavigator = (): JSX.Element => {
             } else {
               iconName = "md-home";
             }
-          } else if (route.name === "Quiz") {
+          } else if (route.name === "Topics") {
             if (Platform.OS === "ios") {
               iconName = "ios-list";
             } else {
@@ -186,8 +188,8 @@ const MainTabNavigator = (): JSX.Element => {
     >
       <MainTab.Screen name="Home" component={HomeStackScreen} />
       <MainTab.Screen
-        name="Quiz"
-        component={QuizStackScreen}
+        name="Topics"
+        component={ModeStackScreen}
         options={({ route }) => ({
           tabBarVisible: ((route) => {
             const routeName = getFocusedRouteNameFromRoute(route) ?? "";

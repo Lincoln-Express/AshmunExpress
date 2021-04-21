@@ -1,4 +1,4 @@
-import QuizHelper from "./QuizHelper";
+import ModeHelper from "./ModeHelper";
 
 const data = [
   {
@@ -54,18 +54,18 @@ const data = [
   },
 ];
 
-const mockQuizHelper = QuizHelper();
+const mockModeHelper = ModeHelper();
 
-describe("tests for validating the Quiz Helper Object", () => {
+describe("tests for validating the Mode Helper Object", () => {
   test("get the correct option keys", () => {
-    const { getAnswers } = mockQuizHelper;
+    const { getAnswers } = mockModeHelper;
     const result = getAnswers(data[0]);
     expect(result.length).toEqual(4);
     expect(result[1]).toEqual("Aa");
   });
 
   test("gets the correct answer option", () => {
-    const { isCorrect } = mockQuizHelper;
+    const { isCorrect } = mockModeHelper;
     const result1 = isCorrect(data[0], "AA");
     const result2 = isCorrect(data[1], "Aa");
     const result3 = isCorrect(data[2], "aA");
@@ -76,7 +76,7 @@ describe("tests for validating the Quiz Helper Object", () => {
   });
 
   test("given valid params, getQuestionObject() returns the expected question object, ", () => {
-    const counter = mockQuizHelper.getCounter();
+    const counter = mockModeHelper.getCounter();
     const questionObject = data[counter];
 
     expect(questionObject.id).toBe(1);
