@@ -23,13 +23,19 @@ const Stack = createStackNavigator();
 const App = (): JSX.Element => {
   const colorScheme = useColorScheme();
   const { state } = useAuth();
+  const [authState, setAuthState] = React.useState(state);
   const [isThemeDark, setIsThemeDark] = React.useState(colorScheme === "dark");
   const [user, setUser] = React.useState(state.user);
   const theme = isThemeDark ? DarkTheme : LightTheme;
 
   React.useEffect(() => {
+    setAuthState(state);
+  }, [state]);
+
+  React.useEffect(() => {
     setUser(state.user);
   }, [state.user]);
+
   const toggleTheme = () => {
     const { appearance } = user;
     const newAppearance =
@@ -77,7 +83,7 @@ const App = (): JSX.Element => {
   return (
     <ErrorBoundary>
       <AppearanceProvider>
-        <AuthContext.Provider value={state}>
+        <AuthContext.Provider value={authState}>
           <UserContext.Provider value={userContextProps}>
             <ModeProvider>
               <ModeSessionProvider>
