@@ -102,7 +102,7 @@ const useAuth = () => {
       }
     };
     fetchUser();
-  }, [dispatch]);
+  }, []);
 
   return { auth, state };
 };
