@@ -32,7 +32,7 @@ app.post("/auth", function (request, response) {
         if (results.length > 0) {
           console.log("match");
           request.session.loggedin = true;
-          response.send({ success: true });
+          response.send({ success: true, result: results });
         } else {
           response.send("Incorrect Username and/or Password!");
         }
@@ -57,7 +57,7 @@ app.post("/register", function (request, response) {
     if (error){ 
       console.log("I threw an error");
       throw error;}
-    response.json({ success: true });
+    response.json({ success: true, result: results });
   });
 });
 // GETS EVERY USER ACCOUNT
