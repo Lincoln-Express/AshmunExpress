@@ -5,7 +5,7 @@ var connection = mysql.createPool({
 	user     : 'AshmunExpressApp',
 	password : '$Lincoln1570',
 	database : 'AshmunExpress',
-	acquireTimeout: 1000000,
+	acquireTimeout: 10000000,
 	queueLimit:100000
 });
 connection.getConnection(function(err,connection) {

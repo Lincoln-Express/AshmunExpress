@@ -30,8 +30,9 @@ app.post("/auth", function (request, response) {
       [username, password],
       function (error, results, fields) {
         if (results.length > 0) {
+          console.log("match");
           request.session.loggedin = true;
-          response.send({ success: true });
+          response.send({ success: true, result: results });
         } else {
           response.send("Incorrect Username and/or Password!");
         }
@@ -52,10 +53,20 @@ app.post("/register", function (request, response) {
     "INSERT INTO accounts SET ?",
     postData,
     function (error, results, fields) {
-      if (error) throw error;
-      response.json({ success: true });
+      if (error) {
+        console.log("I threw an error");
+        throw error;
+      }
+      response.json({ success: true, result: results });
     },
   );
+});
+// GETS EVERY USER ACCOUNT
+app.get("/accounts", function (request, response) {
+  connection.query("select * from accounts", function (error, results, fields) {
+    if (error) throw error;
+    response.json(results);
+  });
 });
 
 //GETS TUTORIAL PROBLEMS
