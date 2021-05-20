@@ -19,9 +19,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// TODO:Check the length of the modes array to determine how many last quizzes to show,
-// TODO: if the length is zero, display a card that says "Check the topics page for the available modes"
-
 const HomeScreen: React.FC<null> = () => {
   const theme = useTheme();
   const userContext = React.useContext(UserContext);
