@@ -31,7 +31,7 @@ app.post("/auth", function (request, response) {
       function (error, results, fields) {
         if (results.length > 0) {
           request.session.loggedin = true;
-          response.send({ success: true });
+          response.send({ success: true, result: results });
         } else {
           response.send("Incorrect Username and/or Password!");
         }
