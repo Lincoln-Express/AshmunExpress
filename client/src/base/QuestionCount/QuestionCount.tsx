@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
 interface QuestionCountProps {
   counter: number;
   totalNumberOfQuestions: number;
-  style?: Record<string, any>;
+  style?: Record<string, unknown>;
 }
 
 const QuestionCount: React.FC<QuestionCountProps> = (

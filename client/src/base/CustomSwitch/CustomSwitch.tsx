@@ -2,7 +2,7 @@ import * as React from "react";
 import { Switch } from "react-native";
 
 interface CustomSwitchProps {
-  onPress: () => any;
+  onPress: () => void;
   trackColor: Array<string>;
   value: boolean;
 }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import { StyleSheet, Text, ScrollView } from "react-native";
 import { useTheme } from "react-native-paper";
 import CustomTextField from "../../base/customTextField/CustomTextField";
 import FilledButton from "../../base/filledButton/FilledButton";

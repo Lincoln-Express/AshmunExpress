@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { useTheme } from "react-native-paper/src/core/theming";
-import pictures from "../../pictures/pictures";
+import pictures from "../../questionImages/questionImages";
 
 const styles = StyleSheet.create({
   container: {
@@ -18,29 +18,22 @@ interface QuestionProps {
   pictureName: string | undefined;
 }
 
-// TODO: Split the question text on the "picture" word index
 const Question: React.FC<QuestionProps> = (props: QuestionProps) => {
   const { question, pictureName } = props;
   const theme = useTheme();
+  const sep = "[picture]";
 
-  let questionStrings: Array<string> = [];
+  // if (pictureName && sep === "[picture]") {
+  //   const questionStrings = question.split(sep);
 
-  // if (pictureName) {
-  //   const firstPictureIndex = question.indexOf(":");
-  //   // contains one image at the end of the question
-  //   if (firstPictureIndex == question.length) {
-  //     questionStrings = question.split(":");
-
+  //   if (questionStrings.length === 2) {
   //     return (
   //       <View>
   //         <Text>{questionStrings[0]}</Text>
-
+  //         // TODO add image
   //         <Text>{questionStrings[1]}</Text>
   //       </View>
   //     );
-  //   }
-  //   // contains multiple images
-  //   else {
   //   }
   // }
 

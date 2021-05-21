@@ -76,13 +76,15 @@ const ModeStackScreen = () => {
         name="ModeList"
         component={ModeListScreen}
         options={({ route }) => ({
-          title: `${route.params.topic}`,
+          title: `${route.params.section} -> ${route.params.topic}`,
         })}
       />
       <ModeStack.Screen
         name="ModeResult"
         component={ModeResultScreen}
-        options={{ title: "Mode Result" }}
+        options={({ route }) => ({
+          title: `${route.params.topic}/${route.params.section} Level ${route.params.level}`,
+        })}
       />
       <ModeStack.Screen
         name="ModePenultimate"
@@ -150,7 +152,6 @@ const MainTabNavigator = (): JSX.Element => {
   const theme = useTheme();
   return (
     <MainTab.Navigator
-      initialRouteName="Topics"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           let iconName = "";

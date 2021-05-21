@@ -4,7 +4,7 @@ import ThemeContext from "../../contexts/ThemeContext";
 
 interface CustomProgressBarProps {
   progress: number;
-  style?: Record<string, any>;
+  style?: Record<string, unknown>;
 }
 
 const CustomProgressBar: React.FC<CustomProgressBarProps> = (

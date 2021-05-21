@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, ImageBackground } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
@@ -7,10 +7,12 @@ import * as yup from "yup";
 import Logo from "../../../base/logo/Logo";
 import FilledButton from "../../../base/filledButton/FilledButton";
 import TextButton from "../../../base/textButton/TextButton";
-import Loading from "../../../base/loading/Loading";
 import Header from "../../../base/header/Header";
 import InputField from "../../../base/inputField/InputField";
-import useAuth from "../../../hooks/useAuth/useAuth";
+import AuthContext from "../../../contexts/AuthContext";
+import Loading from "../../../base/loading/Loading";
+import { ScrollView } from "react-native-gesture-handler";
+import { useTheme } from "react-native-paper";
 
 const styles = StyleSheet.create({
   container: {
@@ -31,9 +33,9 @@ const styles = StyleSheet.create({
 
 const LoginScreen: React.FC<null> = () => {
   const navigation = useNavigation();
-  const { auth } = useAuth();
-  const { login } = auth;
+  const { login } = React.useContext(AuthContext);
   const [loading, setLoading] = React.useState(false);
+
   const validationSchema = yup.object().shape({
     email: yup.string().email().required().label("Your input"),
     password: yup
@@ -45,55 +47,65 @@ const LoginScreen: React.FC<null> = () => {
 
   return (
     <>
-      <KeyboardAwareScrollView
-        resetScrollToCoords={{ x: 0, y: 0 }}
-        contentContainerStyle={styles.container}
-        enableOnAndroid
-      >
-        <Logo />
-        <Header>Welcome</Header>
-        <Formik
-          initialValues={{ email: "", password: "" }}
-          onSubmit={async (values) => {
-            try {
-              setLoading(true);
-              await login(values.email, values.password);
-            } catch (e) {
-              setLoading(false);
-            }
-          }}
-          validationSchema={validationSchema}
+      {loading && (
+        <Loading
+          loading={loading}
+          imageSource={require("../../../../assets/json-animations/loading.json")}
+          loadingText="Logging you in..."
+        />
+      )}
+      {!loading && (
+        <ScrollView
+          keyboardShouldPersistTaps={"always"}
+          contentContainerStyle={styles.container}
         >
-          {(formikProps) => (
-            <>
-              <InputField
-                label="Email"
-                formikProps={formikProps}
-                pointer="email"
-                placeholder="johndoe@email.com"
-                autoFocus
-              />
-              <InputField
-                label="Password"
-                formikProps={formikProps}
-                pointer="password"
-                placeholder="********"
-                secureTextEntry
-                autoFocus
-              />
+          <Logo />
+          <Header>Welcome</Header>
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            onSubmit={async (values) => {
+              try {
+                setLoading(true);
+                await login(values.email, values.password);
+              } catch (e) {
+                setLoading(false);
+              }
+            }}
+            validationSchema={validationSchema}
+          >
+            {(formikProps) => (
+              <>
+                <InputField
+                  label="Email"
+                  formikProps={formikProps}
+                  pointer="email"
+                  placeholder="johndoe@email.com"
+                  autoFocus
+                />
+                <InputField
+                  label="Password"
+                  formikProps={formikProps}
+                  pointer="password"
+                  placeholder="********"
+                  secureTextEntry
+                  autoFocus
+                />
 
-              <FilledButton title="Login" onPress={formikProps.handleSubmit} />
-              <TextButton
-                title={"Don't have an account? create one here"}
-                onPress={() => {
-                  navigation.navigate("Registration");
-                }}
-              />
-            </>
-          )}
-        </Formik>
-        {/* <Loading loading={loading} /> */}
-      </KeyboardAwareScrollView>
+                <FilledButton
+                  title="Login"
+                  onPress={formikProps.handleSubmit}
+                />
+                <TextButton
+                  title={"Don't have an account? create one here"}
+                  onPress={() => {
+                    navigation.navigate("Registration");
+                  }}
+                />
+              </>
+            )}
+          </Formik>
+        </ScrollView>
+      )}
     </>
   );
 };

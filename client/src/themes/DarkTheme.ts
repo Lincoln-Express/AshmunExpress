@@ -15,7 +15,7 @@ const DarkTheme = {
     border: "#F57C00",
     notification: "#F5F5F5",
     accent: "#273A7F",
-    placeholder: "#C0C0C0",
+    placeholder: "#808080",
     backdrop: "#767577",
     surface: "#121212",
   },

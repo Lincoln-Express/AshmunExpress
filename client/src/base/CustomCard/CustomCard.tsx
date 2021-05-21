@@ -8,6 +8,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: 10,
   },
+  title: {
+    textAlign: "left",
+  },
   paragraph: {
     marginVertical: 10,
     textAlign: "left",
@@ -52,7 +55,7 @@ const CustomCard: React.FC<CustomCardProps> = (props: CustomCardProps) => {
         subtitle={subtitle}
         right={right}
         left={left}
-        style={titleStyle}
+        titleStyle={{ ...styles.title, ...titleStyle }}
         subtitleNumberOfLines={subtitleNumberOfLines}
       />
       <Card.Content>

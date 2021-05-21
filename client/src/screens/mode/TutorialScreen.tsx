@@ -60,7 +60,7 @@ const TutorialScreen: React.FC<null> = (): JSX.Element => {
       />
       <Question question={question} pictureName={pictureName} />
       <FilledButton
-        title={hasFinishedMode(questions.length) ? "Show Results" : "Next"}
+        title={hasFinishedMode(questions.length) ? "Done" : "Next"}
         onPress={() => {
           if (!hasFinishedMode(questions.length)) {
             moveToNextQuestion();

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Appearance, User, Mode } from "../types/types";
+import { User } from "../types/types";
 
 const UserContext = React.createContext({
   user: {} as User,

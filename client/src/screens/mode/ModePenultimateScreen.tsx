@@ -1,6 +1,10 @@
 import * as React from "react";
 import { ScrollView, Text, StyleSheet, View } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  StackActions,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { useTheme } from "react-native-paper";
 import shuffle from "lodash/shuffle";
 import Loading from "../../base/loading/Loading";
@@ -12,6 +16,8 @@ import {
   useModeState,
 } from "../../providers/modeProvider/ModeProvider";
 import { ActionType } from "../../types/types";
+import EmptyState from "../../base/emptyState/EmptyState";
+import Empty from "../../../assets/svg/empty.svg";
 
 const styles = StyleSheet.create({
   container: {
@@ -48,9 +54,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 36,
   },
+  emptyStateButton: {
+    maxWidth: "40%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
-const ModePenultimateScreen: React.FC<any> = (): JSX.Element => {
+const ModePenultimateScreen: React.FC<null> = (): JSX.Element => {
   const theme = useTheme();
   const route = useRoute();
   const navigation = useNavigation();
@@ -61,6 +72,7 @@ const ModePenultimateScreen: React.FC<any> = (): JSX.Element => {
     ...modeState,
     modeSection: section,
     modeTopic: topic,
+    level,
   });
 
   const modeDispatch = useModeDispatch()!;
@@ -105,6 +117,7 @@ const ModePenultimateScreen: React.FC<any> = (): JSX.Element => {
                 questions,
                 url,
                 mode,
+                ...route.params,
               });
             }}
             buttonStyle={styles.secondButton}
@@ -117,11 +130,24 @@ const ModePenultimateScreen: React.FC<any> = (): JSX.Element => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {isLoading && <Loading loading={isLoading} />}
+      {isLoading && (
+        <Loading
+          loading={isLoading}
+          imageSource={require("../../../assets/json-animations/waiting-for-data.json")}
+        />
+      )}
       {isError && (
-        <Text style={{ ...styles.text, color: theme.colors.text }}>
-          Failed to Load!
-        </Text>
+        <EmptyState
+          emptyStateText={"Failed to load"}
+          textStyle={{ ...styles.text, color: theme.colors.text }}
+          image={<Empty height={120} width={120} />}
+          buttonTitle={"Go back home"}
+          onPress={() => {
+            navigation.dispatch(StackActions.popToTop());
+            navigation.navigate("Home");
+          }}
+          buttonStyle={styles.emptyStateButton}
+        />
       )}
     </ScrollView>
   );

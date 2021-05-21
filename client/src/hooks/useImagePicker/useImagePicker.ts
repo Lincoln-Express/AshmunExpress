@@ -3,14 +3,13 @@ import * as React from "react";
 import * as ImagePicker from "expo-image-picker";
 
 const useImagePicker = () => {
-  const [image, setImage] = React.useState(null);
+  const [image, setImage] = React.useState({ uri: null });
 
   React.useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
-        const {
-          status,
-        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
 
         if (status !== "granted") {
           Alert.alert(
@@ -37,7 +36,7 @@ const useImagePicker = () => {
     });
 
     if (!result.cancelled) {
-      setImage(result.uri);
+      setImage({ uri: result.uri });
     }
   };
 

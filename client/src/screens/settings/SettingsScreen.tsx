@@ -12,11 +12,12 @@ import { useNavigation } from "@react-navigation/native";
 import ThemeContext from "../../contexts/ThemeContext";
 import CustomSwitch from "../../base/customSwitch/CustomSwitch";
 import CustomCard from "../../base/customCard/CustomCard";
-import IconButton from "../../base/iconButton/IconButton";
+import Icon from "../../base/icon/Icon";
 import useAuth from "../../hooks/useAuth/useAuth";
 import CustomImagePlaceholder from "../../base/customImagePlaceholder/CustomImagePlaceholder";
 import useImagePicker from "../../hooks/useImagePicker/useImagePicker";
 import FilledButton from "../../base/filledButton/FilledButton";
+import AuthContext from "../../contexts/AuthContext";
 
 const window = Dimensions.get("window");
 const styles = StyleSheet.create({
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   button: {
-    backgroundColor: "#FF0000",
+    backgroundColor: "#CC0000",
     maxWidth: "50%",
     marginLeft: 10,
   },
@@ -58,8 +59,7 @@ const styles = StyleSheet.create({
 
 const SettingsScreen: React.FC<null> = () => {
   const theme = useTheme();
-  const { auth } = useAuth();
-  const { logout } = auth;
+  const { logout } = React.useContext(AuthContext);
   const navigation = useNavigation();
   const imagePicker = useImagePicker();
   const { image } = imagePicker;
@@ -75,7 +75,7 @@ const SettingsScreen: React.FC<null> = () => {
     Alert.alert("Warning!", "Are you sure you want to log out?", [
       { text: "Cancel", onPress: () => {}, style: "cancel" },
       {
-        text: "Cancel",
+        text: "Yes",
         onPress: async () => {
           // post user data to the database, then logout
           await logout();
@@ -121,7 +121,7 @@ const renderSettings = (arr: string[], navigation: any) => {
             elevation={5}
             onPress={() => navigation.navigate(screenName)}
             right={() => (
-              <IconButton name={"chevron-forward"} style={styles.cardIcon} />
+              <Icon name={"chevron-forward"} style={styles.cardIcon} />
             )}
             style={styles.card}
             titleStyle={styles.title}

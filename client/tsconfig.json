@@ -12,7 +12,8 @@
     "strict": true,
     "target": "esnext",
     "outDir": ".dist",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
   "include": ["../client"],
   "exclude": [

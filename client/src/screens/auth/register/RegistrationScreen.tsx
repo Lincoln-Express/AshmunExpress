@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, ImageBackground } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
@@ -7,10 +7,9 @@ import * as yup from "yup";
 import Logo from "../../../base/logo/Logo";
 import Header from "../../../base/header/Header";
 import FilledButton from "../../../base/filledButton/FilledButton";
-import IconButton from "../../../base/iconButton/IconButton";
-import Loading from "../../../base/loading/Loading";
+import Icon from "../../../base/icon/Icon";
 import InputField from "../../../base/inputField/InputField";
-import useAuth from "../../../hooks/useAuth/useAuth";
+import AuthContext from "../../../contexts/AuthContext";
 
 const styles = StyleSheet.create({
   container: {
@@ -32,9 +31,7 @@ const styles = StyleSheet.create({
 
 const RegistrationScreen: React.FC<null> = () => {
   const navigation = useNavigation();
-  const { auth } = useAuth();
-  const { register } = auth;
-  const [loading, setLoading] = React.useState(false);
+  const { register } = React.useContext(AuthContext);
   const validationSchema = yup.object().shape({
     firstName: yup.string().required().label("First Name"),
     lastName: yup.string().required().label("Last Name"),
@@ -52,20 +49,19 @@ const RegistrationScreen: React.FC<null> = () => {
       .test(
         "passwords-match",
         "Passwords don't match",
-        function checkPassword(value) {
+        function checkPassword(this: any, value) {
           return this.parent.password === value;
         },
       ),
   });
 
   return (
-    <KeyboardAwareScrollView
-      resetScrollToCoords={{ x: 0, y: 0 }}
+    <ScrollView
+      keyboardShouldPersistTaps={"always"}
       contentContainerStyle={styles.container}
-      enableOnAndroid
     >
       <Logo />
-      <IconButton
+      <Icon
         name="close-circle-outline"
         onPress={() => {
           navigation.goBack();
@@ -82,7 +78,6 @@ const RegistrationScreen: React.FC<null> = () => {
         }}
         onSubmit={async (values) => {
           try {
-            setLoading(true);
             await register(
               values.firstName,
               values.lastName,
@@ -90,9 +85,7 @@ const RegistrationScreen: React.FC<null> = () => {
               values.password,
             );
             navigation.goBack();
-          } catch (e) {
-            setLoading(false);
-          }
+          } catch (e) {}
         }}
         validationSchema={validationSchema}
       >
@@ -141,8 +134,7 @@ const RegistrationScreen: React.FC<null> = () => {
           </>
         )}
       </Formik>
-      <Loading loading={loading} />
-    </KeyboardAwareScrollView>
+    </ScrollView>
   );
 };
 

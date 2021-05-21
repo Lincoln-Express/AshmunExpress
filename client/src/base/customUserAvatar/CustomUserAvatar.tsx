@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Avatar, useTheme } from "react-native-paper";
-import IconButton from "../iconButton/IconButton";
+import Icon from "../icon/Icon";
 import CustomImagePlaceholder from "../customImagePlaceholder/CustomImagePlaceholder";
 
 const styles = StyleSheet.create({
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 interface CustomUserAvatarProps {
   name: string;
   secondaryDetail?: string;
-  image: any;
+  uri: string;
   onPress: () => void;
   miniIcon?: string;
   nameStyle?: Record<string, unknown>;
@@ -47,7 +47,7 @@ const CustomUserAvatar: React.FC<CustomUserAvatarProps> = (
   const {
     name,
     secondaryDetail,
-    image,
+    uri,
     onPress,
     nameStyle,
     secondaryDetailStyle,
@@ -57,13 +57,8 @@ const CustomUserAvatar: React.FC<CustomUserAvatarProps> = (
   return (
     <View style={styles.outerContainer}>
       <View>
-        <CustomImagePlaceholder imageSize={96} image={image} />
-        <IconButton
-          onPress={onPress}
-          name="camera"
-          style={styles.image}
-          size={24}
-        />
+        <CustomImagePlaceholder imageSize={96} uri={uri} />
+        <Icon onPress={onPress} name="camera" style={styles.image} size={24} />
       </View>
       <View style={styles.innerContainer}>
         <View style={styles.textContainer}>
