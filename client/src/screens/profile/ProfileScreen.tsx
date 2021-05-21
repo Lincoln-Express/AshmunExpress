@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import IconButton from "../../base/iconButton/IconButton";
+import Icon from "../../base/icon/Icon";
 import CustomCard from "../../base/customCard/CustomCard";
 import useImagePicker from "../../hooks/useImagePicker/useImagePicker";
 import CustomUserAvatar from "../../base/customUserAvatar/CustomUserAvatar";
@@ -35,16 +35,12 @@ const ProfileScreen: React.FC<null> = () => {
   const { user } = userContext;
   const { firstName, lastName, modes } = user;
   const numberOfTestsTaken = modes.length;
-  const {
-    topic,
-    totalNumberOfQuestions,
-    highestScore,
-    section,
-  } = getHighestScoreText(modes);
+  const { topic, totalNumberOfQuestions, highestScore, section } =
+    getHighestScoreText(modes);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <IconButton
+      <Icon
         name={"settings"}
         onPress={() => navigation.navigate("Settings")}
         size={24}
@@ -54,7 +50,7 @@ const ProfileScreen: React.FC<null> = () => {
         name={`${firstName} ${lastName}`}
         secondaryDetail={"Student"}
         onPress={pickImage}
-        image={image}
+        uri={String(image.uri)}
         nameStyle={{ color: theme.colors.text }}
       />
       <View style={styles.card}>
@@ -62,13 +58,13 @@ const ProfileScreen: React.FC<null> = () => {
           title={"Number of tests: "}
           elevation={5}
           subtitle={`${numberOfTestsTaken}`}
-          left={() => <IconButton name={"flame"} style={styles.cardIcon} />}
+          left={() => <Icon name={"flame"} style={styles.cardIcon} />}
         />
         <CustomCard
           title={`Highest score: ${highestScore}/${totalNumberOfQuestions}`}
           elevation={5}
           subtitle={`Topic: ${topic}, Section: ${section}`}
-          left={() => <IconButton name={"disc"} style={styles.cardIcon} />}
+          left={() => <Icon name={"disc"} style={styles.cardIcon} />}
         />
       </View>
     </ScrollView>
@@ -77,19 +73,15 @@ const ProfileScreen: React.FC<null> = () => {
 
 export default ProfileScreen;
 
-const getHighestScoreText = (modes: Mode[]) => {
+const getHighestScoreText = (quizzes: Mode[]) => {
   let highestScore = 0;
   let topic = "";
   let section = "";
   let totalNumberOfQuestions = 0;
 
-  modes.forEach((mode) => {
-    const {
-      correctAnswersCount,
-      modeSection,
-      modeTopic,
-      numberOfQuestions,
-    } = mode;
+  quizzes.forEach((quiz) => {
+    const { correctAnswersCount, modeSection, modeTopic, numberOfQuestions } =
+      quiz;
     if (correctAnswersCount > highestScore) {
       (highestScore = correctAnswersCount),
         (topic = modeTopic),

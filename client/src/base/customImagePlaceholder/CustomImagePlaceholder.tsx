@@ -9,20 +9,20 @@ const styles = StyleSheet.create({
 });
 interface CustomImagePlaceholderProps {
   imageSize?: number;
-  image: any;
+  uri: string;
   style?: Record<string, unknown>;
 }
 
 const CustomImagePlaceholder: React.FC<CustomImagePlaceholderProps> = (
   props: CustomImagePlaceholderProps,
 ) => {
-  const { image, imageSize, style } = props;
+  const { uri, imageSize, style } = props;
 
   return (
     <View style={style}>
       <Avatar.Image
         size={imageSize}
-        source={{ uri: image }}
+        source={{ uri: uri }}
         style={styles.container}
       />
     </View>

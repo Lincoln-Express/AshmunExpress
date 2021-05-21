@@ -1,8 +1,6 @@
 import * as React from "react";
-import { SessionState, Auth } from "../types/types";
+import { Auth } from "../types/types";
 
-const initialState = { isSignedIn: false, isLoading: false };
-
-const AuthContext = React.createContext({} as SessionState);
+const AuthContext = React.createContext({} as Auth);
 
 export default AuthContext;

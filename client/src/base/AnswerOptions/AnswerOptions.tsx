@@ -14,8 +14,11 @@ const styles = StyleSheet.create({
 
 interface AnswerOptionsProps {
   answers: Array<string>;
-  questionObject: Record<string, any>;
-  isCorrect: (questionObject: Record<string, any>, answer: string) => boolean;
+  questionObject: Record<string, unknown>;
+  isCorrect: (
+    questionObject: Record<string, unknown>,
+    answer: string,
+  ) => boolean;
 }
 
 const AnswerOptions: React.FC<AnswerOptionsProps> = (

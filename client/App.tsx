@@ -6,7 +6,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Provider as PaperProvider } from "react-native-paper";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
 import LightTheme from "./src/themes/LightTheme";
-import "react-native-get-random-values";
 import DarkTheme from "./src/themes/DarkTheme";
 import AuthStackNavigator from "./src/navigators/AuthStackNavigator";
 import MainTabNavigator from "./src/navigators/MainTabNavigator";
@@ -22,15 +21,10 @@ import { Appearance, Mode } from "./src/types/types";
 const Stack = createStackNavigator();
 const App = (): JSX.Element => {
   const colorScheme = useColorScheme();
-  const { state } = useAuth();
-  const [authState, setAuthState] = React.useState(state);
+  const { state, auth } = useAuth();
   const [isThemeDark, setIsThemeDark] = React.useState(colorScheme === "dark");
   const [user, setUser] = React.useState(state.user);
   const theme = isThemeDark ? DarkTheme : LightTheme;
-
-  React.useEffect(() => {
-    setAuthState(state);
-  }, [state]);
 
   React.useEffect(() => {
     setUser(state.user);
@@ -83,7 +77,7 @@ const App = (): JSX.Element => {
   return (
     <ErrorBoundary>
       <AppearanceProvider>
-        <AuthContext.Provider value={authState}>
+        <AuthContext.Provider value={auth}>
           <UserContext.Provider value={userContextProps}>
             <ModeProvider>
               <ModeSessionProvider>

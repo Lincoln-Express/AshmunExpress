@@ -26,7 +26,7 @@ interface AnswerButtonProps {
   answer: string;
   isCorrectAnswer: boolean;
   disabled: boolean;
-  questionObject: Record<string, any>;
+  questionObject: Record<string, unknown>;
 }
 
 const AnswerButton: React.FC<AnswerButtonProps> = (

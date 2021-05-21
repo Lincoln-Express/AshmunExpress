@@ -10,7 +10,8 @@ import ModeHelper from "../../modeHelper/ModeHelper";
 const styles = StyleSheet.create({
   button: {
     maxWidth: "40%",
-    marginLeft: 10,
+    alignSelf: "flex-end",
+    marginRight: 10,
   },
   container: {
     flexGrow: 1,
@@ -32,7 +33,7 @@ const exampleModeHelper = ModeHelper();
 const ExampleScreen: React.FC<null> = (): JSX.Element => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { questions, mode, url } = route.params;
+  const { questions, mode, url, level, section, topic } = route.params;
 
   const {
     getCounter,
@@ -72,6 +73,7 @@ const ExampleScreen: React.FC<null> = (): JSX.Element => {
               mode,
               correctAnswersCount: 0,
               totalQuestions: questions.length,
+              ...route.params,
             });
           }
         }}

@@ -1,42 +1,32 @@
 import * as React from "react";
-import { useTheme } from "react-native-paper";
-import { View, StyleSheet, ActivityIndicator, Text } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
+import { useTheme } from "react-native-paper/src/core/theming";
+import CustomAnimation from "../customAnimation/CustomAnimation";
 
 const styles = StyleSheet.create({
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0,0,0,0.6)",
+  container: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  container: {
-    backgroundColor: "#F5F5F5",
-    flexDirection: "row",
-    padding: 20,
-    borderRadius: 5,
-  },
-  text: {
-    marginLeft: 10,
-    fontSize: 16,
-    fontWeight: "400",
-    color: "#273A7F",
   },
 });
 
 interface LoadingProps {
   loading: boolean;
+  loadingText?: string;
+  imageSource: any;
 }
 const Loading: React.FC<LoadingProps> = (props: LoadingProps) => {
-  const { loading } = props;
+  const theme = useTheme();
+  const backgroundColor = theme.dark ? "#121212" : "#F5F5F5";
+
+  const { loading, loadingText, imageSource } = props;
   if (!loading) {
-    return <View />;
+    return null;
   }
   return (
-    <View style={styles.overlay}>
-      <View style={styles.container}>
-        <ActivityIndicator color="#273A7F" />
-        <Text style={styles.text}>Loading...</Text>
-      </View>
+    <View style={{ ...styles.container, backgroundColor: backgroundColor }}>
+      <CustomAnimation imageSource={imageSource} text={loadingText} />
     </View>
   );
 };

@@ -37,6 +37,7 @@ export type AuthAction =
     };
 
 export type User = {
+  id: number;
   firstName: string;
   lastName: string;
   email: string;
@@ -68,6 +69,7 @@ export type Mode = {
   modeType: string;
   modeTopic: string;
   modeSection: string;
+  level: number;
   correctAnswersCount: number;
   numberOfQuestions: number;
   timeStamp: string;
@@ -89,8 +91,14 @@ export type SessionState = {
 };
 
 export type Auth = {
-  auth: any;
-  state: SessionState;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+  register: (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+  ) => Promise<void>;
 };
 
 export type Dispatch = (action: any) => void;
@@ -99,9 +107,3 @@ export enum Appearance {
   DARK = "dark",
   LIGHT = "light",
 }
-
-export type Picture = {
-  title: string;
-  description: string;
-  file: () => void;
-};

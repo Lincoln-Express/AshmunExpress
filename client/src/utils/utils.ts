@@ -7,17 +7,17 @@ export const createUser = (
   email: string,
   password: string,
 ) => {
-  if (
-    firstName.length == 0 ||
-    lastName.length == 0 ||
-    email.length == 0 ||
-    password.length == 0
-  ) {
-    return null;
-  }
+  // if (
+  //   firstName.length == 0 ||
+  //   lastName.length == 0 ||
+  //   email.length == 0 ||
+  //   password.length == 0
+  // ) {
+  //   return null;
+  // }
   return {
-    firstName,
-    lastName,
+    firstName: firstName,
+    lastName: lastName,
     email,
     password,
     appearance: Appearance.LIGHT,
@@ -35,25 +35,22 @@ export const getEndIndex = (len: number) => {
 };
 
 export const getResultReview = (
-  totalQuestions: number,
   correctAnswersCount: number,
-  lowerQuartile: number,
   median: number,
   upperQuartile: number,
+  mode: string,
 ): string => {
-  if (correctAnswersCount <= lowerQuartile) {
-    return "Not good enough!";
+  if (mode === "Tutorial" || mode === "Example") {
+    return "Great Job";
   }
-  if (correctAnswersCount > lowerQuartile && correctAnswersCount <= median) {
-    return "You can do better!";
+  if (correctAnswersCount <= median) {
+    return "Let's Practice More";
   }
   if (correctAnswersCount > median && correctAnswersCount <= upperQuartile) {
-    return "Good Job!";
+    return "Nice Attempt";
   }
-  if (correctAnswersCount === totalQuestions) {
-    return "Perfect!";
-  }
-  return "Awesome!";
+
+  return "Great Job";
 };
 
 export const changeObjectPropsName = (

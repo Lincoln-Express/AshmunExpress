@@ -7,9 +7,10 @@ import Loading from "../../base/loading/Loading";
 import CustomList from "../../base/customList/CustomList";
 import useFetch from "../../hooks/useFetch/useFetch";
 import { changeObjectPropsName, mergeModeData } from "../../utils/utils";
-import IconButton from "../../base/iconButton/IconButton";
+import Icon from "../../base/icon/Icon";
 import CustomCard from "../../base/customCard/CustomCard";
 import ThemeContext from "../../contexts/ThemeContext";
+import * as waitingForData from "../../../assets/json-animations/waiting-for-data.json";
 
 const styles = StyleSheet.create({
   container: {
@@ -38,10 +39,17 @@ const ModeIntroScreen: React.FC<null> = () => {
   );
   const { isThemeDark } = React.useContext(ThemeContext);
   const theme = useTheme();
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {isError && <View>{isError}</View>}
-      {isLoading && <Loading loading={isLoading} />}
+      {isLoading && (
+        <Loading
+          loading={isLoading}
+          imageSource={require("../../../assets/json-animations/waiting-for-data.json")}
+          loadingText={"Waiting for the quiz data to load"}
+        />
+      )}
       {mergedModeData !== undefined
         ? mergedModeData.map((topic) => (
             <CustomList title={topic.title} key={topic.title}>
@@ -59,7 +67,7 @@ const ModeIntroScreen: React.FC<null> = () => {
                       });
                     }}
                     left={() => (
-                      <IconButton
+                      <Icon
                         name="hourglass"
                         style={styles.icon}
                         color={

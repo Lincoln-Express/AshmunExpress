@@ -4,7 +4,7 @@ import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import * as Updates from "expo-updates";
 import FilledButton from "../filledButton/FilledButton";
-import IconButton from "../iconButton/IconButton";
+import Icon from "../icon/Icon";
 
 const styles = StyleSheet.create({
   container: {
@@ -58,11 +58,7 @@ class ErrorBoundary extends React.Component<any, ErrorBoundaryState> {
     if (hasError) {
       return (
         <View style={styles.container}>
-          <IconButton
-            name="information-circle-outline"
-            size={60}
-            color="#273A7F"
-          />
+          <Icon name="information-circle-outline" size={60} color="#273A7F" />
           <Text style={styles.errorHeader}>Oops, Something went wrong!</Text>
           <Text style={styles.errorMessage}>
             The app ran into a problem and could not continue. We apologize for

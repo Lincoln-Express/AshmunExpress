@@ -45,7 +45,7 @@ const InputField: React.FC<InputFieldProps> = ({
   }
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={{ ...styles.label, color: theme.colors.text }}>{label}</Text>
       <TextInput
         style={inputBoxStyle}
         value={formikProps.values[pointer]}

@@ -12,11 +12,13 @@ import {
   useModeState,
 } from "../../providers/modeProvider/ModeProvider";
 import { useModeSessionDispatch } from "../../providers/modeSessionProvider/ModeSessionProvider";
-import { ActionType } from "../../types/types";
-import { v4 as uuidv4 } from "uuid";
+import { ActionType, ModeSession } from "../../types/types";
+import uuid from "react-native-uuid";
 import CustomCard from "../../base/customCard/CustomCard";
 import { getResultReview } from "../../utils/utils";
 import UserContext from "../../contexts/UserContext";
+import CustomImage from "../../base/customImage/CustomImage";
+import CustomAnimation from "../../base/customAnimation/CustomAnimation";
 
 const styles = StyleSheet.create({
   outerContainer: {
@@ -67,38 +69,50 @@ const styles = StyleSheet.create({
 });
 
 const createTimeStamp = () => {
-  return new Date().toDateString();
+  return new Date().toISOString();
 };
 
 const ModeResultScreen: React.FC<null> = (): JSX.Element => {
   const theme = useTheme();
   const navigation = useNavigation();
+  const [failedQuestions, setFailedQuestions] = React.useState(
+    [] as ModeSession[],
+  );
   const { updateUser } = React.useContext(UserContext);
 
   const route = useRoute();
-  const { totalQuestions, correctAnswersCount, mode } = route.params;
-  const Buttons = React.useMemo(() => viewNextOptions(navigation), [
-    navigation,
-  ]);
+  const { totalQuestions, correctAnswersCount, mode, level, section, topic } =
+    route.params;
+  const Buttons = React.useMemo(
+    () => viewNextOptions(navigation),
+    [navigation],
+  );
 
   const modeState = useModeState();
   const timeStamp = React.useMemo(() => createTimeStamp(), []);
-  const currModeObject = Object.freeze({
-    ...modeState,
-    id: uuidv4(),
-    modeType: mode,
-    correctAnswersCount,
-    totalQuestions,
-    timeStamp,
-  });
 
-  const failedQuestions = currModeObject.modeSessionHistory.filter(
-    (modeSession) => modeSession.userAnswer != modeSession.answer,
-  );
   const modeSessionDispatch = useModeSessionDispatch()!;
   const modeDispatch = useModeDispatch()!;
 
   React.useEffect(() => {
+    const currModeObject = {
+      ...modeState,
+      id: uuid.v4(),
+      modeType: mode,
+      correctAnswersCount,
+      totalQuestions,
+      timeStamp,
+      level,
+      modeSection: section,
+      modeTopic: topic,
+    };
+
+    setFailedQuestions(
+      currModeObject.modeSessionHistory.filter(
+        (modeSession) => modeSession.userAnswer != modeSession.answer,
+      ),
+    );
+
     updateUser(currModeObject, "mode");
 
     modeDispatch({ type: ActionType.UPDATE_MODE, payload: currModeObject });
@@ -112,19 +126,23 @@ const ModeResultScreen: React.FC<null> = (): JSX.Element => {
   const upperQuartile = 3 * lowerQuartile;
   const median = upperQuartile - lowerQuartile;
   const review = getResultReview(
-    totalQuestions,
     correctAnswersCount,
     lowerQuartile,
     median,
-    upperQuartile,
+    mode,
   );
+
+  const ResultImage = getResultImage(review);
 
   if (mode === "Example" || mode === "Tutorial") {
     return (
       <View style={styles.outerContainer}>
         <Text style={{ ...styles.reviewText, color: theme.colors.text }}>
-          Good Job!
+          {`${review}`}
         </Text>
+        <CustomAnimation
+          imageSource={require("../../../assets/json-animations/good-job.json")}
+        />
         {Buttons}
       </View>
     );
@@ -133,11 +151,12 @@ const ModeResultScreen: React.FC<null> = (): JSX.Element => {
   return (
     <ScrollView contentContainerStyle={styles.outerContainer}>
       <Text style={{ ...styles.reviewText, color: theme.colors.text }}>
-        {review}
+        {`${review}!`}
       </Text>
       <Text style={{ ...styles.scoreText, color: theme.colors.primary }}>
         YOUR SCORE:
       </Text>
+      {ResultImage}
       <Text style={{ ...styles.scoreText, color: theme.colors.text }}>
         {`${correctAnswersCount}/${totalQuestions}`}
       </Text>
@@ -154,13 +173,8 @@ const ModeResultScreen: React.FC<null> = (): JSX.Element => {
             Explanations:
           </Text>
           {failedQuestions.map((failedQuestion, index) => {
-            const {
-              question,
-              userAnswer,
-              answer,
-              explanation,
-              id,
-            } = failedQuestion;
+            const { question, userAnswer, answer, explanation, id } =
+              failedQuestion;
 
             const userAnswerParagraph = customText("Your answer: ", userAnswer);
             const correctAnswer = customText("The correct answer: ", answer);
@@ -195,8 +209,8 @@ const ModeResultScreen: React.FC<null> = (): JSX.Element => {
 
 export default ModeResultScreen;
 
-const customText = (string1: string, string2: string) => {
-  return `${string1} ${string2}`;
+const customText = (firstText: string, secondText: string) => {
+  return `${firstText} ${secondText}`;
 };
 
 const viewNextOptions = (navigation) => {
@@ -206,13 +220,12 @@ const viewNextOptions = (navigation) => {
         title="Go Home"
         onPress={() => {
           navigation.dispatch(StackActions.popToTop());
-          // Add a loading screen/splash screen
           navigation.navigate("Home");
         }}
         buttonStyle={styles.firstButton}
       />
       <FilledButton
-        title="New Mode"
+        title="Topics"
         onPress={() => {
           navigation.dispatch(StackActions.popToTop());
         }}
@@ -221,4 +234,24 @@ const viewNextOptions = (navigation) => {
       />
     </View>
   );
+};
+
+const getResultImage = (review: string) => {
+  if (review === "Excellent") {
+    return (
+      <CustomAnimation
+        imageSource={require("../../../assets/json-animations/excellent.json")}
+      />
+    );
+  }
+
+  if (review === "Good") {
+    return (
+      <CustomAnimation
+        imageSource={require("../../../assets/json-animations/good-job.json")}
+      />
+    );
+  }
+
+  return <CustomImage image={"../../../assets/svg/sad.svg"} />;
 };

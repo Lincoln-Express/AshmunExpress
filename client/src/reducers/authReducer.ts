@@ -6,6 +6,7 @@ const authReducer = (state: SessionState, action: AuthAction): SessionState => {
     return {
       ...state,
       isLoading: true,
+      isSignedIn: false,
     };
   }
 
