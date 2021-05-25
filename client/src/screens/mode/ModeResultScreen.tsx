@@ -6,7 +6,6 @@ import {
   useRoute,
 } from "@react-navigation/native";
 import { useTheme } from "react-native-paper/src/core/theming";
-import snakeCase from "lodash/snakeCase";
 import axios from "axios";
 import FilledButton from "../../base/filledButton/FilledButton";
 import {
@@ -16,14 +15,16 @@ import {
 import { useModeSessionDispatch } from "../../providers/modeSessionProvider/ModeSessionProvider";
 import { ActionType, ModeSession } from "../../types/types";
 import CustomCard from "../../base/customCard/CustomCard";
-import { getResultReview } from "../../utils/utils";
+import {
+  changePropsToSnakeCase,
+  customText,
+  getResultReview,
+} from "../../utils/utils";
 import UserContext from "../../contexts/UserContext";
 import CustomImage from "../../base/customImage/CustomImage";
 import CustomAnimation from "../../base/customAnimation/CustomAnimation";
 import { heightSize, widthSize } from "../../themes/sizes";
 import BASE_URL from "../../config";
-
-const mapObject = require("map-obj");
 
 const styles = StyleSheet.create({
   outerContainer: {
@@ -116,9 +117,7 @@ const ModeResultScreen: React.FC<null> = (): JSX.Element => {
     );
 
     const newModeObject = changePropsToSnakeCase(currModeObject);
-    const newModeSessionArray = modeSessionArray.map((modeSession) => {
-      return changePropsToSnakeCase(modeSession);
-    });
+    const newModeSessionArray = changePropsToSnakeCase(modeSessionArray);
 
     async function postData() {
       try {
@@ -239,10 +238,6 @@ const ModeResultScreen: React.FC<null> = (): JSX.Element => {
 
 export default ModeResultScreen;
 
-const customText = (firstText: string, secondText: string) => {
-  return `${firstText} ${secondText}`;
-};
-
 const viewNextOptions = (navigation) => {
   return (
     <View style={styles.innerContainer}>
@@ -283,10 +278,4 @@ const getResultImage = (review: string) => {
   }
 
   return <CustomImage image={"../../../assets/svg/sad.svg"} />;
-};
-
-const changePropsToSnakeCase = (object) => {
-  return mapObject(object, (key, value) => [snakeCase(String(key)), value], {
-    deep: true,
-  });
 };

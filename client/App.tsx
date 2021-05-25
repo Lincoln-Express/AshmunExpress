@@ -70,7 +70,7 @@ const App = (): JSX.Element => {
   };
 
   const renderScreens = () => {
-    return !state.isSignedIn ? (
+    return state.isSignedIn ? (
       <Stack.Screen name="MainTab" component={MainTabNavigator} />
     ) : (
       <Stack.Screen name="AuthStack" component={AuthStackNavigator} />

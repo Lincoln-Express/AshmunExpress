@@ -2,15 +2,14 @@ import * as React from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import * as converter from "number-to-words";
 import format from "date-fns/format";
-import capitalize from "lodash/capitalize";
 import CustomCard from "../../base/customCard/CustomCard";
 import UserContext from "../../contexts/UserContext";
 import EmptyState from "../../base/emptyState/EmptyState";
 import NoData from "../../../assets/svg/no-data.svg";
 import { Mode } from "../../types/types";
 import { widthSize, heightSize } from "../../themes/sizes";
+import { getGreetingText, getModeHistoryText } from "../../utils/utils";
 
 const styles = StyleSheet.create({
   container: {
@@ -115,30 +114,3 @@ const HomeScreen: React.FC<null> = () => {
 };
 
 export default HomeScreen;
-
-const getGreetingText = (hours: number) => {
-  if (hours < 12) {
-    return "Good Morning";
-  } else if (hours >= 12 && hours < 16) {
-    return "Good Afternoon";
-  }
-
-  return "Good evening";
-};
-
-const getModeHistoryText = (modesArrayLength: number | undefined) => {
-  if (!modesArrayLength) {
-    return "";
-  }
-
-  if (modesArrayLength === 1) {
-    return "Last Result:";
-  }
-  if (modesArrayLength < 5) {
-    const numInWords = converter.toWords(modesArrayLength);
-    const resultWord = modesArrayLength === 1 ? "Result:" : "Results:";
-    return `Last ${capitalize(numInWords)} ${resultWord}`;
-  }
-
-  return "Last Five Results:";
-};

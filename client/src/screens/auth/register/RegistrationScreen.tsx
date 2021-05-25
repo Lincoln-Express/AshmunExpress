@@ -74,11 +74,7 @@ const RegistrationScreen: React.FC<null> = () => {
         onSubmit={async (values) => {
           try {
             await axios
-              .get(`${BASE_URL}/unique`, {
-                params: {
-                  email: values.email,
-                },
-              })
+              .get(`${BASE_URL}/unique/${values.email}`)
               .then(async (res) => {
                 if (res.data.isUnique) {
                   await register(
@@ -91,7 +87,7 @@ const RegistrationScreen: React.FC<null> = () => {
                 } else {
                   Alert.alert(
                     "Sorry!",
-                    "This email has been used to create an account",
+                    "This email has already been used to create an account",
                     [{ text: "Ok", onPress: () => {} }],
                     { cancelable: true },
                   );

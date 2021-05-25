@@ -20,15 +20,15 @@ app.use(express.json());
 
 // get user Mode data
 // req.body will include a user_id
-app.get("/mode-info", (req, res) => {
+app.get("/mode-info/:user_id", (req, res) => {
   connection.query(
     "SELECT * FROM mode WHERE user_id = ?",
-    [req.body],
+    [req.params.user_id],
     (error, results, fields) => {
       if (error) {
         throw error;
       } else {
-        res.send({ result: results });
+        res.send({ success: true, result: results });
       }
     },
   );
@@ -37,7 +37,7 @@ app.get("/mode-info", (req, res) => {
 // inserts user Mode data
 // req.body will include an object containing a mode object (without the modeSession array), and user_id
 app.post("/mode", (req, res) => {
-  connection.query("INSERT mode SET ?"[req.body]);
+  connection.query("INSERT mode SET ?", [req.body]);
   res.end();
 });
 
@@ -45,8 +45,15 @@ app.post("/mode", (req, res) => {
 // req.body will include an object containing an array of modeSessions, and mode_id
 app.post("/mode-session", (req, res) => {
   connection.query(
-    "INSERT mode_session(mode_id, id, question, answer, explanation, user_answer) VALUES ?"[
-      req.body
+    "INSERT INTO mode_session(mode_id, question, answer, explanation, user_answer) VALUES ?",
+    [
+      req.body.map((item) => [
+        item.mode_id,
+        item.question,
+        item.explanation,
+        item.answer,
+        item.user_answer,
+      ]),
     ],
   );
   res.end();
@@ -54,15 +61,15 @@ app.post("/mode-session", (req, res) => {
 
 // get user ModeSession data
 // req.body will include a mode_id
-app.get("/mode-session-info", (req, res) => {
+app.get("/mode-session-info/:mode_id", (req, res) => {
   connection.query(
     "SELECT * FROM mode_session WHERE mode_id = ?",
-    req.body,
+    [req.params.mode_id],
     (error, results, fields) => {
       if (error) {
         throw error;
       } else {
-        res.send({ result: results });
+        res.send({ success: true, result: results });
       }
     },
   );
@@ -84,7 +91,6 @@ app.get("/unique/:email", (req, res) => {
         } else {
           res.send({ isUnique: false });
         }
-        res.send({ isUnique: result });
       }
     },
   );

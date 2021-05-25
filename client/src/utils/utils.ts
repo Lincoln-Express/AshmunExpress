@@ -1,5 +1,10 @@
 import axios from "axios";
+import capitalize from "lodash/capitalize";
+import snakeCase from "lodash/snakeCase";
+import * as converter from "number-to-words";
 import { User, Appearance, Mode } from "../types/types";
+
+const mapObject = require("map-obj");
 
 export const createUser = (
   firstName: string,
@@ -90,3 +95,40 @@ export const mergeModeData = (
 
 export const fetcher = async (url: string) =>
   await axios.get(url).then((res) => res.data);
+
+export const changePropsToSnakeCase = (object) => {
+  return mapObject(object, (key, value) => [snakeCase(String(key)), value], {
+    deep: true,
+  });
+};
+
+export const customText = (firstText: string, secondText: string) => {
+  return `${firstText} ${secondText}`;
+};
+
+export const getGreetingText = (hours: number) => {
+  if (hours < 12) {
+    return "Good Morning";
+  } else if (hours >= 12 && hours < 16) {
+    return "Good Afternoon";
+  }
+
+  return "Good evening";
+};
+
+export const getModeHistoryText = (modesArrayLength: number | undefined) => {
+  if (!modesArrayLength) {
+    return "";
+  }
+
+  if (modesArrayLength === 1) {
+    return "Last Result:";
+  }
+  if (modesArrayLength < 5) {
+    const numInWords = converter.toWords(modesArrayLength);
+    const resultWord = modesArrayLength === 1 ? "Result:" : "Results:";
+    return `Last ${capitalize(numInWords)} ${resultWord}`;
+  }
+
+  return "Last Five Results:";
+};

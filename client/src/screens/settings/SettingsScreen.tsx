@@ -10,6 +10,7 @@ import useImagePicker from "../../hooks/useImagePicker/useImagePicker";
 import FilledButton from "../../base/filledButton/FilledButton";
 import AuthContext from "../../contexts/AuthContext";
 import { heightSize, widthSize } from "../../themes/sizes";
+import UserContext from "../../contexts/UserContext";
 
 const styles = StyleSheet.create({
   container: {
@@ -47,6 +48,7 @@ const SettingsScreen: React.FC<null> = () => {
   const navigation = useNavigation();
   const imagePicker = useImagePicker();
   const { image } = imagePicker;
+  const { user } = React.useContext(UserContext);
   const { toggleTheme, isThemeDark } = React.useContext(ThemeContext);
   const firstPair = ["Notifications", "Account Preferences"];
   const secondPair = ["Feedback", "About us"];
@@ -64,7 +66,6 @@ const SettingsScreen: React.FC<null> = () => {
         {
           text: "Yes",
           onPress: async () => {
-            // TODO: post user data to the database, then logout
             await logout();
           },
         },
