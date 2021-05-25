@@ -78,11 +78,12 @@ app.get("/unique/:email", (req, res) => {
       if (error) {
         throw error;
       } else {
-        if (results == 0) {
-          res.send({ isUnique: true });
-        } else {
-          res.send({ isUnique: false });
-        }
+        // if (results == 0) {
+        //   res.send({ isUnique: true });
+        // } else {
+        //   res.send({ isUnique: false });
+        // }
+        res.send({ isUnique: results });
       }
     },
   );
