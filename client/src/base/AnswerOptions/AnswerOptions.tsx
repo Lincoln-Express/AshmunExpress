@@ -4,6 +4,7 @@ import shuffle from "lodash/shuffle";
 import AnswerButton from "../answerButton/AnswerButton";
 import AnswerButtonContext from "../../contexts/AnswerButtonContext";
 import { widthSize } from "../../themes/sizes";
+import uuid from "react-native-uuid";
 
 const styles = StyleSheet.create({
   container: {
@@ -48,7 +49,7 @@ const AnswerOptions: React.FC<AnswerOptionsProps> = (
       {shuffledAnswers.map((answer) => {
         const isCorrectAnswer = isCorrect(questionObject, answer);
         return (
-          <View style={styles.container} key={answer}>
+          <View style={styles.container} key={uuid.v4().toString()}>
             <AnswerButton
               answer={answer}
               isCorrectAnswer={isCorrectAnswer}

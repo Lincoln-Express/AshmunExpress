@@ -215,7 +215,7 @@ const ModeResultScreen: React.FC<null> = (): JSX.Element => {
 
             return (
               <CustomCard
-                key={`${uuid.v4()}`}
+                key={uuid.v4().toString()}
                 title={`${index + 1}/${failedQuestions.length + 1}`}
                 subtitle={customText("Question: ", question)}
                 subtitleNumberOfLines={5}
