@@ -6,18 +6,19 @@ import { useModeDispatch } from "../../providers/modeProvider/ModeProvider";
 import { useModeSessionDispatch } from "../../providers/modeSessionProvider/ModeSessionProvider";
 import AnswerButtonContext from "../../contexts/AnswerButtonContext";
 import { ActionType } from "../../types/types";
+import { widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    borderRadius: 10,
-    borderWidth: 3,
-    padding: 10,
+    borderRadius: widthSize.l / 3,
+    borderWidth: widthSize.s / 5,
+    padding: widthSize.l / 3,
     backgroundColor: "#F5F5F5",
   },
   text: {
-    fontSize: 20,
+    fontSize: widthSize.xl / 2,
     fontWeight: "bold",
   },
 });
@@ -43,7 +44,6 @@ const AnswerButton: React.FC<AnswerButtonProps> = (
   const modeDispatch = useModeDispatch()!;
   const modeSessionDispatch = useModeSessionDispatch()!;
   const modeSessionObject = {
-    id: questionObject.id,
     question: questionObject.question,
     answer: questionObject.answer,
     explanation: questionObject.explanation,

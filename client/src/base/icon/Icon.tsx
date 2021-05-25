@@ -6,11 +6,16 @@ import {
   Platform,
   View,
 } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "react-native-paper/src/core/theming";
+import { heightSize, widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
-  container: { position: "absolute", top: 50, right: 20 },
+  container: {
+    position: "absolute",
+    top: heightSize.s * 1.75,
+    right: widthSize.xl / 2,
+  },
 });
 
 export interface IconProps {

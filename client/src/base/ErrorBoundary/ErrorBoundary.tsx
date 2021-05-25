@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable react/destructuring-assignment */
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import * as Updates from "expo-updates";
 import FilledButton from "../filledButton/FilledButton";
 import Icon from "../icon/Icon";
+import { heightSize, widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
@@ -16,13 +15,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     color: "#273A7F",
-    fontSize: 32,
+    fontSize: widthSize.l,
   },
   errorMessage: {
     justifyContent: "center",
     alignItems: "center",
     fontWeight: "400",
-    marginVertical: 10,
+    marginVertical: heightSize.s / 3,
     color: "#273A7F",
   },
 });

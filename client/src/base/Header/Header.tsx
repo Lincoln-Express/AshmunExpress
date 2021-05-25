@@ -1,12 +1,13 @@
 import * as React from "react";
 import { Text, StyleSheet } from "react-native";
 import { useTheme } from "react-native-paper";
+import { heightSize, widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 24,
+    fontSize: widthSize.m,
     color: "#273A7F",
-    marginBottom: 10,
+    marginBottom: heightSize.s / 3,
   },
 });
 

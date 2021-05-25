@@ -34,6 +34,7 @@ const useAuth = () => {
                   const temp = res.data.result[0];
 
                   user = sanitizeServerUserData(temp);
+                  //TODO: add a request to get the users data
                   await SecureStore.setItemAsync("user", JSON.stringify(user));
                 }
 

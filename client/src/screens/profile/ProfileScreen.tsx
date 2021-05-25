@@ -8,21 +8,22 @@ import useImagePicker from "../../hooks/useImagePicker/useImagePicker";
 import CustomUserAvatar from "../../base/customUserAvatar/CustomUserAvatar";
 import UserContext from "../../contexts/UserContext";
 import { Mode } from "../../types/types";
+import { heightSize, widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
   },
   settingsIcon: {
-    top: 10,
-    right: 10,
+    top: heightSize.s / 3,
+    right: widthSize.l / 3,
   },
   card: {
-    margin: 15,
+    margin: widthSize.s,
   },
   cardIcon: {
-    top: 10,
-    right: 10,
+    top: heightSize.s / 3,
+    right: widthSize.l / 3,
   },
 });
 

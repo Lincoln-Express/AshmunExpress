@@ -1,14 +1,15 @@
 import * as React from "react";
 import { StyleSheet, View, Image } from "react-native";
+import { heightSize, widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    padding: 50,
+    padding: heightSize.s * 1.75,
     justifyContent: "center",
     alignItems: "center",
   },
-  image: { width: 330, height: 190 },
+  image: { width: widthSize.s * 22, height: heightSize.xl * 2.6 },
 });
 
 interface LogoProps {

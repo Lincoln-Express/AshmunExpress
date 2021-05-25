@@ -23,6 +23,7 @@ const useImagePicker = () => {
                   await ImagePicker.getMediaLibraryPermissionsAsync(),
               },
             ],
+            { cancelable: true },
           );
         }
       }

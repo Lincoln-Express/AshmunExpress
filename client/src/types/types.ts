@@ -65,6 +65,7 @@ export type ModeSessionAction =
   | { type: ActionType.RESET_MODE_SESSION };
 
 export type Mode = {
+  userId: number;
   id: number;
   modeType: string;
   modeTopic: string;
@@ -72,11 +73,12 @@ export type Mode = {
   level: number;
   correctAnswersCount: number;
   numberOfQuestions: number;
-  timeStamp: string;
+  timestamp: string;
   modeSessionHistory: ModeSession[];
 };
 
 export type ModeSession = {
+  modeId: number;
   id: number;
   question: string;
   answer: string;

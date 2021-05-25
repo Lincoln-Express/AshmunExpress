@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Text, Image, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
+import { heightSize } from "../../themes/sizes";
 import FilledButton from "../filledButton/FilledButton";
 
 const styles = StyleSheet.create({
@@ -9,10 +10,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    marginVertical: 10,
+    marginVertical: heightSize.s / 3,
   },
   image: {
-    marginTop: 20,
+    marginTop: heightSize.l / 3,
   },
 });
 interface EmptyStateProps {

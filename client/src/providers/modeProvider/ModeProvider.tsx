@@ -1,27 +1,10 @@
 import * as React from "react";
-import {
-  Dispatch,
-  Mode,
-  ActionType,
-  ModeAction,
-  ModeSession,
-} from "../../types/types";
+import { Dispatch, Mode, ActionType, ModeAction } from "../../types/types";
 
-const initialState = {
-  id: 0,
-  correctAnswersCount: 0,
-  numberOfQuestions: 0,
-  timeStamp: "",
-  modeSection: "",
-  modeTopic: "",
-  modeType: "",
-  modeSessionHistory: [] as ModeSession[],
-};
 const ModeStateContext = React.createContext({} as Mode);
 
-const ModeDispatchContext = React.createContext<Dispatch | undefined>(
-  undefined,
-);
+const ModeDispatchContext =
+  React.createContext<Dispatch | undefined>(undefined);
 
 export const useModeState = () => {
   const context = React.useContext(ModeStateContext);
@@ -59,7 +42,7 @@ const reducer = (state: Mode, action: ModeAction): Mode => {
   }
 
   if (action.type === ActionType.RESET_MODE) {
-    return initialState;
+    return {} as Mode;
   }
 
   return state;
@@ -71,7 +54,7 @@ interface ModeProviderProps {
 const ModeProvider: React.FC<ModeProviderProps> = ({
   children,
 }: ModeProviderProps) => {
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+  const [state, dispatch] = React.useReducer(reducer, {} as Mode);
 
   return (
     <ModeStateContext.Provider value={state}>

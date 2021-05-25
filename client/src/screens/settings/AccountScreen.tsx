@@ -1,17 +1,15 @@
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import EmptyState from "../../base/emptyState/EmptyState";
 import UserContext from "../../contexts/UserContext";
 import Empty from "../../../assets/svg/empty.svg";
+import { heightSize, widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  button: {
-    maxWidth: "40%",
   },
 });
 
@@ -28,13 +26,22 @@ const AccountScreen: React.FC<null> = () => {
         emptyStateText={
           "The option to view your account and change profile details hasn't been created yet, check with your professor for updates."
         }
-        textStyle={{ color: theme.colors.text, fontSize: 16, marginLeft: 10 }}
-        image={<Empty height={120} width={120} fillOpacity={0.7} />}
+        textStyle={{
+          color: theme.colors.text,
+          fontSize: widthSize.s,
+          marginLeft: widthSize.l / 3,
+        }}
+        image={
+          <Empty
+            height={heightSize.s * 4}
+            width={widthSize.xl * 3}
+            fillOpacity={0.7}
+          />
+        }
         buttonTitle={"Go back"}
         onPress={() => {
           navigation.goBack();
         }}
-        buttonStyle={styles.button}
       />
     </View>
   );

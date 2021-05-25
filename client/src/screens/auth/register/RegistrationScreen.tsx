@@ -1,7 +1,6 @@
 import * as React from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, View, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
 import * as yup from "yup";
 import Logo from "../../../base/logo/Logo";
@@ -10,23 +9,19 @@ import FilledButton from "../../../base/filledButton/FilledButton";
 import Icon from "../../../base/icon/Icon";
 import InputField from "../../../base/inputField/InputField";
 import AuthContext from "../../../contexts/AuthContext";
+import { heightSize, widthSize } from "../../../themes/sizes";
+import useFetch from "../../../hooks/useFetch/useFetch";
+import axios from "axios";
+import BASE_URL from "../../../config";
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     alignItems: "center",
-    paddingTop: 80,
-    padding: 15,
+    paddingTop: heightSize.m * 1.81,
+    padding: widthSize.s,
   },
-  header: { paddingTop: 170 },
-  image: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-    opacity: 0.5,
-  },
+  header: { paddingTop: heightSize.xl * 2.3 },
 });
 
 const RegistrationScreen: React.FC<null> = () => {
@@ -78,13 +73,32 @@ const RegistrationScreen: React.FC<null> = () => {
         }}
         onSubmit={async (values) => {
           try {
-            await register(
-              values.firstName,
-              values.lastName,
-              values.email,
-              values.password,
-            );
-            navigation.goBack();
+            await axios
+              .get(`${BASE_URL}/unique`, {
+                params: {
+                  email: values.email,
+                },
+              })
+              .then(async (res) => {
+                console.log("Here");
+
+                if (res.data.isUnique) {
+                  await register(
+                    values.firstName,
+                    values.lastName,
+                    values.email,
+                    values.password,
+                  );
+                  navigation.goBack();
+                } else {
+                  Alert.alert(
+                    "Sorry!",
+                    "This email has been used to create an account",
+                    [{ text: "Ok", onPress: () => {} }],
+                    { cancelable: true },
+                  );
+                }
+              });
           } catch (e) {}
         }}
         validationSchema={validationSchema}

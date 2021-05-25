@@ -18,19 +18,17 @@ import {
 import { ActionType } from "../../types/types";
 import EmptyState from "../../base/emptyState/EmptyState";
 import Empty from "../../../assets/svg/empty.svg";
+import { heightSize, widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
   },
-  firstButton: {
-    maxWidth: "40%",
-  },
   innerContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginTop: 20,
+    marginTop: heightSize.l / 3,
   },
   outerContainer: {
     flex: 1,
@@ -38,13 +36,12 @@ const styles = StyleSheet.create({
   },
 
   readyText: {
-    fontSize: 24,
+    fontSize: widthSize.m,
     textAlign: "center",
   },
   secondButton: {
-    maxWidth: "40%",
     backgroundColor: "#F5F5F5",
-    borderWidth: 2,
+    borderWidth: widthSize.s / 7.5,
     borderColor: "#273A8F",
   },
   secondButtonText: {
@@ -52,10 +49,9 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: "center",
-    fontSize: 36,
+    fontSize: widthSize.s * 2.4,
   },
   emptyStateButton: {
-    maxWidth: "40%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -107,7 +103,6 @@ const ModePenultimateScreen: React.FC<null> = (): JSX.Element => {
             onPress={() => {
               navigation.goBack();
             }}
-            buttonStyle={styles.firstButton}
           />
 
           <FilledButton

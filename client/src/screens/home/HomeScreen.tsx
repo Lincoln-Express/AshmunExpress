@@ -10,36 +10,38 @@ import UserContext from "../../contexts/UserContext";
 import EmptyState from "../../base/emptyState/EmptyState";
 import NoData from "../../../assets/svg/no-data.svg";
 import { Mode } from "../../types/types";
+import { widthSize, heightSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
   },
   greeting: {
-    fontSize: 20,
-    marginVertical: 15,
-    marginLeft: 10,
+    fontSize: widthSize.l,
+    marginVertical: heightSize.s,
+    marginLeft: widthSize.m / 2,
   },
   modeText: {
-    fontSize: 16,
-    marginLeft: 10,
+    fontSize: widthSize.s,
+    marginLeft: widthSize.m / 2,
   },
   text: {
-    marginVertical: 5,
-    fontSize: 16,
+    marginVertical: heightSize.s / 3,
+    fontSize: widthSize.s,
   },
   button: {
-    maxWidth: "40%",
+    width: widthSize.xl * 5,
+    height: heightSize.xl,
     justifyContent: "center",
     alignItems: "center",
   },
   title: {
     alignItems: "center",
-    paddingTop: 10,
+    paddingTop: heightSize.s / 3,
     textAlign: "auto",
   },
   card: {
-    marginHorizontal: 10,
+    marginHorizontal: widthSize.m / 2,
   },
 });
 
@@ -78,9 +80,9 @@ const HomeScreen: React.FC<null> = () => {
             </Text>
             <View>
               {recentResults.map((recentResult) => {
-                const { modeTopic, modeType, timeStamp, level, id } =
+                const { modeTopic, modeType, timestamp, level, id } =
                   recentResult;
-                const date = format(Date.parse(timeStamp), "PPPPpp");
+                const date = format(Date.parse(timestamp), "PPPPpp");
 
                 return (
                   <CustomCard

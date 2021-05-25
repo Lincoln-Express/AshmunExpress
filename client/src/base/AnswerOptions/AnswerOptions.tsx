@@ -3,12 +3,13 @@ import { View, StyleSheet } from "react-native";
 import shuffle from "lodash/shuffle";
 import AnswerButton from "../answerButton/AnswerButton";
 import AnswerButtonContext from "../../contexts/AnswerButtonContext";
+import { widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    marginHorizontal: 30,
+    marginHorizontal: widthSize.l,
   },
 });
 

@@ -1,14 +1,15 @@
 import * as React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Avatar, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 import Icon from "../icon/Icon";
 import CustomImagePlaceholder from "../customImagePlaceholder/CustomImagePlaceholder";
+import { heightSize, widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 0,
     flexDirection: "row",
-    margin: 10,
+    margin: widthSize.l / 3,
     justifyContent: "center",
   },
   innerContainer: {
@@ -16,18 +17,18 @@ const styles = StyleSheet.create({
   },
 
   textContainer: {
-    marginLeft: 3,
+    marginLeft: widthSize.l / 10,
   },
   primaryText: {
-    fontSize: 20,
+    fontSize: widthSize.xl / 2,
   },
   secondaryText: {
     opacity: 0.7,
   },
   image: {
-    top: 10,
+    top: heightSize.s / 3,
     right: 0,
-    left: 70,
+    left: widthSize.xl,
   },
 });
 

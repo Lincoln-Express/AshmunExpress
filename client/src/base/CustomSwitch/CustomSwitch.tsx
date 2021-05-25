@@ -18,7 +18,6 @@ const CustomSwitch: React.FC<CustomSwitchProps> = (
       trackColor={{ false: trackColor[0], true: trackColor[1] }}
       thumbColor={value ? "#273A7F" : "#F57C00"}
       value={value}
-      ios_backgroundColor="#3e3e3e"
     />
   );
 };

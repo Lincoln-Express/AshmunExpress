@@ -4,6 +4,7 @@ import { useTheme } from "react-native-paper";
 import CustomTextField from "../../base/customTextField/CustomTextField";
 import FilledButton from "../../base/filledButton/FilledButton";
 import Logo from "../../base/logo/Logo";
+import { widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
@@ -12,11 +13,10 @@ const styles = StyleSheet.create({
   },
   logo: {
     position: "relative",
-    padding: 25,
+    padding: widthSize.m,
   },
   button: {
-    maxWidth: "50%",
-    marginLeft: 15,
+    marginLeft: widthSize.s,
   },
 });
 
@@ -32,7 +32,7 @@ const FeedbackScreen: React.FC<null> = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Logo style={styles.logo} />
-      <Text style={{ color: theme.colors.text, marginLeft: 15 }}>
+      <Text style={{ color: theme.colors.text, marginLeft: widthSize.s }}>
         Have a question or an issue, let us know!
       </Text>
       <CustomTextField placeholder={"Type something here"} numberOfLines={10} />

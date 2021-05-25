@@ -1,6 +1,7 @@
 import * as React from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { useTheme } from "react-native-paper";
+import { heightSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
@@ -10,7 +11,7 @@ const styles = StyleSheet.create({
     color: "red",
   },
   label: {
-    marginTop: 10,
+    marginTop: heightSize.s / 3,
   },
 });
 interface InputFieldProps {

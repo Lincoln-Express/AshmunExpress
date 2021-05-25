@@ -1,15 +1,16 @@
 import * as React from "react";
 import { View, TextInput, StyleSheet } from "react-native";
+import { widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderWidth: 1,
+    borderWidth: widthSize.s / 10,
     borderColor: "#767577",
-    borderRadius: 3,
-    padding: 5,
+    borderRadius: widthSize.l / 3,
+    padding: widthSize.l / 6,
     alignItems: "center",
-    margin: 15,
+    margin: widthSize.s,
   },
 });
 interface CustomTextFieldProps {

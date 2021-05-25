@@ -6,24 +6,24 @@ import CustomProgressBar from "../../base/customProgressBar/CustomProgressBar";
 import Question from "../../base/question/Question";
 import QuestionCount from "../../base/questionCount/QuestionCount";
 import ModeHelper from "../../modeHelper/ModeHelper";
+import { widthSize, heightSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   button: {
-    maxWidth: "40%",
-    marginLeft: 10,
+    marginLeft: widthSize.l / 3,
   },
   container: {
     flexGrow: 1,
   },
   questionCount: {
-    fontSize: 20,
-    marginVertical: 10,
-    marginLeft: 10,
+    fontSize: widthSize.xl / 2,
+    marginVertical: heightSize.s / 3,
+    marginLeft: widthSize.l / 3,
     fontWeight: "bold",
   },
   progressBar: {
-    marginLeft: 10,
-    marginBottom: 50,
+    marginLeft: widthSize.l,
+    marginBottom: widthSize.m * 1.13,
   },
 });
 
@@ -45,7 +45,7 @@ const TutorialScreen: React.FC<null> = (): JSX.Element => {
   const counter = getCounter();
   const questionObject = getQuestionObject(questions);
   const { question, picture, id } = questionObject;
-  const pictureName = picture === "yes" ? `${url}${id}` : undefined;
+  const pictureTitle = picture === "yes" ? `${url}/${id}` : undefined;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -58,7 +58,7 @@ const TutorialScreen: React.FC<null> = (): JSX.Element => {
         progress={counter + 1 / questions.length}
         style={styles.progressBar}
       />
-      <Question question={question} pictureName={pictureName} />
+      <Question question={question} pictureTitle={pictureTitle} />
       <FilledButton
         title={hasFinishedMode(questions.length) ? "Done" : "Next"}
         onPress={() => {

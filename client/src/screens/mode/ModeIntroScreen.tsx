@@ -10,21 +10,21 @@ import { changeObjectPropsName, mergeModeData } from "../../utils/utils";
 import Icon from "../../base/icon/Icon";
 import CustomCard from "../../base/customCard/CustomCard";
 import ThemeContext from "../../contexts/ThemeContext";
-import * as waitingForData from "../../../assets/json-animations/waiting-for-data.json";
+import { heightSize, widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     justifyContent: "flex-start",
-    padding: 8,
+    padding: widthSize.s / 2,
   },
   icon: {
     right: 0,
-    top: 5,
+    top: heightSize.m / 3,
   },
   title: {
     alignItems: "center",
-    paddingTop: 10,
+    paddingTop: heightSize.s / 3,
     textAlign: "auto",
   },
 });
@@ -47,7 +47,6 @@ const ModeIntroScreen: React.FC<null> = () => {
         <Loading
           loading={isLoading}
           imageSource={require("../../../assets/json-animations/waiting-for-data.json")}
-          loadingText={"Waiting for the quiz data to load"}
         />
       )}
       {mergedModeData !== undefined

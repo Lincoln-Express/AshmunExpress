@@ -6,20 +6,21 @@ import CustomCard from "../../base/customCard/CustomCard";
 import Icon from "../../base/icon/Icon";
 import CustomList from "../../base/customList/CustomList";
 import ThemeContext from "../../contexts/ThemeContext";
+import { widthSize, heightSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     justifyContent: "flex-start",
-    padding: 8,
+    padding: widthSize.s / 2,
   },
   icon: {
     right: 0,
-    top: 5,
+    top: heightSize.s / 3,
   },
   title: {
     alignItems: "center",
-    paddingTop: 10,
+    paddingTop: heightSize.s / 3,
     textAlign: "auto",
   },
 });
