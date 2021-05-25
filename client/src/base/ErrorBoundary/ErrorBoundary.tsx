@@ -24,6 +24,9 @@ const styles = StyleSheet.create({
     marginVertical: heightSize.s / 3,
     color: "#273A7F",
   },
+  button: {
+    width: widthSize.xl * 7,
+  },
 });
 
 interface ErrorBoundaryState {
@@ -67,6 +70,7 @@ class ErrorBoundary extends React.Component<any, ErrorBoundaryState> {
           <FilledButton
             title="Back to the Home Page"
             onPress={() => this.handleError()}
+            buttonStyle={styles.button}
           />
         </View>
       );

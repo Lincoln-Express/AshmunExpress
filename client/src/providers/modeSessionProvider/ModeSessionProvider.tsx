@@ -6,6 +6,15 @@ import {
   ModeSession,
 } from "../../types/types";
 
+const initialState = {
+  modeId: 0,
+  id: 0,
+  question: "",
+  answer: "",
+  explanation: "",
+  userAnswer: "",
+};
+
 const ModeSessionStateContext = React.createContext({} as ModeSession);
 
 const ModeSessionDispatchContext =
@@ -33,7 +42,7 @@ const reducer = (
   }
 
   if (action.type === ActionType.RESET_MODE_SESSION) {
-    return {} as ModeSession;
+    return initialState;
   }
 
   return state;
@@ -45,7 +54,7 @@ interface ModeSessionProviderProps {
 const ModeSessionProvider: React.FC<ModeSessionProviderProps> = ({
   children,
 }: ModeSessionProviderProps) => {
-  const [state, dispatch] = React.useReducer(reducer, {} as ModeSession);
+  const [state, dispatch] = React.useReducer(reducer, initialState);
 
   return (
     <ModeSessionStateContext.Provider value={state}>

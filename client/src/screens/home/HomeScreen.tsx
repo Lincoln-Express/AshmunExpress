@@ -82,7 +82,6 @@ const HomeScreen: React.FC<null> = () => {
                 const { modeTopic, modeType, timestamp, level, id } =
                   recentResult;
                 const date = format(Date.parse(timestamp), "PPPPpp");
-
                 return (
                   <CustomCard
                     key={id}

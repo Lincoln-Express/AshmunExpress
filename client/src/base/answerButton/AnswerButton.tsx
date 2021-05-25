@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import FilledButton from "../filledButton/FilledButton";
 import { useModeDispatch } from "../../providers/modeProvider/ModeProvider";
@@ -12,10 +12,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
+  },
+  button: {
     borderRadius: widthSize.l / 3,
     borderWidth: widthSize.s / 5,
     padding: widthSize.l / 3,
     backgroundColor: "#F5F5F5",
+    width: widthSize.xl * 7,
   },
   text: {
     fontSize: widthSize.xl / 2,
@@ -84,13 +88,15 @@ const AnswerButton: React.FC<AnswerButtonProps> = (
   };
 
   return (
-    <FilledButton
-      title={trimmedAnswer}
-      buttonStyle={{ ...styles.container, borderColor, backgroundColor }}
-      textStyle={{ ...styles.text, color }}
-      onPress={filledButtonOnPress}
-      disabled={disabled}
-    />
+    <View style={styles.container}>
+      <FilledButton
+        title={trimmedAnswer}
+        buttonStyle={{ ...styles.button, borderColor, backgroundColor }}
+        textStyle={{ ...styles.text, color }}
+        onPress={filledButtonOnPress}
+        disabled={disabled}
+      />
+    </View>
   );
 };
 

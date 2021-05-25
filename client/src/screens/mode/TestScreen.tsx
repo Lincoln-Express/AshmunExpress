@@ -34,7 +34,7 @@ const testModeHelper = ModeHelper();
 const TestScreen: React.FC<null> = (): JSX.Element => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { questions, mode, url } = route.params;
+  const { questions, mode, url, ...rest } = route.params;
 
   const {
     canGoBack,
@@ -103,6 +103,7 @@ const TestScreen: React.FC<null> = (): JSX.Element => {
               mode,
               correctAnswersCount,
               totalQuestions: questions.length,
+              ...rest,
             });
           }
         }}

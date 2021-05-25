@@ -25,6 +25,7 @@ import CustomImage from "../../base/customImage/CustomImage";
 import CustomAnimation from "../../base/customAnimation/CustomAnimation";
 import { heightSize, widthSize } from "../../themes/sizes";
 import BASE_URL from "../../config";
+import uuid from "react-native-uuid";
 
 const styles = StyleSheet.create({
   outerContainer: {
@@ -214,7 +215,7 @@ const ModeResultScreen: React.FC<null> = (): JSX.Element => {
 
             return (
               <CustomCard
-                key={id.toString()}
+                key={`${uuid.v4()}`}
                 title={`${index + 1}/${failedQuestions.length + 1}`}
                 subtitle={customText("Question: ", question)}
                 subtitleNumberOfLines={5}

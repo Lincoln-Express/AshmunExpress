@@ -32,7 +32,7 @@ const tutorialModeHelper = ModeHelper();
 const TutorialScreen: React.FC<null> = (): JSX.Element => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { questions, mode, url } = route.params;
+  const { questions, mode, url, ...rest } = route.params;
 
   const {
     getCounter,
@@ -72,6 +72,7 @@ const TutorialScreen: React.FC<null> = (): JSX.Element => {
               mode,
               correctAnswersCount: 0,
               totalQuestions: questions.length,
+              ...rest,
             });
           }
         }}

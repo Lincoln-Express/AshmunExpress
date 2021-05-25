@@ -74,13 +74,6 @@ const useAuth = () => {
                   type: ActionType.SIGN_IN,
                   payload: user,
                 });
-              } else {
-                Alert.alert(
-                  "Sorry!",
-                  "You have typed in an incorrect username and/or password",
-                  [{ text: "Ok", onPress: () => {} }],
-                  { cancelable: true },
-                );
               }
             });
         } catch (error) {
