@@ -1,7 +1,6 @@
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
 import * as yup from "yup";
 import Logo from "../../../base/logo/Logo";
@@ -12,22 +11,14 @@ import InputField from "../../../base/inputField/InputField";
 import AuthContext from "../../../contexts/AuthContext";
 import Loading from "../../../base/loading/Loading";
 import { ScrollView } from "react-native-gesture-handler";
-import { useTheme } from "react-native-paper";
+import { heightSize, widthSize } from "../../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     alignItems: "center",
-    paddingTop: 250,
-    padding: 16,
-  },
-  image: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-    opacity: 0.5,
+    paddingTop: heightSize.xl * 3.387,
+    padding: widthSize.s,
   },
 });
 
@@ -65,8 +56,8 @@ const LoginScreen: React.FC<null> = () => {
             initialValues={{ email: "", password: "" }}
             onSubmit={async (values) => {
               try {
-                setLoading(true);
                 await login(values.email, values.password);
+                setLoading(true);
               } catch (e) {
                 setLoading(false);
               }

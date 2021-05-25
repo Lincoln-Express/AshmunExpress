@@ -1,23 +1,28 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import FilledButton from "../filledButton/FilledButton";
 import { useModeDispatch } from "../../providers/modeProvider/ModeProvider";
 import { useModeSessionDispatch } from "../../providers/modeSessionProvider/ModeSessionProvider";
 import AnswerButtonContext from "../../contexts/AnswerButtonContext";
 import { ActionType } from "../../types/types";
+import { widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    borderRadius: 10,
-    borderWidth: 3,
-    padding: 10,
+    alignItems: "center",
+  },
+  button: {
+    borderRadius: widthSize.l / 3,
+    borderWidth: widthSize.s / 5,
+    padding: widthSize.l / 3,
     backgroundColor: "#F5F5F5",
+    width: widthSize.xl * 7,
   },
   text: {
-    fontSize: 20,
+    fontSize: widthSize.xl / 2,
     fontWeight: "bold",
   },
 });
@@ -43,7 +48,6 @@ const AnswerButton: React.FC<AnswerButtonProps> = (
   const modeDispatch = useModeDispatch()!;
   const modeSessionDispatch = useModeSessionDispatch()!;
   const modeSessionObject = {
-    id: questionObject.id,
     question: questionObject.question,
     answer: questionObject.answer,
     explanation: questionObject.explanation,
@@ -84,13 +88,15 @@ const AnswerButton: React.FC<AnswerButtonProps> = (
   };
 
   return (
-    <FilledButton
-      title={trimmedAnswer}
-      buttonStyle={{ ...styles.container, borderColor, backgroundColor }}
-      textStyle={{ ...styles.text, color }}
-      onPress={filledButtonOnPress}
-      disabled={disabled}
-    />
+    <View style={styles.container}>
+      <FilledButton
+        title={trimmedAnswer}
+        buttonStyle={{ ...styles.button, borderColor, backgroundColor }}
+        textStyle={{ ...styles.text, color }}
+        onPress={filledButtonOnPress}
+        disabled={disabled}
+      />
+    </View>
   );
 };
 

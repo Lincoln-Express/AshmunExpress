@@ -1,11 +1,14 @@
 import * as React from "react";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
+import { Alert } from "react-native";
 import BASE_URL from "../../config/index";
 import { createUser } from "../../utils/utils";
 import { ActionType, User } from "../../types/types";
 import authReducer from "../../reducers/authReducer";
+import camelCase from "lodash/camelCase";
 
+const mapObject = require("map-obj");
 const useAuth = () => {
   const [state, dispatch] = React.useReducer(authReducer, {
     isSignedIn: false,
@@ -13,8 +16,6 @@ const useAuth = () => {
     user: {} as User,
   });
 
-  // TODO: Delete/Load the "mode" object from SecureStore in the Logout/Login function
-  // TODO: "user", "profilePic", are the objects in SecureStore
   const auth = React.useMemo(
     () => ({
       login: async (email: string, password: string) => {
@@ -27,15 +28,43 @@ const useAuth = () => {
             .then(async (res) => {
               if (res.data.success) {
                 let user = {} as User;
-                const userData = await SecureStore.getItemAsync("user");
-                if (userData) {
-                  user = JSON.parse(userData);
-                } else {
-                  const temp = res.data.result[0];
 
-                  user = sanitizeServerUserData(temp);
-                  await SecureStore.setItemAsync("user", JSON.stringify(user));
-                }
+                const temp = res.data.result[0];
+
+                user = sanitizeServerUserData(temp);
+
+                try {
+                  const user_id = user.id;
+                  await axios
+                    .get(`${BASE_URL}/mode-info/${user_id}`)
+                    .then(async (res) => {
+                      if (res.data.success) {
+                        const modes = res.data.result;
+
+                        try {
+                          const newModes = modes.map(async (mode) => {
+                            const mode_id = mode.id;
+
+                            await axios
+                              .get(`${BASE_URL}/mode-session-info/${mode_id}`)
+                              .then(() => {
+                                if (res.data.success) {
+                                  mode.modeSessionHistory = res.data.result;
+                                }
+                              });
+                          });
+
+                          user.modes = mapObject(
+                            newModes,
+                            (key, value) => [camelCase(String(key)), value],
+                            { deep: true },
+                          );
+                        } catch (error) {}
+                      }
+                    });
+                } catch (error) {}
+
+                await SecureStore.setItemAsync("user", JSON.stringify(user));
 
                 dispatch({
                   type: ActionType.SET_LOADING,
@@ -45,8 +74,6 @@ const useAuth = () => {
                   type: ActionType.SIGN_IN,
                   payload: user,
                 });
-              } else {
-                throw new Error("Couldn't find user");
               }
             });
         } catch (error) {
@@ -62,14 +89,8 @@ const useAuth = () => {
       },
       logout: async () => {
         try {
-          //const user = {} as User;
-          // TODO: add the actual endpoint later to send the data to the database;
-          //await axios.post(`${BASE_URL}`, user).then(async (res) => {
-          //if (res.data.success) {
           await SecureStore.deleteItemAsync("user");
           dispatch({ type: ActionType.SIGN_OUT });
-          //}
-          //});
         } catch (error) {
           if (error.request) {
             console.error(`Login request failed: ${error.request}`);

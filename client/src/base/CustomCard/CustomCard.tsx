@@ -1,18 +1,19 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Card, Paragraph } from "react-native-paper";
+import { heightSize, widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    borderRadius: 10,
-    marginVertical: 10,
+    borderRadius: widthSize.l / 3,
+    marginVertical: heightSize.s / 3,
   },
   title: {
     textAlign: "left",
   },
   paragraph: {
-    marginVertical: 10,
+    marginVertical: heightSize.s / 3,
     textAlign: "left",
   },
 });

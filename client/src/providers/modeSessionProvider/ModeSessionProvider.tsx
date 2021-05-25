@@ -7,6 +7,7 @@ import {
 } from "../../types/types";
 
 const initialState = {
+  modeId: 0,
   id: 0,
   question: "",
   answer: "",
@@ -16,9 +17,8 @@ const initialState = {
 
 const ModeSessionStateContext = React.createContext({} as ModeSession);
 
-const ModeSessionDispatchContext = React.createContext<Dispatch | undefined>(
-  undefined,
-);
+const ModeSessionDispatchContext =
+  React.createContext<Dispatch | undefined>(undefined);
 
 export const useModeSessionState = () => {
   const context = React.useContext(ModeSessionStateContext);

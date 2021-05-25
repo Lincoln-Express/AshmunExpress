@@ -1,24 +1,25 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { List, useTheme } from "react-native-paper";
+import { heightSize, widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    borderWidth: 1.5,
-    borderRadius: 3,
-    marginVertical: 5,
+    borderWidth: widthSize.s / 10,
+    borderRadius: widthSize.s / 5,
+    marginVertical: heightSize.s / 6,
   },
   sectionTitle: {
-    fontSize: 24,
-    left: 20,
+    fontSize: widthSize.m,
+    left: widthSize.xl / 2,
     flexGrow: 1,
     justifyContent: "center",
     alignItems: "stretch",
   },
   children: {
-    marginVertical: 10,
-    marginLeft: 10,
+    marginVertical: heightSize.s / 3,
+    marginLeft: widthSize.l / 3,
   },
 });
 

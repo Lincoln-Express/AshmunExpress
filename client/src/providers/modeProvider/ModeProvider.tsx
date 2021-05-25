@@ -8,10 +8,12 @@ import {
 } from "../../types/types";
 
 const initialState = {
+  userId: 0,
   id: 0,
+  level: 0,
   correctAnswersCount: 0,
   numberOfQuestions: 0,
-  timeStamp: "",
+  timestamp: "",
   modeSection: "",
   modeTopic: "",
   modeType: "",
@@ -19,9 +21,8 @@ const initialState = {
 };
 const ModeStateContext = React.createContext({} as Mode);
 
-const ModeDispatchContext = React.createContext<Dispatch | undefined>(
-  undefined,
-);
+const ModeDispatchContext =
+  React.createContext<Dispatch | undefined>(undefined);
 
 export const useModeState = () => {
   const context = React.useContext(ModeStateContext);

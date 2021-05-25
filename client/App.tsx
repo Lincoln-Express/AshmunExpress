@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Provider as PaperProvider } from "react-native-paper";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
+import * as SecureStore from "expo-secure-store";
 import LightTheme from "./src/themes/LightTheme";
 import DarkTheme from "./src/themes/DarkTheme";
 import AuthStackNavigator from "./src/navigators/AuthStackNavigator";
@@ -43,7 +44,7 @@ const App = (): JSX.Element => {
     isThemeDark,
   };
 
-  const updateUser = (newValue, attribute) => {
+  const updateUser = async (newValue, attribute) => {
     if (attribute === "mode") {
       const { modes } = user;
       if (modes) {
@@ -58,6 +59,8 @@ const App = (): JSX.Element => {
 
     const newUser = user;
     newUser[attribute] = newValue;
+
+    await SecureStore.setItemAsync("user", JSON.stringify(newUser));
     return setUser(newUser);
   };
 

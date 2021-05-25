@@ -1,4 +1,3 @@
-// import important modules
 var express = require("express");
 var session = require("express-session");
 var bodyParser = require("body-parser");
@@ -16,10 +15,87 @@ app.use(
   }),
 );
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-app.get("/", (request, response) => response.json("Hello World!"));
+// get user Mode data
+// req.body will include a user_id
+app.get("/mode-info/:user_id", (req, res) => {
+  connection.query(
+    "SELECT * FROM mode WHERE user_id = ?",
+    [req.params.user_id],
+    (error, results, fields) => {
+      if (error) {
+        throw error;
+      } else {
+        res.send({ success: true, result: results });
+      }
+    },
+  );
+});
+
+// inserts user Mode data
+// req.body will include an object containing a mode object (without the modeSession array), and user_id
+app.post("/mode", (req, res) => {
+  connection.query("INSERT mode SET ?", [req.body]);
+  res.end();
+});
+
+// inserts user ModeSession data
+// req.body will include an object containing an array of modeSessions, and mode_id
+app.post("/mode-session", (req, res) => {
+  connection.query(
+    "INSERT INTO mode_session(mode_id, question, answer, explanation, user_answer) VALUES ?",
+    [
+      req.body.map((item) => [
+        item.mode_id,
+        item.question,
+        item.explanation,
+        item.answer,
+        item.user_answer,
+      ]),
+    ],
+  );
+  res.end();
+});
+
+// get user ModeSession data
+// req.body will include a mode_id
+app.get("/mode-session-info/:mode_id", (req, res) => {
+  connection.query(
+    "SELECT * FROM mode_session WHERE mode_id = ?",
+    [req.params.mode_id],
+    (error, results, fields) => {
+      if (error) {
+        throw error;
+      } else {
+        res.send({ success: true, result: results });
+      }
+    },
+  );
+});
+
+// verifies that the new user's email is unique
+// req.body will include an email address
+app.get("/unique/:email", (req, res) => {
+  connection.query(
+    "SELECT EXISTS(SELECT * FROM accounts WHERE email = ?)",
+    [req.params.email],
+    (error, results, fields) => {
+      if (error) {
+        throw error;
+      } else {
+        const result = Object.values(results[0])[0];
+        if (result == 0) {
+          res.send({ isUnique: true });
+        } else {
+          res.send({ isUnique: false });
+        }
+      }
+    },
+  );
+});
+
 // verifies user's username and password
 app.post("/auth", function (request, response) {
   var username = request.body.username;
@@ -30,7 +106,6 @@ app.post("/auth", function (request, response) {
       [username, password],
       function (error, results, fields) {
         if (results.length > 0) {
-          console.log("match");
           request.session.loggedin = true;
           response.send({ success: true, result: results });
         } else {
@@ -54,7 +129,6 @@ app.post("/register", function (request, response) {
     postData,
     function (error, results, fields) {
       if (error) {
-        console.log("I threw an error");
         throw error;
       }
       response.json({ success: true, result: results });
@@ -128,45 +202,3 @@ app.get("/topics", function (request, response) {
 });
 
 app.listen(PORT, () => console.log("app is running"));
-
-/*var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
-var app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-module.exports = app;*/

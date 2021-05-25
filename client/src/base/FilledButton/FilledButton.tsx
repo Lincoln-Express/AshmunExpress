@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native";
 import { useTheme } from "react-native-paper";
+import { heightSize, widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
@@ -18,20 +19,21 @@ const styles = StyleSheet.create({
       },
       android: {
         backgroundColor: "#273A7F",
-        elevation: 5,
+        elevation: widthSize.s / 3,
       },
     }),
-    width: "100%",
+    width: widthSize.xl * 4,
     alignItems: "center",
     justifyContent: "center",
-    padding: 20,
-    marginBottom: 10,
-    borderRadius: 5,
-    marginVertical: 15,
+    padding: widthSize.xl / 2,
+    marginBottom: heightSize.s / 3,
+    borderRadius: widthSize.s,
+    marginVertical: heightSize.s / 2,
+    height: heightSize.xl,
   },
   text: {
     color: "#F5F5F5",
-    fontSize: 16,
+    fontSize: widthSize.s,
   },
 });
 

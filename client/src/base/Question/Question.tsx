@@ -1,44 +1,53 @@
 import * as React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { useTheme } from "react-native-paper/src/core/theming";
-import pictures from "../../questionImages/questionImages";
+import questionImages from "../../questionImages/questionImages";
+import { heightSize, widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: 30,
-  },
   text: {
     textAlign: "center",
-    fontSize: 20,
+    fontSize: widthSize.xl / 2,
+  },
+  picture: {
+    marginVertical: heightSize.s / 3,
+    alignSelf: "center",
   },
 });
 
 interface QuestionProps {
   question: string;
-  pictureName: string | undefined;
+  pictureTitle: string | undefined;
 }
 
 const Question: React.FC<QuestionProps> = (props: QuestionProps) => {
-  const { question, pictureName } = props;
+  const { question, pictureTitle } = props;
   const theme = useTheme();
   const sep = "[picture]";
 
-  // if (pictureName && sep === "[picture]") {
-  //   const questionStrings = question.split(sep);
+  if (pictureTitle) {
+    const questionStrings = question.split(sep);
+    const picture = questionImages.find(
+      (picture) => picture.title === pictureTitle,
+    )?.image;
 
-  //   if (questionStrings.length === 2) {
-  //     return (
-  //       <View>
-  //         <Text>{questionStrings[0]}</Text>
-  //         // TODO add image
-  //         <Text>{questionStrings[1]}</Text>
-  //       </View>
-  //     );
-  //   }
-  // }
+    if (questionStrings.length === 2) {
+      return (
+        <View>
+          <Text style={{ ...styles.text, color: theme.colors.text }}>
+            {questionStrings[0]}
+          </Text>
+          <Image source={picture} style={styles.picture} />
+          <Text style={{ ...styles.text, color: theme.colors.text }}>
+            {questionStrings[1]}
+          </Text>
+        </View>
+      );
+    }
+  }
 
   return (
-    <View style={styles.container}>
+    <View>
       <Text style={{ ...styles.text, color: theme.colors.text }}>
         {question}
       </Text>

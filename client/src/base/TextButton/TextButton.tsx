@@ -7,18 +7,19 @@ import {
   Platform,
 } from "react-native";
 import { useTheme } from "react-native-paper";
+import { widthSize } from "../../themes/sizes";
 
 const styles = StyleSheet.create({
   container: {
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    padding: 10,
-    borderRadius: 5,
+    padding: widthSize.l / 3,
+    borderRadius: widthSize.s / 3,
   },
   text: {
     color: "#273A7F",
-    fontSize: 14,
+    fontSize: widthSize.s,
   },
 });
 

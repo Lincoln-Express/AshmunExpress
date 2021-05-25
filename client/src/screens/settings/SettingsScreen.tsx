@@ -1,25 +1,17 @@
 import * as React from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  Alert,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, View, Text, ScrollView, Alert } from "react-native";
 import { useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import ThemeContext from "../../contexts/ThemeContext";
 import CustomSwitch from "../../base/customSwitch/CustomSwitch";
 import CustomCard from "../../base/customCard/CustomCard";
 import Icon from "../../base/icon/Icon";
-import useAuth from "../../hooks/useAuth/useAuth";
-import CustomImagePlaceholder from "../../base/customImagePlaceholder/CustomImagePlaceholder";
 import useImagePicker from "../../hooks/useImagePicker/useImagePicker";
 import FilledButton from "../../base/filledButton/FilledButton";
 import AuthContext from "../../contexts/AuthContext";
+import { heightSize, widthSize } from "../../themes/sizes";
+import UserContext from "../../contexts/UserContext";
 
-const window = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
@@ -27,33 +19,26 @@ const styles = StyleSheet.create({
   themeButton: {
     justifyContent: "space-between",
     flexDirection: "row",
-    marginHorizontal: 15,
-    marginTop: 30,
+    marginHorizontal: widthSize.s,
+    marginTop: heightSize.s,
   },
   pair: {
-    marginVertical: 10,
+    marginVertical: heightSize.s / 3,
   },
   card: {
-    margin: 15,
-  },
-  customImagePlaceholder: {
-    top: 10,
-    left: window.width - 55,
-    bottom: 0,
-    right: 0,
-    opacity: 0.5,
+    margin: widthSize.s,
   },
   button: {
     backgroundColor: "#CC0000",
     maxWidth: "50%",
-    marginLeft: 10,
+    marginLeft: widthSize.l / 3,
   },
   cardIcon: {
-    top: -15,
-    right: 30,
+    top: -(heightSize.s / 2),
+    right: widthSize.l,
   },
   title: {
-    paddingTop: 10,
+    paddingTop: heightSize.s / 3,
   },
 });
 
@@ -63,25 +48,30 @@ const SettingsScreen: React.FC<null> = () => {
   const navigation = useNavigation();
   const imagePicker = useImagePicker();
   const { image } = imagePicker;
+  const { user } = React.useContext(UserContext);
   const { toggleTheme, isThemeDark } = React.useContext(ThemeContext);
   const firstPair = ["Notifications", "Account Preferences"];
   const secondPair = ["Feedback", "About us"];
   const [miniImage, setMiniImage] = React.useState(null);
 
   React.useEffect(() => {
-    setMiniImage(image);
+    setMiniImage(image.uri);
   }, [image]);
   const handleLogout = () => {
-    Alert.alert("Warning!", "Are you sure you want to log out?", [
-      { text: "Cancel", onPress: () => {}, style: "cancel" },
-      {
-        text: "Yes",
-        onPress: async () => {
-          // post user data to the database, then logout
-          await logout();
+    Alert.alert(
+      "Warning!",
+      "Are you sure you want to log out?",
+      [
+        { text: "Cancel", onPress: () => {}, style: "cancel" },
+        {
+          text: "Yes",
+          onPress: async () => {
+            await logout();
+          },
         },
-      },
-    ]);
+      ],
+      { cancelable: true },
+    );
   };
 
   return (

@@ -2,44 +2,45 @@ import * as React from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import * as converter from "number-to-words";
 import format from "date-fns/format";
-import capitalize from "lodash/capitalize";
 import CustomCard from "../../base/customCard/CustomCard";
 import UserContext from "../../contexts/UserContext";
 import EmptyState from "../../base/emptyState/EmptyState";
 import NoData from "../../../assets/svg/no-data.svg";
 import { Mode } from "../../types/types";
+import { widthSize, heightSize } from "../../themes/sizes";
+import { getGreetingText, getModeHistoryText } from "../../utils/utils";
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
   },
   greeting: {
-    fontSize: 20,
-    marginVertical: 15,
-    marginLeft: 10,
+    fontSize: widthSize.l,
+    marginVertical: heightSize.s,
+    marginLeft: widthSize.m / 2,
   },
   modeText: {
-    fontSize: 16,
-    marginLeft: 10,
+    fontSize: widthSize.s,
+    marginLeft: widthSize.m / 2,
   },
   text: {
-    marginVertical: 5,
-    fontSize: 16,
+    marginVertical: heightSize.s / 3,
+    fontSize: widthSize.s,
   },
   button: {
-    maxWidth: "40%",
+    width: widthSize.xl * 5,
+    height: heightSize.xl,
     justifyContent: "center",
     alignItems: "center",
   },
   title: {
     alignItems: "center",
-    paddingTop: 10,
+    paddingTop: heightSize.s / 3,
     textAlign: "auto",
   },
   card: {
-    marginHorizontal: 10,
+    marginHorizontal: widthSize.m / 2,
   },
 });
 
@@ -78,10 +79,9 @@ const HomeScreen: React.FC<null> = () => {
             </Text>
             <View>
               {recentResults.map((recentResult) => {
-                const { modeTopic, modeType, timeStamp, level, id } =
+                const { modeTopic, modeType, timestamp, level, id } =
                   recentResult;
-                const date = format(Date.parse(timeStamp), "PPPPpp");
-
+                const date = format(Date.parse(timestamp), "PPPPpp");
                 return (
                   <CustomCard
                     key={id}
@@ -113,30 +113,3 @@ const HomeScreen: React.FC<null> = () => {
 };
 
 export default HomeScreen;
-
-const getGreetingText = (hours: number) => {
-  if (hours < 12) {
-    return "Good Morning";
-  } else if (hours >= 12 && hours < 16) {
-    return "Good Afternoon";
-  }
-
-  return "Good evening";
-};
-
-const getModeHistoryText = (modesArrayLength: number | undefined) => {
-  if (!modesArrayLength) {
-    return "";
-  }
-
-  if (modesArrayLength === 1) {
-    return "Last Result:";
-  }
-  if (modesArrayLength < 5) {
-    const numInWords = converter.toWords(modesArrayLength);
-    const resultWord = modesArrayLength === 1 ? "Result:" : "Results:";
-    return `Last ${capitalize(numInWords)} ${resultWord}`;
-  }
-
-  return "Last Five Results:";
-};
