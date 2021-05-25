@@ -80,8 +80,6 @@ const RegistrationScreen: React.FC<null> = () => {
                 },
               })
               .then(async (res) => {
-                console.log("Here");
-
                 if (res.data.isUnique) {
                   await register(
                     values.firstName,
