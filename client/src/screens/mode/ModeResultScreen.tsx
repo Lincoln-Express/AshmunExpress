@@ -240,20 +240,20 @@ const ModeResultScreen: React.FC<null> = (): JSX.Element => {
 export default ModeResultScreen;
 
 const viewNextOptions = (navigation) => {
+  const firstButtonOnPress = () => {
+    navigation.dispatch(StackActions.popToTop());
+    navigation.navigate("Home");
+  };
+
+  const secondButtonOnPress = () => {
+    navigation.dispatch(StackActions.popToTop());
+  };
   return (
     <View style={styles.innerContainer}>
-      <FilledButton
-        title="Go Home"
-        onPress={() => {
-          navigation.dispatch(StackActions.popToTop());
-          navigation.navigate("Home");
-        }}
-      />
+      <FilledButton title="Go Home" onPress={firstButtonOnPress} />
       <FilledButton
         title="Topics"
-        onPress={() => {
-          navigation.dispatch(StackActions.popToTop());
-        }}
+        onPress={secondButtonOnPress}
         buttonStyle={styles.secondButton}
         textStyle={styles.secondButtonText}
       />

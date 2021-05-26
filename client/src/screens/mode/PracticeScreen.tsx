@@ -54,6 +54,20 @@ const PracticeScreen: React.FC<null> = (): JSX.Element => {
   const answers = getAnswers(questionObject);
   const { correctAnswersCount } = useModeState();
   const pictureTitle = picture === "yes" ? `${url}/${id}` : undefined;
+  const onPress = () => {
+    if (!hasFinishedMode(questions.length)) {
+      moveToNextQuestion();
+      navigation.navigate("Practice", { questions, mode });
+    } else {
+      resetCounter();
+      navigation.navigate("ModeResult", {
+        mode,
+        correctAnswersCount,
+        totalQuestions: questions.length,
+        ...rest,
+      });
+    }
+  };
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener("beforeRemove", (event) => {
@@ -93,20 +107,7 @@ const PracticeScreen: React.FC<null> = (): JSX.Element => {
 
       <FilledButton
         title={hasFinishedMode(questions.length) ? "Show Results" : "Next"}
-        onPress={() => {
-          if (!hasFinishedMode(questions.length)) {
-            moveToNextQuestion();
-            navigation.navigate("Practice", { questions, mode });
-          } else {
-            resetCounter();
-            navigation.navigate("ModeResult", {
-              mode,
-              correctAnswersCount,
-              totalQuestions: questions.length,
-              ...rest,
-            });
-          }
-        }}
+        onPress={onPress}
         buttonStyle={styles.button}
       />
     </ScrollView>

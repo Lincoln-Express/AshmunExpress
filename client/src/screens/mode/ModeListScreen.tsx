@@ -33,40 +33,40 @@ const ModeListScreen: React.FC<null> = (): JSX.Element => {
   const { section, topic } = route.params;
   const { isThemeDark } = React.useContext(ThemeContext);
   const theme = useTheme();
+  const left = () => (
+    <Icon
+      name="hourglass"
+      style={styles.icon}
+      color={isThemeDark ? theme.colors.primary : theme.colors.accent}
+    />
+  );
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {modes.map((mode) => (
+      {modes.map((mode) => {
         <CustomList title={mode} key={mode}>
           {levels.map((level) => {
+            const onPress = () => {
+              navigation.navigate("ModePenultimate", {
+                topic,
+                section,
+                level,
+                mode,
+              });
+            };
             return (
               <CustomCard
                 key={level}
                 title={`Level ${level}`}
                 titleStyle={styles.title}
                 elevation={5}
-                onPress={() => {
-                  navigation.navigate("ModePenultimate", {
-                    topic,
-                    section,
-                    level,
-                    mode,
-                  });
-                }}
-                left={() => (
-                  <Icon
-                    name="hourglass"
-                    style={styles.icon}
-                    color={
-                      isThemeDark ? theme.colors.primary : theme.colors.accent
-                    }
-                  />
-                )}
+                onPress={onPress}
+                left={left}
               />
             );
           })}
-        </CustomList>
-      ))}
+        </CustomList>;
+      })}
     </ScrollView>
   );
 };

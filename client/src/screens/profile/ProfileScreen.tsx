@@ -38,34 +38,36 @@ const ProfileScreen: React.FC<null> = () => {
   const numberOfTestsTaken = modes.length;
   const { topic, totalNumberOfQuestions, highestScore, section } =
     getHighestScoreText(modes);
+  const firstCardIcon = () => <Icon name={"flame"} style={styles.cardIcon} />;
+  const secondCardIcon = () => <Icon name={"disc"} style={styles.cardIcon} />;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Icon
         name={"settings"}
         onPress={() => navigation.navigate("Settings")}
-        size={24}
+        size={widthSize.m}
         style={styles.settingsIcon}
       />
-      <CustomUserAvatar
+      {/* <CustomUserAvatar
         name={`${firstName} ${lastName}`}
         secondaryDetail={"Student"}
         onPress={pickImage}
         uri={String(image.uri)}
         nameStyle={{ color: theme.colors.text }}
-      />
+      /> */}
       <View style={styles.card}>
         <CustomCard
           title={"Number of tests: "}
           elevation={5}
           subtitle={`${numberOfTestsTaken}`}
-          left={() => <Icon name={"flame"} style={styles.cardIcon} />}
+          left={firstCardIcon}
         />
         <CustomCard
           title={`Highest score: ${highestScore}/${totalNumberOfQuestions}`}
           elevation={5}
           subtitle={`Topic: ${topic}, Section: ${section}`}
-          left={() => <Icon name={"disc"} style={styles.cardIcon} />}
+          left={secondCardIcon}
         />
       </View>
     </ScrollView>

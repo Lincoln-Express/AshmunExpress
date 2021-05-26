@@ -65,6 +65,9 @@ const HomeScreen: React.FC<null> = () => {
     recentResults = len < 5 ? modes : modes.slice(len);
   }
   const modeHistoryText = getModeHistoryText(recentResults?.length);
+  const onPress = () => {
+    navigation.navigate("Topics");
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -100,9 +103,7 @@ const HomeScreen: React.FC<null> = () => {
             emptyStateText={"Want to try something new?"}
             buttonTitle={"Go to Topics"}
             image={<NoData height={120} width={120} fillOpacity={0.7} />}
-            onPress={() => {
-              navigation.navigate("Topics");
-            }}
+            onPress={onPress}
             buttonStyle={styles.button}
             textStyle={{ ...styles.text, color: theme.colors.text }}
           />

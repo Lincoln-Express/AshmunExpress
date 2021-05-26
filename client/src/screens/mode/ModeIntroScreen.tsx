@@ -39,6 +39,13 @@ const ModeIntroScreen: React.FC<null> = () => {
   );
   const { isThemeDark } = React.useContext(ThemeContext);
   const theme = useTheme();
+  const left = () => (
+    <Icon
+      name="hourglass"
+      style={styles.icon}
+      color={isThemeDark ? theme.colors.primary : theme.colors.accent}
+    />
+  );
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -53,29 +60,21 @@ const ModeIntroScreen: React.FC<null> = () => {
         ? mergedModeData.map((topic) => (
             <CustomList title={topic.title} key={topic.title}>
               {topic.data.map((section) => {
+                const onPress = () => {
+                  navigation.navigate("ModeList", {
+                    topic: topic.title,
+                    section,
+                  });
+                };
+
                 return (
                   <CustomCard
                     key={section}
                     title={section}
                     titleStyle={styles.title}
                     elevation={5}
-                    onPress={() => {
-                      navigation.navigate("ModeList", {
-                        topic: topic.title,
-                        section,
-                      });
-                    }}
-                    left={() => (
-                      <Icon
-                        name="hourglass"
-                        style={styles.icon}
-                        color={
-                          isThemeDark
-                            ? theme.colors.primary
-                            : theme.colors.accent
-                        }
-                      />
-                    )}
+                    onPress={onPress}
+                    left={left}
                   />
                 );
               })}

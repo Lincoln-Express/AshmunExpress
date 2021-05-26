@@ -15,6 +15,9 @@ const styles = StyleSheet.create({
 const NotificationsScreen: React.FC<null> = () => {
   const theme = useTheme();
   const navigation = useNavigation();
+  const onPress = () => {
+    navigation.goBack();
+  };
 
   return (
     <View style={styles.container}>
@@ -35,9 +38,7 @@ const NotificationsScreen: React.FC<null> = () => {
           />
         }
         buttonTitle={"Go back"}
-        onPress={() => {
-          navigation.goBack();
-        }}
+        onPress={onPress}
       />
     </View>
   );

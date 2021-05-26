@@ -100,19 +100,20 @@ const SettingsScreen: React.FC<null> = () => {
 export default SettingsScreen;
 
 const renderSettings = (arr: string[], navigation: any) => {
+  const right = () => <Icon name={"chevron-forward"} style={styles.cardIcon} />;
+
   return (
     <View style={styles.pair}>
       {arr.map((value) => {
         const screenName = value.split(" ")[0];
+        const onPress = () => navigation.navigate(screenName);
         return (
           <CustomCard
             key={value}
             title={value}
             elevation={5}
-            onPress={() => navigation.navigate(screenName)}
-            right={() => (
-              <Icon name={"chevron-forward"} style={styles.cardIcon} />
-            )}
+            onPress={onPress}
+            right={right}
             style={styles.card}
             titleStyle={styles.title}
           />

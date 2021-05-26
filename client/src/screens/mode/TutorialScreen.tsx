@@ -33,6 +33,21 @@ const TutorialScreen: React.FC<null> = (): JSX.Element => {
   const navigation = useNavigation();
   const route = useRoute();
   const { questions, mode, url, ...rest } = route.params;
+  const onPress = () => {
+    if (!hasFinishedMode(questions.length)) {
+      moveToNextQuestion();
+      navigation.navigate("Tutorial", { questions, mode });
+    } else {
+      resetCounter();
+
+      navigation.navigate("ModeResult", {
+        mode,
+        correctAnswersCount: 0,
+        totalQuestions: questions.length,
+        ...rest,
+      });
+    }
+  };
 
   const {
     getCounter,
@@ -61,21 +76,7 @@ const TutorialScreen: React.FC<null> = (): JSX.Element => {
       <Question question={question} pictureTitle={pictureTitle} />
       <FilledButton
         title={hasFinishedMode(questions.length) ? "Done" : "Next"}
-        onPress={() => {
-          if (!hasFinishedMode(questions.length)) {
-            moveToNextQuestion();
-            navigation.navigate("Tutorial", { questions, mode });
-          } else {
-            resetCounter();
-
-            navigation.navigate("ModeResult", {
-              mode,
-              correctAnswersCount: 0,
-              totalQuestions: questions.length,
-              ...rest,
-            });
-          }
-        }}
+        onPress={onPress}
         buttonStyle={styles.button}
       />
     </ScrollView>

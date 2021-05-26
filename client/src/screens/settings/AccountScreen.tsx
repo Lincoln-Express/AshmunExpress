@@ -19,7 +19,9 @@ const AccountScreen: React.FC<null> = () => {
   const { user } = React.useContext(UserContext);
   const { firstName, lastName, email, password } = user;
   const data = [firstName, lastName, email, password];
-
+  const onPress = () => {
+    navigation.goBack();
+  };
   return (
     <View style={styles.container}>
       <EmptyState
@@ -39,9 +41,7 @@ const AccountScreen: React.FC<null> = () => {
           />
         }
         buttonTitle={"Go back"}
-        onPress={() => {
-          navigation.goBack();
-        }}
+        onPress={onPress}
       />
     </View>
   );

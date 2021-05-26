@@ -47,6 +47,20 @@ const ExampleScreen: React.FC<null> = (): JSX.Element => {
   const questionObject = getQuestionObject(questions);
   const { question, picture, id } = questionObject;
   const pictureTitle = picture === "yes" ? `${url}/${id}` : undefined;
+  const onPress = () => {
+    if (!hasFinishedMode(questions.length)) {
+      moveToNextQuestion();
+      navigation.navigate("Example", { questions, mode });
+    } else {
+      resetCounter();
+      navigation.navigate("ModeResult", {
+        mode,
+        correctAnswersCount: 0,
+        totalQuestions: questions.length,
+        ...rest,
+      });
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -63,20 +77,7 @@ const ExampleScreen: React.FC<null> = (): JSX.Element => {
 
       <FilledButton
         title={hasFinishedMode(questions.length) ? "Show Results" : "Next"}
-        onPress={() => {
-          if (!hasFinishedMode(questions.length)) {
-            moveToNextQuestion();
-            navigation.navigate("Example", { questions, mode });
-          } else {
-            resetCounter();
-            navigation.navigate("ModeResult", {
-              mode,
-              correctAnswersCount: 0,
-              totalQuestions: questions.length,
-              ...rest,
-            });
-          }
-        }}
+        onPress={onPress}
         buttonStyle={styles.button}
       />
     </ScrollView>

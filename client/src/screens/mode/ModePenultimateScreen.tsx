@@ -92,29 +92,28 @@ const ModePenultimateScreen: React.FC<null> = (): JSX.Element => {
     const len = shuffledArray.length;
     const endIndex = getEndIndex(len);
     const questions = shuffledArray.slice(0, endIndex);
+    const firstButtonOnPress = () => {
+      navigation.goBack();
+    };
+    const secondButtonOnPress = () => {
+      navigation.navigate(`${mode}`, {
+        questions,
+        url,
+        mode,
+        ...route.params,
+      });
+    };
     return (
       <ScrollView contentContainerStyle={styles.outerContainer}>
         <Text style={{ ...styles.readyText, color: theme.colors.text }}>
           Are you ready ?
         </Text>
         <View style={styles.innerContainer}>
-          <FilledButton
-            title="Not yet"
-            onPress={() => {
-              navigation.goBack();
-            }}
-          />
+          <FilledButton title="Not yet" onPress={firstButtonOnPress} />
 
           <FilledButton
             title="Get Started"
-            onPress={() => {
-              navigation.navigate(`${mode}`, {
-                questions,
-                url,
-                mode,
-                ...route.params,
-              });
-            }}
+            onPress={secondButtonOnPress}
             buttonStyle={styles.secondButton}
             textStyle={styles.secondButtonText}
           />
@@ -123,6 +122,10 @@ const ModePenultimateScreen: React.FC<null> = (): JSX.Element => {
     );
   }
 
+  const emptyStateOnPress = () => {
+    navigation.dispatch(StackActions.popToTop());
+    navigation.navigate("Home");
+  };
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {isLoading && (
@@ -137,10 +140,7 @@ const ModePenultimateScreen: React.FC<null> = (): JSX.Element => {
           textStyle={{ ...styles.text, color: theme.colors.text }}
           image={<Empty height={120} width={120} />}
           buttonTitle={"Go back home"}
-          onPress={() => {
-            navigation.dispatch(StackActions.popToTop());
-            navigation.navigate("Home");
-          }}
+          onPress={emptyStateOnPress}
           buttonStyle={styles.emptyStateButton}
         />
       )}

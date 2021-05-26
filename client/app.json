@@ -5,20 +5,27 @@
     "description": "",
     "privacy": "public",
     "platforms": ["ios", "android", "web"],
-    "version": "0.1.0",
+    "version": "1.0.0",
     "orientation": "portrait",
+    "primaryColor": "#F57C00",
     "icon": "./assets/images/icon.png",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#f57c00"
+      "backgroundColor": "#F57C00"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": ["assets/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.learningexpress.ashmunexpress",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.learningexpress.ashmunexpress",
+      "versionCode": 1
     },
     "userInterfaceStyle": "automatic",
     "packagerOpts": {
